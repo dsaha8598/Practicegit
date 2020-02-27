@@ -1,0 +1,29 @@
+begin
+     for i in 1 .. 100
+     loop
+         insert into USER_MASTER values(i,date'2019-11-23',date'2019-11-23','LowBalance','dsaha8598@gmail.com','dipak','male','saha',8598084392,'LowBalance');
+         end loop;
+         commit;
+         end;
+         /
+
+
+
+begin
+     for i in 1 .. 100
+     loop
+         insert into tag_master values(i,date'2019-11-23',date'2019-11-23','LowBalance',date'2023-10-10',date'2019-11-23',5000,i,'LowBalance',i,'abc123','2 wheeler');
+         end loop;
+         commit;
+         end;
+         /
+
+begin
+     for i in 1 .. 100
+     loop
+         insert into tag_tx_triggers values(i,date'2019-11-23',date'2019-11-23','LowBalance','p',i,500,i,'fail','low balance','LowBalance','abc123');
+         end loop;
+         commit;
+         end;
+         /
+

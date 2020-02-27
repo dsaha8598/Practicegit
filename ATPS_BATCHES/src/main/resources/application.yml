@@ -1,0 +1,25 @@
+#server port configuration
+server:
+  port: 9090
+  
+  #context path configuration
+  servlet:
+    context-path: /task
+  
+  #view resolver configuration
+spring:
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+      
+ #data source configuration
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: scott
+    password: tiger
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
