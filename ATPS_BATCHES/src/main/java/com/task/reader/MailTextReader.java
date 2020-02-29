@@ -12,7 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-
+//added a new comment for git
 
 /**
  * this class is to read the text file containig the mail subject
