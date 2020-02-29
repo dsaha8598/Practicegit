@@ -50,13 +50,13 @@ public class TaskService {
 	 */
 	@Autowired
 	UserMasterRepo userRepo;
-	
+
 	/***
 	 * 
 	 */
 	@Autowired
 	BatchRunSummeryRepo batchSummeryRepo;
-	
+
 	/**
 	 * injecting MailSender class object
 	 */
@@ -70,11 +70,12 @@ public class TaskService {
 	Integer runSequenceId = 0;
 	UserMasterEntity userEntity = null;
 	private static String batchName = "LOW_BALANCE";
-	BatchRunSummeryEntity2 summeryEntity=null;
-	int successCount=0,failureCount=0,recordCount=0;
+	BatchRunSummeryEntity2 summeryEntity = null;
+	int successCount = 0, failureCount = 0, recordCount = 0;
 
 	/**
 	 * this method is used to set the data into batch details
+	 * 
 	 * @return runSequenceId
 	 */
 	public Integer preProcess() {
@@ -87,12 +88,12 @@ public class TaskService {
 		runSequenceId = savedEntity.getRunId();
 		System.out.println(runSequenceId);
 		return runSequenceId;
+		System.out.println("added a statement");
 	}
 
 	/**
-	 * start method retrieves record from TagTransactiontriggers table
-	 * process eac h recor
-	 * calls process()
+	 * start method retrieves record from TagTransactiontriggers table process eac h
+	 * recor calls process()
 	 */
 	@SuppressWarnings("rawtypes")
 	public void start() {
@@ -102,77 +103,85 @@ public class TaskService {
 		Date date = new Date();
 		System.out.println(date);
 		String reminderMessageSwitch = "p";
-        //retrieveing and storing in list collection
+		// retrieveing and storing in list collection
 		List<TagTransactiontriggersEntity> getTagTriggerTransactionRecords = triggerRepo
 				.getTagTriggerTransactionRecords(status, reason, date, reminderMessageSwitch);
-		//counting no of reccords retrieved
-	    recordCount=getTagTriggerTransactionRecords.size();
-	    //creating thread pool
-		ExecutorService service=Executors.newFixedThreadPool(10);  //creating ExecutorService object by using Executors factory class which gives thread pool of fixed length
-		CompletionService<Future> pool=new ExecutorCompletionService<Future>(service); //creating ExecutorCompletionService object by passing service as argument and asssigning the object to the reference variable of CompletionService Interface		   
-		//itereating the collection object
+		// counting no of reccords retrieved
+		recordCount = getTagTriggerTransactionRecords.size();
+		// creating thread pool
+		ExecutorService service = Executors.newFixedThreadPool(10); // creating ExecutorService object by using
+																	// Executors factory class which gives thread pool
+																	// of fixed length
+		CompletionService<Future> pool = new ExecutorCompletionService<Future>(service); // creating
+																							// ExecutorCompletionService
+																							// object by passing service
+																							// as argument and
+																							// asssigning the object to
+																							// the reference variable of
+																							// CompletionService
+																							// Interface
+		// itereating the collection object
 		for (TagTransactiontriggersEntity trigentity : getTagTriggerTransactionRecords) {
-			pool.submit(new Callable<Future>() { //calling the submit method to execute the task and creating a inner class of callable
-				public Future call() { //overriding the call() and placing the tasks to be executed whose return type is Future object which contains the retrirvrd data
+			pool.submit(new Callable<Future>() { // calling the submit method to execute the task and creating a inner
+													// class of callable
+				public Future call() { // overriding the call() and placing the tasks to be executed whose return type
+										// is Future object which contains the retrirvrd data
 					Integer tagId = trigentity.getTagId();
 					Integer userId = tagRepo.getUserId(tagId);
 					System.out.println(tagId);
-					//getting the userMasterEntity class object
+					// getting the userMasterEntity class object
 					Optional<UserMasterEntity> userOptional = userRepo.findById(userId);
 					if (userOptional.isPresent()) {
 						userEntity = userOptional.get();
-					//calling process() with current object reference
-					    process(userEntity,tagId);
+						// calling process() with current object reference
+						process(userEntity, tagId);
 					}
 					return null;
 				}
 			});
-		
 
-		}//for
+		} // for
 
-	    }// start()
+	}// start()
 
-	
 	/**
 	 * calls sendUserMail() by supplying required inputs
+	 * 
 	 * @param userEntity
 	 * @param tagId
 	 */
-	public void process(UserMasterEntity userEntity,Integer tagId) {
+	public void process(UserMasterEntity userEntity, Integer tagId) {
 		String name = userEntity.getFirtsName();
-		String email = userEntity.getEmailId();//to send the mail
-		//calling this method to send the mails to the users
-		String msg=sendMail.sendUserMail(name, email);
-	if(msg.equals("success")) {
+		String email = userEntity.getEmailId();// to send the mail
+		// calling this method to send the mails to the users
+		String msg = sendMail.sendUserMail(name, email);
+		if (msg.equals("success")) {
 			this.updateMessageSwitch(tagId);
 			successCount++;
-		}
-		else {
+		} else {
 			System.out.println("**************************failed******************************************");
 			failureCount++;
 			return;
 		}
-	}//process
-	
+	}// process
 
-	
 	public void updateMessageSwitch(Integer tagId) {
-		String messageSwitch="c";
-		//updating the message switch
-		triggerRepo.updateMessageSwitch(tagId, messageSwitch);	
-		System.out.println("***********************************************************record updated*********************************************");
+		String messageSwitch = "c";
+		// updating the message switch
+		triggerRepo.updateMessageSwitch(tagId, messageSwitch);
+		System.out.println(
+				"***********************************************************record updated*********************************************");
 	}
-	
-	
+
 	public void postprocess() {
-		summeryEntity=new BatchRunSummeryEntity2 ();
+		summeryEntity = new BatchRunSummeryEntity2();
 		summeryEntity.setBatchName(batchName);
-		String msg="total "+recordCount+"  processed and "+ successCount +"records updated"+  failureCount  +"failed";
+		String msg = "total " + recordCount + "  processed and " + successCount + "records updated" + failureCount
+				+ "failed";
 		summeryEntity.setSummeryDetails(msg);
-		//saving details to BatchRunSummeryDetails table
+		// saving details to BatchRunSummeryDetails table
 		batchSummeryRepo.save(summeryEntity);
-		
+
 		Batchrunentity brentity = new Batchrunentity();
 		brentity.setRunId(runSequenceId);
 		brentity.setEndDt(new Date());

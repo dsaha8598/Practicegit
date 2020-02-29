@@ -51,7 +51,7 @@ public class UserMailSender {
 
     javaMailSender.send(message);
     msg="success";
-    
+    System.out.println("aded a new statement only git hub practice purpose");
     }
     catch(Exception e) {
     	LOGGER.info("************catch block of sendUserMail method of  UserMailSender execution started************");
