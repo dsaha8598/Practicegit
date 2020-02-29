@@ -16,7 +16,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
 
-
+//buyhbhjb
 @Data
 @Entity
 @Table(name="BATCH_RUN_SUMMARY")

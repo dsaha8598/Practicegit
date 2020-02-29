@@ -37,7 +37,7 @@ public class Batchrunentity {
 	private Date createDt;
 	@UpdateTimestamp
 	private Date UpdatedDt;
-	
+	//lssahsbasbasabsjabs
 	private String createdby;
 	private String uopdatedBy;
 }
