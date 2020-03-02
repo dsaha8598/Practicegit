@@ -110,7 +110,7 @@ public class TaskService {
 		recordCount = getTagTriggerTransactionRecords.size();
 		// creating thread pool
 		ExecutorService service = Executors.newFixedThreadPool(10); // creating ExecutorService object by using
-																	// Executors factory class which gives thread pool
+						////											// Executors factory class which gives thread pool
 																	// of fixed length
 		CompletionService<Future> pool = new ExecutorCompletionService<Future>(service); // creating
 																							// ExecutorCompletionService
