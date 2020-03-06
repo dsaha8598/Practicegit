@@ -15,7 +15,7 @@ public class TaskApplication {
 	    service.preProcess();
 		service.start();
 	    service.postprocess();
-		
-	}
+		System.out.println();
+	} 
 
 }
