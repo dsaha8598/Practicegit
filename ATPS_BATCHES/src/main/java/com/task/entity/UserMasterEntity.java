@@ -39,4 +39,64 @@ public class UserMasterEntity {
 	
 	private String createdby;
 	private String uopdatedBy;
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public String getFirtsName() {
+		return firtsName;
+	}
+	public void setFirtsName(String firtsName) {
+		this.firtsName = firtsName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getEmailId() {
+		return emailId;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+	public Long getPhno() {
+		return phno;
+	}
+	public void setPhno(Long phno) {
+		this.phno = phno;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public Date getCreateDt() {
+		return createDt;
+	}
+	public void setCreateDt(Date createDt) {
+		this.createDt = createDt;
+	}
+	public Date getUpdatedDt() {
+		return UpdatedDt;
+	}
+	public void setUpdatedDt(Date updatedDt) {
+		UpdatedDt = updatedDt;
+	}
+	public String getCreatedby() {
+		return createdby;
+	}
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
+	}
+	public String getUopdatedBy() {
+		return uopdatedBy;
+	}
+	public void setUopdatedBy(String uopdatedBy) {
+		this.uopdatedBy = uopdatedBy;
+	}
 }

@@ -88,7 +88,6 @@ public class TaskService {
 		runSequenceId = savedEntity.getRunId();
 		System.out.println(runSequenceId);
 		return runSequenceId;
-		System.out.println("added a statement");
 	}
 
 	/**

@@ -39,4 +39,46 @@ public class BatchRunSummeryEntity2{
 	
 	private String createdby;
 	private String uopdatedBy;
+	public Integer getSummeryId() {
+		return summeryId;
+	}
+	public void setSummeryId(Integer summeryId) {
+		this.summeryId = summeryId;
+	}
+	public String getBatchName() {
+		return batchName;
+	}
+	public void setBatchName(String batchName) {
+		this.batchName = batchName;
+	}
+	public String getSummeryDetails() {
+		return summeryDetails;
+	}
+	public void setSummeryDetails(String summeryDetails) {
+		this.summeryDetails = summeryDetails;
+	}
+	public Date getCreateDt() {
+		return createDt;
+	}
+	public void setCreateDt(Date createDt) {
+		this.createDt = createDt;
+	}
+	public Date getUpdatedDt() {
+		return UpdatedDt;
+	}
+	public void setUpdatedDt(Date updatedDt) {
+		UpdatedDt = updatedDt;
+	}
+	public String getCreatedby() {
+		return createdby;
+	}
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
+	}
+	public String getUopdatedBy() {
+		return uopdatedBy;
+	}
+	public void setUopdatedBy(String uopdatedBy) {
+		this.uopdatedBy = uopdatedBy;
+	}
 }
