@@ -20,7 +20,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="BATCH_RUN_SUMMARY")
-public class BatchRunSummeryEntity2{
+public class BatchRunSummeryEntity2{  //comments
 
 	 @Id
 	    @GenericGenerator(name = "sequence", strategy = "sequence", parameters = {
