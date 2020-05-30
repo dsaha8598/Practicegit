@@ -14,7 +14,7 @@ import com.task.reader.MailTextReader;
 @Component
 public class UserMailSender {
 	/**
-	 * injecting javaMailSender object
+	 * injecting javaMailSender object   here
 	 */
 	@Autowired
     private JavaMailSender javaMailSender;
