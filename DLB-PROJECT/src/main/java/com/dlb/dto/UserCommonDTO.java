@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.dlb.dto;
 /**
  * This class is to carry data across multiple classes
  * @author Dipak
