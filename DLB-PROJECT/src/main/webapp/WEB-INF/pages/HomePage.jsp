@@ -23,8 +23,8 @@
 
 	<div class="container" align="center">
 	
-		<a href="#" class="btn btn-info" role="button">LOGIN HERE</a>
-        <a href="#" class="btn btn-info" role="button">SignUp HERE</a>
+		<a href="login" class="btn btn-info" role="button">LOGIN HERE</a>
+        <a href="SignUp" class="btn btn-info" role="button">SignUp HERE</a>
 
 	</div>
 
