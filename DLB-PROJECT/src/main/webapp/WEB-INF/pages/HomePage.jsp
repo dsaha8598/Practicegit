@@ -21,7 +21,7 @@
 <body>
 <h1 style="color: olive; text-align: center;">Welcome Dear</h1>
 
-	<div class="container">
+	<div class="container" align="center">
 	
 		<a href="#" class="btn btn-info" role="button">LOGIN HERE</a>
         <a href="#" class="btn btn-info" role="button">SignUp HERE</a>
