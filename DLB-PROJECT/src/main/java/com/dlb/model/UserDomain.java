@@ -2,13 +2,8 @@ package com.dlb.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 public class UserDomain {
-	
+
 	private Integer uid;
 	private String fullName;
 	private String userName;
@@ -16,7 +11,7 @@ public class UserDomain {
 	private String gender;
 	private String email;
 	private Integer phNo;
-	
+
 	private String dateOfBirth;
 
 	public Integer getUid() {
@@ -83,6 +78,78 @@ public class UserDomain {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((phNo == null) ? 0 : phNo.hashCode());
+		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDomain other = (UserDomain) obj;
+		if (dateOfBirth == null) {
+			if (other.dateOfBirth != null)
+				return false;
+		} else if (!dateOfBirth.equals(other.dateOfBirth))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (fullName == null) {
+			if (other.fullName != null)
+				return false;
+		} else if (!fullName.equals(other.fullName))
+			return false;
+		if (gender == null) {
+			if (other.gender != null)
+				return false;
+		} else if (!gender.equals(other.gender))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (phNo == null) {
+			if (other.phNo != null)
+				return false;
+		} else if (!phNo.equals(other.phNo))
+			return false;
+		if (uid == null) {
+			if (other.uid != null)
+				return false;
+		} else if (!uid.equals(other.uid))
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDomain [uid=" + uid + ", fullName=" + fullName + ", userName=" + userName + ", password=" + password
+				+ ", gender=" + gender + ", email=" + email + ", phNo=" + phNo + ", dateOfBirth=" + dateOfBirth + "]";
+	}
 	
 
 }

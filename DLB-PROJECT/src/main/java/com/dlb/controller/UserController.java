@@ -1,6 +1,5 @@
 package com.dlb.controller;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,62 +21,65 @@ public class UserController {
 	 */
 	@Autowired
 	private UserServiceImpl service;
-	
-	
-	private static final Logger log = LoggerFactory.getLogger(UserController.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	/***
-	 * this method is to show home page
+	 * this method is to show start page having login and create button
+	 * 
 	 * @return
 	 */
-	
-	@RequestMapping(value = "/home",method = RequestMethod.GET)
+
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String showHome() {
-		log.info("*********************************showhome started***********************");
-		
+		logger.info(" Executing home page {}");
 		return "HomePage";
-		
+
 	}
+
 	/**
 	 * this method is to show login page
+	 * 
 	 * @return
 	 */
-	
-	@RequestMapping(value = "/login",method = RequestMethod.GET)
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String showLogin(Model model) {
-		
-		UserDomain domain=new UserDomain();
+		logger.info(" displaying login page {}");
+		UserDomain domain = new UserDomain();
 		model.addAttribute("domain", domain);
-		
 		return "Login";
 	}
-	
-	
+
 	/**
 	 * this method is to show signup page
+	 * 
 	 * @return
 	 */
-	
-	@RequestMapping(value = "/SignUp",method = RequestMethod.GET)
+
+	@RequestMapping(value = "/SignUp", method = RequestMethod.GET)
 	public String showSignUp(Model model) {
-		
-		UserDomain signUpdomain=new UserDomain();
+		logger.info(" displaying sign up page {}");
+		UserDomain signUpdomain = new UserDomain();
 		model.addAttribute("signUpdomain", signUpdomain);
-		
+
 		return "Signup";
 	}
-	
-	
-	@RequestMapping(value = "/signupPost",method = RequestMethod.POST)
-	public String storeUserdata(Model model,@ModelAttribute(name = "signUpdomain") UserDomain domain) {
+
+	/**
+	 * to recieve the user data from UI
+	 * 
+	 * @param model
+	 * @param domain
+	 * @return
+	 */
+	@RequestMapping(value = "/signupPost", method = RequestMethod.POST)
+	public String storeUserdata(Model model, @ModelAttribute(name = "signUpdomain") UserDomain domain) {
 		System.out.println("UserController.storeUserdata()");
-		UserEntity userid=service.saveUser(domain);
+		UserEntity userid = service.createUserAccount(domain);
 		model.addAttribute("obj", userid);
-		
+
 		return "Signup";
-		
+
 	}
-	
-	
 
 }

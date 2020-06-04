@@ -13,10 +13,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.Data;
-
 @Entity
-@Table(name = "DLBUserMaster")
+@Table(name = "DLB_USER_MSTER")
 
 public class UserEntity {
 	@Id
