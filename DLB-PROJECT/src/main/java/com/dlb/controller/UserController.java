@@ -78,8 +78,13 @@ public class UserController {
 		UserEntity userid = service.createUserAccount(domain);
 		model.addAttribute("obj", userid);
 
-		return "Signup";
+		return "forward:/homepage";
 
+	}
+	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
+	public String showHomeAppPage() {
+		logger.info(" Executing home page of Application{}");
+		return "AppHomePage";
 	}
 
 }
