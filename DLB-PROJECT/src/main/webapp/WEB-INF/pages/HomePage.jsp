@@ -17,7 +17,29 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+<style type="text/css">
+
+body {
+  height: 100%;
+}
+.bg {
+  /* The image used */
+  background-image: url("../images/b1.jpg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>           
 </head>
+
+
+
 <body>
 <h1 style="color: olive; text-align: center;">Welcome Dear</h1>
 

@@ -35,12 +35,13 @@
 			</div>
 			<div class="form-inline">
 				<label for="userName">UserName:</label> <input type="text"
-					class="form-control" id="userName"
+					class="form-control" name="userName" id="userName"
 					placeholder="Enter User name here">
 			</div>
 			<div class="form-inline">
 				<label for="password">Password:</label> <input type="password"
-					class="form-control" id="password" placeholder="Enter password">
+					class="form-control" name="password" id="password"
+					placeholder="Enter password">
 			</div>
 
 
@@ -48,39 +49,39 @@
 				<label for="gender">Select Gender:</label>
 			</div>
 			<div class="radio">
-			<label for="gender"><input type="radio" name="optradio" checked>Male</label>
+				<label for="gender"><input type="radio" name="gender" id="gender" value="Male" >Male</label>
 			</div>
-         	
-	    <div class="radio">
-		<label for="gender"><input type="radio" name="optradio">Female</label>
-	</div>
-	<div class="radio disabled">
-		<label for="gender"><input type="radio" name="optradio">Others</label>
-	</div>
 
-	<div class="form-inline">
-		<label for="email">Email id:</label> <input type="email"
-			class="form-control" id="email" placeholder="Enter emailid here">
-	</div>
+			<div class="radio">
+				<label for="gender"><input type="radio" name="gender" id="gender" value="Female">Female</label>
+			</div>
+			<div class="radio">
+				<label for="gender"><input type="radio" name="gender" id="gender" value="Others">Others</label>
+			</div>
 
-
+			<div class="form-inline">
+				<label for="email">Email id:</label> <input type="email"
+					class="form-control" name="email" id="email" placeholder="Enter emailid here">
+			</div>
 
 
 
-	<div class="form-inline">
-		<label for="phNo">Phone No:</label> <input type="text"
-			class="form-control" id="phNo" placeholder="Enter phone number ">
-	</div>
-
-	<div>
-		<label for="dateOfBirth">Date of Birth</label> <input type="date"
-			id="dateOfBirth" name="dateOfBirth">
-	</div>
 
 
-	<button type="reset" class="btn btn-default">Reset</button>
-	<button type="submit" class="btn btn-default">Submit</button>
-	</form>
+			<div class="form-inline">
+				<label for="phNo">Phone No:</label> <input type="text"
+					class="form-control" name="phNo" id="phNo" placeholder="Enter phone number ">
+			</div>
+
+			<div>
+				<label for="dateOfBirth">Date of Birth</label> <input type="date"
+					id="dateOfBirth" name="dateOfBirth">
+			</div>
+
+
+			<button type="reset" class="btn btn-default">Reset</button>
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
 	</div>
 
 </body>
