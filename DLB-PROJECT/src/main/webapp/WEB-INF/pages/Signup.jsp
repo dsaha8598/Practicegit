@@ -25,8 +25,10 @@
 </head>
 <body>
 
-	<div class="container">
+	<div align="center" class="container">
 		<h2 style="color: blue; text-align: center;">Signup here....</h2>
+		<hr>
+		
 		<form action="signupPost" method="POST" modelAttribute="signUpdomain"  enctype="multipart/form-data">
 			<div class="form-inline">
 				<label for="fullName">Name:</label> <input type="text"
@@ -86,8 +88,8 @@
 
 
 
-			<button type="reset" class="btn btn-default">Reset</button>
-			<button type="submit" class="btn btn-default">Submit</button>
+			<button type="reset" class="btn btn-info col-2">Reset</button>
+			<button type="submit" class="btn btn-info col-2">Submit</button>
 		</form>
 	</div>
 
