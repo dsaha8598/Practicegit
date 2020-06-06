@@ -83,10 +83,33 @@ public class UserController {
 		return "forward:/homepage"; 
 
 	}
+	
+	
+	/**
+	 * this method is used for showinf apphome page
+	 * @return
+	 */
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
 	public String showHomeAppPage() {
 		logger.info(" Executing home page of Application{}");
 		return "AppHomePage";
+	}
+	
+	/**
+	 * this method is used to show the user profile by username by queryparameter
+	 * @param name
+	 * @return
+	 */
+	
+	
+	@RequestMapping(value = "/showProfileByName")
+	public String showProfile(@RequestParam String name) {
+		
+		String userName=name;
+		
+		UserEntity user=service.showUserProfile(userName);
+		return "AppHomePage";
+		
 	}
 
 }

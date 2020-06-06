@@ -28,69 +28,73 @@
 	<div align="center" class="container">
 		<h2 style="color: blue; text-align: center;">Signup here....</h2>
 		<hr>
-		
-		<form action="signupPost" method="POST" modelAttribute="signUpdomain"  enctype="multipart/form-data">
-			<div class="form-inline">
-				<label for="fullName">Name:</label> <input type="text"
-					class="form-control" name="fullName" id="fullName"
-					placeholder="Enter full name here">
-			</div>
-			<div class="form-inline">
-				<label for="userName">UserName:</label> <input type="text"
-					class="form-control" name="userName" id="userName"
-					placeholder="Enter User name here">
-			</div>
-			<div class="form-inline">
-				<label for="password">Password:</label> <input type="password"
-					class="form-control" name="password" id="password"
-					placeholder="Enter password">
-			</div>
+		<table>
+			<form action="signupPost" method="POST" modelAttribute="signUpdomain"
+				enctype="multipart/form-data">
+				<div class="form-inline">
+
+					<label for="fullName">Name:</label> <input type="text"
+						class="form-control" name="fullName" id="fullName"
+						placeholder="Enter full name here">
+
+				</div>
+				<div class="form-inline">
+					<label for="userName">UserName:</label> <input type="text"
+						class="form-control" name="userName" id="userName"
+						placeholder="Enter User name here">
+				</div>
+				<div class="form-inline">
+					<label for="password">Password:</label> <input type="password"
+						class="form-control" name="password" id="password"
+						placeholder="Enter password">
+				</div>
 
 
-			<div class="form-inline">
-				<label for="gender">Select Gender:</label>
-			</div>
-			<div class="radio">
-				<label for="gender"><input type="radio" name="gender" id="gender" value="Male" >Male</label>
-			</div>
+				<div class="form-inline">
+					<label for="gender">Select Gender:</label>
+				</div>
+				<div class="radio">
+					<label for="gender"><input type="radio" name="gender"
+						id="gender" value="Male">Male</label>
+				</div>
 
-			<div class="radio">
-				<label for="gender"><input type="radio" name="gender" id="gender" value="Female">Female</label>
-			</div>
-			<div class="radio">
-				<label for="gender"><input type="radio" name="gender" id="gender" value="Others">Others</label>
-			</div>
+				<div class="radio">
+					<label for="gender"><input type="radio" name="gender"
+						id="gender" value="Female">Female</label>
+				</div>
+				<div class="radio">
+					<label for="gender"><input type="radio" name="gender"
+						id="gender" value="Others">Others</label>
+				</div>
 
-			<div class="form-inline">
-				<label for="email">Email id:</label> <input type="email"
-					class="form-control" name="email" id="email" placeholder="Enter emailid here">
-			</div>
+				<div class="form-inline">
+					<label for="email">Email id:</label> <input type="email"
+						class="form-control" name="email" id="email"
+						placeholder="Enter emailid here">
+				</div>
 
+				<div class="form-inline">
+					<label for="phNo">Phone No:</label> <input type="text"
+						class="form-control" name="phNo" id="phNo"
+						placeholder="Enter phone number ">
+				</div>
 
-
-
-
-			<div class="form-inline">
-				<label for="phNo">Phone No:</label> <input type="text"
-					class="form-control" name="phNo" id="phNo" placeholder="Enter phone number ">
-			</div>
-
-			<div>
-				<label for="dateOfBirth">Date of Birth</label> <input type="date"
-					id="dateOfBirth" name="dateOfBirth">
-			</div>
-
-	
-	<div>
-		<label for="file">Upload profile pic</label> <input type="file"
-			id="file" name="file">
-	</div>
+				<div>
+					<label for="dateOfBirth">Date of Birth</label> <input type="date"
+						id="dateOfBirth" name="dateOfBirth">
+				</div>
 
 
+				<div>
+					<label for="file">Upload profile pic</label> <input type="file"
+						id="file" name="file">
+				</div>
 
-			<button type="reset" class="btn btn-info col-2">Reset</button>
-			<button type="submit" class="btn btn-info col-2">Submit</button>
-		</form>
+
+
+				<button type="reset" class="btn btn-primary" >Reset</button>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
 	</div>
 
 </body>

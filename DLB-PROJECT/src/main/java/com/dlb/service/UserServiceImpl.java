@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
@@ -63,8 +64,23 @@ public class UserServiceImpl implements UserService {
 		return userid;
 	}
 	
-	public void finduser(){
-		Iterable<UserEntity> findAll = userRepo.findAll();
+	/**
+	 * this mwhtod is used to get userobject by username
+	 * @param userName
+	 * @return
+	 */
+	
+
+	public UserEntity showUserProfile(String userName) {
+		// TODO Auto-generated method stub
+		
+		int uidbyUsername = userRepo.getUidbyUsername(userName);
+		Optional<UserEntity> optional = userRepo.findById(uidbyUsername);
+		UserEntity userEntity = optional.get();
+	
+		return userEntity;
 	}
+	
+	
 
 }
