@@ -80,7 +80,7 @@ public class UserController {
 		UserEntity userid = service.createUserAccount(domain,imageFile);
 		model.addAttribute("obj", userid);
 
-		return "forward:/homepage";
+		return "forward:/homepage"; 
 
 	}
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)

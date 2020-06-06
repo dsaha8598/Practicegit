@@ -73,6 +73,10 @@
 		
 
 
+<<<<<<< HEAD
+=======
+		
+>>>>>>> branch 'master' of https://github.com/dsaha8598/Practicegit.git
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>

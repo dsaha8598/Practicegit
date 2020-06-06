@@ -77,11 +77,14 @@
 				<label for="dateOfBirth">Date of Birth</label> <input type="date"
 					id="dateOfBirth" name="dateOfBirth">
 			</div>
+<<<<<<< HEAD
 	
 	<div>
 		<label for="file">Upload profile pic</label> <input type="date"
 			id="file" name="file">
 	</div>
+=======
+>>>>>>> branch 'master' of https://github.com/dsaha8598/Practicegit.git
 
 
 			<button type="reset" class="btn btn-default">Reset</button>
