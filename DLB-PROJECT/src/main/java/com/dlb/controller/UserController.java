@@ -75,20 +75,40 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/signupPost", method = RequestMethod.POST)
-	public String storeUserdata(Model model, @RequestParam("file")MultipartFile imageFile, @ModelAttribute(name = "signUpdomain") UserDomain domain) {
+	public String storeUserdata(Model model, @RequestParam("file") MultipartFile imageFile,
+			@ModelAttribute(name = "signUpdomain") UserDomain domain) {
 		System.out.println("UserController.storeUserdata()");
-		UserEntity userid = service.createUserAccount(domain,imageFile);
+		UserEntity userid = service.createUserAccount(domain, imageFile);
 		model.addAttribute("obj", userid);
 
-		return "forward:/homepage"; 
+		return "forward:/homepage";
 
 	}
+
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
 	public String showHomeAppPage() {
 		logger.info(" Executing home page of Application{}");
 		return "AppHomePage";
 	}
-	@RequestMapping(value="/newPassword",method=RequestMethod.GET)
+
+	/**
+	 * this method is used to show the user profile by username by queryparameter
+	 * 
+	 * @param name
+	 * @return
+	 */
+
+	@RequestMapping(value = "/showProfileByName")
+	public String showProfile(@RequestParam String name) {
+
+		String userName = name;
+
+		UserEntity user = service.showUserProfile(userName);
+		return "AppHomePage";
+
+	}
+
+	@RequestMapping(value = "/newPassword", method = RequestMethod.GET)
 	public String newPasswordPage() {
 		logger.info("Displaying Generating new password page");
 		return "NewPwd";
