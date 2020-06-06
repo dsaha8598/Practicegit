@@ -1,13 +1,19 @@
 package com.dlb.service;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dlb.controller.UserController;
 import com.dlb.entity.UserEntity;
@@ -22,11 +28,21 @@ public class UserServiceImpl implements UserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	UserEntity userid = null;
 
-	public UserEntity createUserAccount(UserDomain domain) {
+	public UserEntity createUserAccount(UserDomain domain,MultipartFile imageFile) {
 		logger.info("Processing to save user creation data {}");
 		UserEntity userEntity = new UserEntity();
 		String dateOfBirth = domain.getDateOfBirth();
+		
 		try {
+			
+			 byte[] bytes=imageFile.getBytes();
+						 ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+					    BufferedImage image=ImageIO.read(bis);
+					    ByteArrayOutputStream pngContent = new ByteArrayOutputStream();
+				         ImageIO.write(image, "png", pngContent);
+					   byte[] encodeBase64 = Base64.encodeBase64(pngContent.toByteArray());//.encode(null);   
+						   String base64Encoded = new String(encodeBase64, "UTF-8");
+			
 			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth);
 			System.out.println(dateOfBirth);
 			userEntity.setFullName(domain.getFullName());
@@ -37,6 +53,7 @@ public class UserServiceImpl implements UserService {
 			userEntity.setGender(domain.getGender());
 			userEntity.setCreatedDate(new Date());
 			userEntity.setDateOfBirth(date);
+			userEntity.setProfilePic(base64Encoded);
 
 			userid = userRepo.save(userEntity);
 			logger.info("saved user account creation data {}");

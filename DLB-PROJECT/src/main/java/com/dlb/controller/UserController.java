@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dlb.entity.UserEntity;
 import com.dlb.model.UserDomain;
@@ -73,13 +75,18 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/signupPost", method = RequestMethod.POST)
-	public String storeUserdata(Model model, @ModelAttribute(name = "signUpdomain") UserDomain domain) {
+	public String storeUserdata(Model model, @RequestParam("file")MultipartFile imageFile, @ModelAttribute(name = "signUpdomain") UserDomain domain) {
 		System.out.println("UserController.storeUserdata()");
-		UserEntity userid = service.createUserAccount(domain);
+		UserEntity userid = service.createUserAccount(domain,imageFile);
 		model.addAttribute("obj", userid);
 
-		return "Signup";
+		return "forward:/homepage";
 
+	}
+	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
+	public String showHomeAppPage() {
+		logger.info(" Executing home page of Application{}");
+		return "AppHomePage";
 	}
 
 }

@@ -37,6 +37,10 @@ public class UserEntity {
 	@Column(name = "DoB")
 	private Date dateOfBirth;
 	
+	@Column(name="Profile_pic")
+	private String profilePic;
+
+
 	
 	@Column(name = "CreatedDate")
 	@CreationTimestamp
@@ -105,6 +109,12 @@ public class UserEntity {
 	}
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+	public String getProfilePic() {
+		return profilePic;
+	}
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
 	}
 	
 
