@@ -90,6 +90,7 @@ public class UserController {
 		logger.info(" Executing home page of Application{}");
 		return "AppHomePage";
 	}
+
 	
 	/**
 	 * this method is used to show the user profile by username by queryparameter
@@ -109,6 +110,7 @@ public class UserController {
 	}
 		
 	
+
 	@RequestMapping(value="/newPassword",method=RequestMethod.GET)
 	public String newPasswordPage() {
 		logger.info("Displaying Generating new password page");
