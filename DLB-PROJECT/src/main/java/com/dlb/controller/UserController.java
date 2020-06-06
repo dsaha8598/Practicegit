@@ -88,5 +88,10 @@ public class UserController {
 		logger.info(" Executing home page of Application{}");
 		return "AppHomePage";
 	}
+	@RequestMapping(value="/newPassword",method=RequestMethod.GET)
+	public String newPasswordPage() {
+		logger.info("Displaying Generating new password page");
+		return "NewPwd";
+	}
 
 }
