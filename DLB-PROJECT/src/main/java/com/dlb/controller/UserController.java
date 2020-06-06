@@ -3,12 +3,14 @@ package com.dlb.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dlb.entity.UserEntity;
@@ -83,12 +85,6 @@ public class UserController {
 		return "forward:/homepage"; 
 
 	}
-	
-	
-	/**
-	 * this method is used for showinf apphome page
-	 * @return
-	 */
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
 	public String showHomeAppPage() {
 		logger.info(" Executing home page of Application{}");
@@ -102,14 +98,21 @@ public class UserController {
 	 */
 	
 	
-	@RequestMapping(value = "/showProfileByName")
+	@RequestMapping(value = "/showProfileByName" )
+	
 	public String showProfile(@RequestParam String name) {
 		
 		String userName=name;
 		
 		UserEntity user=service.showUserProfile(userName);
 		return "AppHomePage";
+	}
 		
+	
+	@RequestMapping(value="/newPassword",method=RequestMethod.GET)
+	public String newPasswordPage() {
+		logger.info("Displaying Generating new password page");
+		return "NewPwd";
 	}
 
 }
