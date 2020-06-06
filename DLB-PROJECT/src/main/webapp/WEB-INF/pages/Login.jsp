@@ -11,7 +11,7 @@
 
 <div align="center" class="container"  >
   <h2 style="color: orange;text-align: center;">Login Here.......</h2>
-  <form>
+  <form action="loinPostCredentials" METHOD="post">
     <div class="form-inline">
       <label for="email">Email:</label>
       <input type="email" class="form-control" id="email" placeholder="Enter email">
@@ -25,6 +25,7 @@
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
   </form>
+  <b style="color:red;font-size: 50px;">${userMessage}</b>
 </div>
 
 </body> 

@@ -1,5 +1,9 @@
 package com.dlb.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,15 +83,55 @@ public class UserController {
 			@ModelAttribute(name = "signUpdomain") UserDomain domain) {
 		System.out.println("UserController.storeUserdata()");
 		UserEntity userid = service.createUserAccount(domain, imageFile);
+		if(userid!=null) {
+			model.addAttribute("userMessage","Account created Successfuly, Login to continue");
+		}
 		model.addAttribute("obj", userid);
 
-		return "forward:/homepage";
+		return "Login";
 
 	}
 
-	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
-	public String showHomeAppPage() {
+	/**
+	 * to capture the login credentials and validate user login
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.POST)
+	public String showHomeAppPage(Model model,HttpServletResponse response,HttpServletRequest request,@RequestParam("email")String email,@RequestParam("pwd")String password) {
+		HttpSession oldsession=request.getSession(false);
+		if(oldsession!=null) {
+			oldsession.invalidate();
+		}
+		HttpSession session=request.getSession(true);
+		session.setAttribute("userName", email);
+		session.setAttribute("password",password);
+		
+		String msg=null;// TO DO: service method will be called here with return type entity
+		if(msg.equalsIgnoreCase("fail")) {
+			model.addAttribute("msg",msg);
+			return "Login";
+		}
+		else if(msg.equalsIgnoreCase("fail")) {
+			model.addAttribute("userName", "userName");
+			return "AppHomePage";
+		}
 		logger.info(" Executing home page of Application{}");
+		return "AppHomePage";
+	}
+	/**
+	 * to display home landing page if user press refresh button on browser
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.GET)
+	public String getHomePageRequest(HttpServletResponse response,HttpServletRequest request) {
+		HttpSession oldsession=request.getSession(false);
+		if(oldsession==null) {
+			throw new RuntimeException("Unautherized Acess,Login to continue");
+		}
 		return "AppHomePage";
 	}
 
@@ -113,5 +157,6 @@ public class UserController {
 		logger.info("Displaying Generating new password page");
 		return "NewPwd";
 	}
+	
 
 }
