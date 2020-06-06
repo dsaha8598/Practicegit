@@ -122,6 +122,7 @@ public class UserController {
 		logger.info(" Executing home page of Application{}");
 		return "AppHomePage";
 	}
+
 	/**
 	 * to display home landing page if user press refresh button on browser
 	 * @param response
@@ -154,7 +155,7 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/newPassword", method = RequestMethod.GET)
+	@RequestMapping(value="/newPassword",method=RequestMethod.GET)
 	public String newPasswordPage() {
 		logger.info("Displaying Generating new password page");
 		return "NewPwd";
