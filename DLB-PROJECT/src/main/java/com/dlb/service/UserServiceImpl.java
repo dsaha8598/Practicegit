@@ -62,5 +62,9 @@ public class UserServiceImpl implements UserService {
 		}
 		return userid;
 	}
+	
+	public void finduser(){
+		Iterable<UserEntity> findAll = userRepo.findAll();
+	}
 
 }

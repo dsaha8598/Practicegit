@@ -37,7 +37,7 @@ public class UserEntity {
 	@Column(name = "DoB")
 	private Date dateOfBirth;
 	
-	@Column(name="Profile_pic")
+	@Column(name="Profile_pic",length = 10000)
 	private String profilePic;
 
 
