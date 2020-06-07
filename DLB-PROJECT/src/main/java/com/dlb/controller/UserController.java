@@ -7,14 +7,13 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dlb.entity.UserEntity;
@@ -130,11 +129,18 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.GET)
-	public String getHomePageRequest(HttpServletResponse response,HttpServletRequest request) {
+	public String getHomePageRequest(Model model,HttpServletResponse response,HttpServletRequest request) {
+		logger.info("executing to displaying home page for get call {}");
+		UserDomain domain=new UserDomain();
 		HttpSession oldsession=request.getSession(false);
 		if(oldsession==null) {
 			throw new RuntimeException("Unautherized Acess,Login to continue");
 		}
+		if(oldsession!=null) {
+			// TODO do the service call to get the record
+			model.addAttribute("domain",domain);
+		}
+		logger.info("Method executed successfully to display home page for get call{}");
 		return "AppHomePage";
 	}
 
@@ -147,18 +153,39 @@ public class UserController {
 
 	@RequestMapping(value = "/showProfileByName")
 	public String showProfile(@RequestParam String name) {
-
+        logger.info("controller method executing to display user {}");
 		String userName = name;
-
 		UserEntity user = service.showUserProfile(userName);
+		logger.info("controller method executed to display the  user successfully {}");
 		return "AppHomePage";
 
 	}
 
 	@RequestMapping(value="/newPassword",method=RequestMethod.GET)
 	public String newPasswordPage() {
-		logger.info("Displaying Generating new password page");
+		logger.info("Displaying Generating new password page {}");
 		return "NewPwd";
+	}
+	/**
+	 * to logout the user and to invalidate the session
+	 * @param request
+	 * @param response
+	 * @param userName
+	 * @return
+	 */
+	@RequestMapping("/logOut/{userNAme}")
+    public String userLogOut(HttpServletRequest request,HttpServletResponse response,@PathVariable("userNAme")String userName) {
+		logger.info(" started user logging out {}");
+		HttpSession existingSession=request.getSession(false);
+		if(existingSession==null && (userName==null || org.springframework.util.StringUtils.isEmpty(userName))){
+			throw new RuntimeException("Unautherized acess,Access Denied");
+		}
+		String sessionName=(String)existingSession.getAttribute("userName");
+		if(sessionName.equalsIgnoreCase(userName)) {
+			existingSession.invalidate();
+		}
+		logger.info("User logged out successfuly");
+		return "Login";
 	}
 	
 

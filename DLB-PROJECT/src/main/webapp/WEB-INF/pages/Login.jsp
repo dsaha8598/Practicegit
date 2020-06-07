@@ -11,7 +11,7 @@
 
 <div align="center" class="container"  >
   <h2 style="color: orange;text-align: center;">Login Here.......</h2>
-  <form action="loinPostCredentials" METHOD="post">
+  <form action="loinPostCredentials" method="post">
     <div class="form-inline">
       <label for="email">Email:</label>
       <input type="email" class="form-control" id="email" placeholder="Enter email">
