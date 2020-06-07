@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 			userEntity.setPhNo(domain.getPhNo());
 			userEntity.setEmail(domain.getEmail());
 			userEntity.setGender(domain.getGender());
-			userEntity.setCreatedDate(new Date());
+			
 			userEntity.setDateOfBirth(date);
 			userEntity.setProfilePic(base64Encoded);
 

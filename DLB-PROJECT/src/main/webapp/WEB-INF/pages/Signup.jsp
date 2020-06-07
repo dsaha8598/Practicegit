@@ -74,7 +74,7 @@
 				</div>
 
 				<div class="form-inline">
-					<label for="phNo">Phone No:</label> <input type="text"
+					<label for="phNo">Phone No:</label> <input type="number"
 						class="form-control" name="phNo" id="phNo"
 						placeholder="Enter phone number ">
 				</div>
@@ -91,10 +91,8 @@
 				</div>
 
 
-			<button type="reset" class="btn btn-info col-2">Reset</button>
-			<button type="submit" class="btn btn-info col-2">Submit</button>
-		</form>
-
-
+				<button type="reset" class="btn btn-info col-2">Reset</button>
+				<button type="submit" class="btn btn-info col-2">Submit</button>
+			</form>
 </body>
 </html>
