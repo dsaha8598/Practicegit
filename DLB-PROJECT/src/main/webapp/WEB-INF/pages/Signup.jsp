@@ -91,37 +91,10 @@
 				</div>
 
 
-
-<<<<<<< HEAD
-
-
-			<div class="form-inline">
-				<label for="phNo">Phone No:</label> <input type="text"
-					class="form-control" name="phNo" id="phNo" placeholder="Enter phone number ">
-			</div>
-
-			<div>
-				<label for="dateOfBirth">Date of Birth</label> <input type="date"
-					id="dateOfBirth" name="dateOfBirth">
-			</div>
-
-	
-	<div>
-		<label for="file">Upload profile pic</label> <input type="file"
-			id="file" name="file">
-	</div>
-
-
-
 			<button type="reset" class="btn btn-info col-2">Reset</button>
 			<button type="submit" class="btn btn-info col-2">Submit</button>
 		</form>
-=======
-				<button type="reset" class="btn btn-primary" >Reset</button>
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
->>>>>>> branch 'master' of https://github.com/dsaha8598/Practicegit.git
-	</div>
+
 
 </body>
 </html>
