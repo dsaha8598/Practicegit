@@ -66,7 +66,7 @@ public class UserDomain {
 		return phNo;
 	}
 
-	public void setPhNo(Integer phNo) {
+	public void setPhNo( Integer phNo) {
 		this.phNo = phNo;
 	}
 

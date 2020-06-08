@@ -33,7 +33,7 @@ public class UserEntity {
 	@Column(name = "EmailID")
 	private String email;
 	@Column(name = "PhoneNUM")
-	private Integer phNo;
+	private double phNo;
 	@Column(name = "DoB")
 	private Date dateOfBirth;
 	
@@ -84,7 +84,7 @@ public class UserEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Integer getPhNo() {
+	public double getPhNo() {
 		return phNo;
 	}
 	public void setPhNo(Integer phNo) {
