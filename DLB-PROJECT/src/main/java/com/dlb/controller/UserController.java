@@ -52,8 +52,6 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String showLogin(Model model) {
 		logger.info(" displaying login page {}");
-		UserDomain domain = new UserDomain();
-		model.addAttribute("domain", domain);
 		return "Login";
 	}
 
@@ -84,8 +82,8 @@ public class UserController {
 			@ModelAttribute(name = "signUpdomain") UserDomain domain) {
 		System.out.println("UserController.storeUserdata()");
 		UserEntity userid = service.createUserAccount(domain, imageFile);
-		if(userid!=null) {
-			model.addAttribute("userMessage","Account created Successfuly, Login to continue");
+		if (userid != null) {
+			model.addAttribute("userMessage", "Account created Successfuly, Login to continue");
 		}
 		model.addAttribute("obj", userid);
 
@@ -95,50 +93,62 @@ public class UserController {
 
 	/**
 	 * to capture the login credentials and validate user login
+	 * 
 	 * @param response
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.POST)
-	public String showHomeAppPage(Model model,HttpServletResponse response,HttpServletRequest request,@RequestParam("email")String email,@RequestParam("pwd")String password) {
-		HttpSession oldsession=request.getSession(false);
-		if(oldsession!=null) {
-			oldsession.invalidate();
-		}
-		HttpSession session=request.getSession(true);
-		session.setAttribute("userName", email);
-		session.setAttribute("password",password);
+	public String showHomeAppPage(Model model, HttpServletResponse response, HttpServletRequest request,
+			@RequestParam("email") String email, @RequestParam("password") String pwd) {
 		
-		String msg=null;// TO DO: service method will be called here with return type entity
-		if(msg.equalsIgnoreCase("fail")) {
-			model.addAttribute("msg",msg);
+		HttpSession oldsession = request.getSession(false);  //getting existing session
+		if (oldsession != null) {
+			oldsession.invalidate();   //destroying the existing session
+		}
+
+		UserEntity entity = service.checkPassword(email, pwd);// email,email);
+		if (entity != null) {
+			HttpSession session = request.getSession(true);   //creating a new session
+			session.setAttribute("email", email);
+			session.setAttribute("password", pwd);
+			model.addAttribute("domain", entity);
+			return "AppHomePage";
+		} else if (entity == null) {
+			model.addAttribute("msg", "invalid userName or Password");
 			return "Login";
 		}
-		else if(msg.equalsIgnoreCase("fail")) {
-			model.addAttribute("userName", "userName");
-			return "AppHomePage";
-		}
-		logger.info(" Executing home page of Application{}");
 		return "AppHomePage";
 	}
 
 	/**
 	 * to display home landing page if user press refresh button on browser
+	 * 
 	 * @param response
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.GET)
-	public String getHomePageRequest(Model model,HttpServletResponse response,HttpServletRequest request) {
+	public String getHomePageRequest(Model model, HttpServletResponse response, HttpServletRequest request) {
 		logger.info("executing to displaying home page for get call {}");
-		UserDomain domain=new UserDomain();
-		HttpSession oldsession=request.getSession(false);
-		if(oldsession==null) {
-			throw new RuntimeException("Unautherized Acess,Login to continue");
+		
+		UserDomain domain = new UserDomain();
+		HttpSession oldsession = request.getSession(false); //getting existing session
+		
+		if (oldsession == null) {
+			throw new RuntimeException("*******Unautherized Acess,Login to continue*************************");
 		}
-		if(oldsession!=null) {
-			// TODO do the service call to get the record
-			model.addAttribute("domain",domain);
+		if (oldsession != null) {
+			String email = (String) oldsession.getAttribute("email");     //getting email from session
+			String password = (String) oldsession.getAttribute("password");
+			if (email == null || password == null) {
+				throw new RuntimeException(
+						"***********Unautherized Acess,Login to continue \n" + "***********************");
+			}
+			
+			UserEntity entity = service.getByEmailAndPassword(email, password);
+			model.addAttribute("domain", entity);
+			oldsession.invalidate();
 		}
 		logger.info("Method executed successfully to display home page for get call{}");
 		return "AppHomePage";
@@ -153,7 +163,7 @@ public class UserController {
 
 	@RequestMapping(value = "/showProfileByName")
 	public String showProfile(@RequestParam String name) {
-        logger.info("controller method executing to display user {}");
+		logger.info("controller method executing to display user {}");
 		String userName = name;
 		UserEntity user = service.showUserProfile(userName);
 		logger.info("controller method executed to display the  user successfully {}");
@@ -161,32 +171,40 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value="/newPassword",method=RequestMethod.GET)
+	@RequestMapping(value = "/newPassword", method = RequestMethod.GET)
 	public String newPasswordPage() {
 		logger.info("Displaying Generating new password page {}");
 		return "NewPwd";
 	}
+
 	/**
 	 * to logout the user and to invalidate the session
+	 * 
 	 * @param request
 	 * @param response
 	 * @param userName
 	 * @return
 	 */
-	@RequestMapping("/logOut/{userNAme}")
-    public String userLogOut(HttpServletRequest request,HttpServletResponse response,@PathVariable("userNAme")String userName) {
+	@RequestMapping("/logOut")
+	public String userLogOut(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("email") String email) {
 		logger.info(" started user logging out {}");
-		HttpSession existingSession=request.getSession(false);
-		if(existingSession==null && (userName==null || org.springframework.util.StringUtils.isEmpty(userName))){
+		
+		HttpSession existingSession = request.getSession(false);  //getting existing session if present
+		if (existingSession == null) {
 			throw new RuntimeException("Unautherized acess,Access Denied");
 		}
-		String sessionName=(String)existingSession.getAttribute("userName");
-		if(sessionName.equalsIgnoreCase(userName)) {
-			existingSession.invalidate();
+		if (existingSession != null) {
+			String sessionEmail = (String) existingSession.getAttribute("email");
+			if (sessionEmail.equalsIgnoreCase(email)) {
+				existingSession.invalidate();        //destroying the session
+			} else {
+				throw new RuntimeException("Unautherized acess,Access Denied");
+			}
+
 		}
 		logger.info("User logged out successfuly");
 		return "Login";
 	}
-	
 
 }

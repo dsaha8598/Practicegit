@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 			userid = userRepo.save(userEntity);
 			logger.info("saved user account creation data {}");
 		} catch (Exception exception) {
-			logger.info("exception occured during saving user creation data {} " + exception);
+			throw new RuntimeException(""+exception);
 		}
 		return userid;
 	}
@@ -81,6 +81,21 @@ public class UserServiceImpl implements UserService {
 		return userEntity;
 	}
 	
+	public UserEntity checkPassword(String email,String password) {
+		
+		UserEntity entity=userRepo.getByUserName(email);
+		if(entity.getPassword().equals(password)) {
+			return entity;
+		}
+		else {
+			return null;
+		}
+		
+	}
 	
+	public UserEntity getByEmailAndPassword(String email,String password) {
+		UserEntity entity=userRepo.getByEmailAndPassword(email, password);
+		return entity;
+	}
 
 }
