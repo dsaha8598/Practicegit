@@ -10,7 +10,7 @@ public class UserDomain {
 	private String password;
 	private String gender;
 	private String email;
-	private Integer phNo;
+	private Long phNo;
 
 	private String dateOfBirth;
 
@@ -62,11 +62,11 @@ public class UserDomain {
 		this.email = email;
 	}
 
-	public Integer getPhNo() {
+	public Long getPhNo() {
 		return phNo;
 	}
 
-	public void setPhNo( Integer phNo) {
+	public void setPhNo( Long phNo) {
 		this.phNo = phNo;
 	}
 

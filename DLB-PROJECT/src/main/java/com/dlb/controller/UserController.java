@@ -171,11 +171,10 @@ public class UserController {
 
 	}
 
-<<<<<<< HEAD
-	@RequestMapping(value="/newPassword",method=RequestMethod.GET)
-=======
+
+
 	@RequestMapping(value = "/newPassword", method = RequestMethod.GET)
->>>>>>> branch 'master' of https://github.com/dsaha8598/Practicegit.git
+
 	public String newPasswordPage() {
 		logger.info("Displaying Generating new password page {}");
 		return "NewPwd";

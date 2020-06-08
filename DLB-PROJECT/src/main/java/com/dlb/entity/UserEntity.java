@@ -34,94 +34,108 @@ public class UserEntity {
 	@Column(name = "EmailID")
 	private String email;
 	@Column(name = "PhoneNUM")
-<<<<<<< HEAD
-	private double phNo;
-=======
-	private Integer phNo;
-	
->>>>>>> branch 'master' of https://github.com/dsaha8598/Practicegit.git
+
+	private Long phNo;
+
 	@Column(name = "DoB")
 	private Date dateOfBirth;
-	
-	@Column(name="Profile_pic",length = 10000)
+
+	@Column(name = "Profile_pic", length = 10000)
 	private String profilePic;
 
-
-	
 	@Column(name = "CreatedDate")
 	@CreationTimestamp
 	private Date createdDate;
 	@Column(name = "UpdatedDate")
 	@UpdateTimestamp
 	private Date updatedDate;
+
 	public Integer getUid() {
 		return uid;
 	}
+
 	public void setUid(Integer uid) {
 		this.uid = uid;
 	}
+
 	public String getFullName() {
 		return fullName;
 	}
+
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public double getPhNo() {
+
+	public Long getPhNo() {
 		return phNo;
 	}
-	public void setPhNo(Integer phNo) {
+
+	public void setPhNo(Long phNo) {
 		this.phNo = phNo;
 	}
+
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
+
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
 	public String getProfilePic() {
 		return profilePic;
 	}
+
 	public void setProfilePic(String profilePic) {
 		this.profilePic = profilePic;
 	}
-	
 
 }
