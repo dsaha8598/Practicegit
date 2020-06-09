@@ -6,12 +6,18 @@
 <head>
 <link rel="stylesheet"
 	href="../node_modules/bootstrap/dist/css/bootstrap.css">
-	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <style>
 @import
 	url(https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css)
 	;
+
+body {
+	height: 100%;
+	background: rgba(231,232,234,0.5);
+}
 
 .form {
 	height: 900px;
@@ -33,7 +39,7 @@
 
 	<div class="containerCustom">
 		<div class="form">
-			<h2 class="text-monospace font-weight-bolder bg-info text-center">
+			<h2 class="text-monospace font-weight-bolder bg-danger text-center">
 				Signup Here</h2>
 			<hr>
 			<br>
@@ -81,10 +87,9 @@
 				</div>
 				<br>
 				<div class="font-weight-bolder">
-					Gender : <input type="radio" name="gender" value="male">
-					 <i class="fa fa-male"  ></i> male 
-						<input type="radio" name="gender" value="female">
-					<i class="fa fa-female"></i> female
+					Gender : <input type="radio" name="gender" value="male"> <i
+						class="fa fa-male"></i> male <input type="radio" name="gender"
+						value="female"> <i class="fa fa-female"></i> female
 				</div>
 				<br>
 				<div>
@@ -93,11 +98,13 @@
 				</div>
 				<br>
 				<div>
-					 <a href="login" class="btn btn-warning font-weight-bolder text-white" role="button">
-						Already have an account</a>
+					<button type="reset" class="btn btn-danger font-weight-bolder">Reset</button>
 					<button class="btn btn-success font-weight-bolder">
 						Register</button>
 				</div>
+				<br> <a href="login"
+					class="btn btn-warning font-weight-bolder text-white" role="button">
+					Already have an account</a>
 			</form>
 		</div>
 
