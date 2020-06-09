@@ -61,13 +61,13 @@ public class UserController {
 	 * @return
 	 */
 
-	@RequestMapping(value = "/SignUp", method = RequestMethod.GET)
+	@RequestMapping(value = "/signupNew", method = RequestMethod.GET)
 	public String showSignUp(Model model) {
 		logger.info(" displaying sign up page {}");
 		UserDomain signUpdomain = new UserDomain();
 		model.addAttribute("signUpdomain", signUpdomain);
 
-		return "Signup";
+		return "signupNew";
 	}
 
 	/**
@@ -101,15 +101,15 @@ public class UserController {
 	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.POST)
 	public String showHomeAppPage(Model model, HttpServletResponse response, HttpServletRequest request,
 			@RequestParam("email") String email, @RequestParam("password") String pwd) {
-		
-		HttpSession oldsession = request.getSession(false);  //getting existing session
+
+		HttpSession oldsession = request.getSession(false); // getting existing session
 		if (oldsession != null) {
-			oldsession.invalidate();   //destroying the existing session
+			oldsession.invalidate(); // destroying the existing session
 		}
 
 		UserEntity entity = service.checkPassword(email, pwd);// email,email);
 		if (entity != null) {
-			HttpSession session = request.getSession(true);   //creating a new session
+			HttpSession session = request.getSession(true); // creating a new session
 			session.setAttribute("email", email);
 			session.setAttribute("password", pwd);
 			model.addAttribute("domain", entity);
@@ -131,21 +131,21 @@ public class UserController {
 	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.GET)
 	public String getHomePageRequest(Model model, HttpServletResponse response, HttpServletRequest request) {
 		logger.info("executing to displaying home page for get call {}");
-		
+
 		UserDomain domain = new UserDomain();
-		HttpSession oldsession = request.getSession(false); //getting existing session
-		
+		HttpSession oldsession = request.getSession(false); // getting existing session
+
 		if (oldsession == null) {
 			throw new RuntimeException("*******Unautherized Acess,Login to continue*************************");
 		}
 		if (oldsession != null) {
-			String email = (String) oldsession.getAttribute("email");     //getting email from session
+			String email = (String) oldsession.getAttribute("email"); // getting email from session
 			String password = (String) oldsession.getAttribute("password");
 			if (email == null || password == null) {
 				throw new RuntimeException(
 						"***********Unautherized Acess,Login to continue \n" + "***********************");
 			}
-			
+
 			UserEntity entity = service.getByEmailAndPassword(email, password);
 			model.addAttribute("domain", entity);
 			oldsession.invalidate();
@@ -171,13 +171,17 @@ public class UserController {
 
 	}
 
+	/**
+	 * this method is used for forgotpassword
+	 * 
+	 * @return
+	 */
 
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
 
-	@RequestMapping(value = "/newPassword", method = RequestMethod.GET)
-
-	public String newPasswordPage() {
+	public String forgotPasswordPage() {
 		logger.info("Displaying Generating new password page {}");
-		return "NewPwd";
+		return "forgotpassword";
 	}
 
 	/**
@@ -192,15 +196,15 @@ public class UserController {
 	public String userLogOut(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("email") String email) {
 		logger.info(" started user logging out {}");
-		
-		HttpSession existingSession = request.getSession(false);  //getting existing session if present
+
+		HttpSession existingSession = request.getSession(false); // getting existing session if present
 		if (existingSession == null) {
 			throw new RuntimeException("Unautherized acess,Access Denied");
 		}
 		if (existingSession != null) {
 			String sessionEmail = (String) existingSession.getAttribute("email");
 			if (sessionEmail.equalsIgnoreCase(email)) {
-				existingSession.invalidate();        //destroying the session
+				existingSession.invalidate(); // destroying the session
 			} else {
 				throw new RuntimeException("Unautherized acess,Access Denied");
 			}

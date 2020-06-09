@@ -8,6 +8,7 @@ public class UserDomain {
 	private String fullName;
 	private String userName;
 	private String password;
+	private String confirmPassword;
 	private String gender;
 	private String email;
 	private Long phNo;
@@ -76,6 +77,14 @@ public class UserDomain {
 
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	@Override
