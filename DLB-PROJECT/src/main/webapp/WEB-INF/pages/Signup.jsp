@@ -20,7 +20,11 @@
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
+<style type="text/css">
+body {
+	background-image: url("resources/images/dukanhome.jpg");
+}
+</style>
 
 </head>
 <body>

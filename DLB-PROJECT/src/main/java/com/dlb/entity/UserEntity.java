@@ -15,7 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "DLB_USER_MSTER")
+@Table(name = "DLB_USER_MASTER")
 
 public class UserEntity {
 	@Id
@@ -29,95 +29,123 @@ public class UserEntity {
 	private String userName;
 	@Column(name = "Password")
 	private String password;
+	@Column(name = "confirmPassword")
+	private String confirmPassword;
 	@Column(name = "gender")
 	private String gender;
 	@Column(name = "EmailID")
 	private String email;
 	@Column(name = "PhoneNUM")
-	private Integer phNo;
-	
+
+	private Long phNo;
+
 	@Column(name = "DoB")
 	private Date dateOfBirth;
-	
-	@Column(name="Profile_pic",length = 10000)
+
+	@Column(name = "Profile_pic", length = 10000)
 	private String profilePic;
 
-
-	
 	@Column(name = "CreatedDate")
 	@CreationTimestamp
 	private Date createdDate;
 	@Column(name = "UpdatedDate")
 	@UpdateTimestamp
 	private Date updatedDate;
+
 	public Integer getUid() {
 		return uid;
 	}
+
 	public void setUid(Integer uid) {
 		this.uid = uid;
 	}
+
 	public String getFullName() {
 		return fullName;
 	}
+
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Integer getPhNo() {
+
+	public Long getPhNo() {
 		return phNo;
 	}
-	public void setPhNo(Integer phNo) {
+
+	public void setPhNo(Long phNo) {
 		this.phNo = phNo;
 	}
+
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
+
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
 	public String getProfilePic() {
 		return profilePic;
 	}
+
 	public void setProfilePic(String profilePic) {
 		this.profilePic = profilePic;
 	}
-	
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 
 }
