@@ -22,31 +22,24 @@
 
 body {
   height: 100%;
+  background-image: url("/../images/dukanhome.jpg");
 }
-.bg {
-  /* The image used */
-  background-image: url("../images/b1.jpg");
-
-  /* Full height */
-  height: 100%;
-
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.container{
+margin-top: 200px
 }
+
 </style>           
 </head>
 
 
 
 <body>
-<h1 style="color: olive; text-align: center;">Welcome Dear</h1>
+
 
 	<div class="container" align="center">
-	
+	<h1 style="color: olive; text-align: center;">Welcome Dear</h1>
 		<a href="login" class="btn btn-info" role="button">LOGIN HERE</a>
-        <a href="SignUp" class="btn btn-info" role="button">SignUp HERE</a>
+        <a href="signupNew" class="btn btn-info" role="button">SignUp HERE</a>
 
 	</div>
 

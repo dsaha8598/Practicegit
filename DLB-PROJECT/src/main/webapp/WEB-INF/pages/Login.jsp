@@ -19,13 +19,10 @@
 
 
 	<style type="text/css">
-	#div1{
-	table-layout: auto;
-	background-color: fuchsia;
-	font-family: sans-serif ;
-	
-	
+	.container{
+	margin-top: 170px;
 	}
+	
 	</style>
 </head>
 
@@ -33,7 +30,7 @@
 
 <body>
 <div align="center" >
-	<b style="color: red; font-size: 50px;">${userMessage}</b>
+	
 </div>
 <div align="center" class="container"  >
   <h2 style="color: orange;text-align: center;">Login Here.......</h2>

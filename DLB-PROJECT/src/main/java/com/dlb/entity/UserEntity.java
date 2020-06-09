@@ -15,7 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "DLB_USER_MSTER")
+@Table(name = "DLB_USER_MASTER")
 
 public class UserEntity {
 	@Id
@@ -29,6 +29,8 @@ public class UserEntity {
 	private String userName;
 	@Column(name = "Password")
 	private String password;
+	@Column(name = "confirmPassword")
+	private String confirmPassword;
 	@Column(name = "gender")
 	private String gender;
 	@Column(name = "EmailID")
@@ -136,6 +138,14 @@ public class UserEntity {
 
 	public void setProfilePic(String profilePic) {
 		this.profilePic = profilePic;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 }

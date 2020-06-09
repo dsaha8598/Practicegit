@@ -61,13 +61,13 @@ public class UserController {
 	 * @return
 	 */
 
-	@RequestMapping(value = "/SignUp", method = RequestMethod.GET)
+	@RequestMapping(value = "/signupNew", method = RequestMethod.GET)
 	public String showSignUp(Model model) {
 		logger.info(" displaying sign up page {}");
 		UserDomain signUpdomain = new UserDomain();
 		model.addAttribute("signUpdomain", signUpdomain);
 
-		return "Signup";
+		return "signupNew";
 	}
 
 	/**
