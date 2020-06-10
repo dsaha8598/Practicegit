@@ -190,7 +190,7 @@ public class UserController {
 	
 	
 	/**
-	 * this method is used to send otp to email and to show update password page
+	 * this method is used to send otp to email and to show enter otp page
 	 * @param model
 	 * @param domain
 	 * @return
@@ -203,7 +203,7 @@ public class UserController {
 		
 		
 		
-		return "updatePassword";
+		return "otp";
 		
 	}
 	
