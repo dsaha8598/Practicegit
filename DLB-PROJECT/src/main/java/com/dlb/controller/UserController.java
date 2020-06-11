@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dlb.entity.UserEntity;
 import com.dlb.model.UserDomain;
 import com.dlb.service.UserServiceImpl;
+import com.sun.xml.bind.v2.TODO;
 
 @Controller
 public class UserController {
@@ -172,17 +173,65 @@ public class UserController {
 	}
 
 	/**
-	 * this method is used for forgotpassword
+	 * this method is used to show forgotpassword page to insert email 
 	 * 
 	 * @return
 	 */
 
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
 
-	public String forgotPasswordPage() {
+	public String forgotPasswordPage(Model model ) {
 		logger.info("Displaying Generating new password page {}");
+		UserDomain forgotpsdomain=new UserDomain();
+		model.addAttribute("forgotpsdomain", forgotpsdomain);
 		return "forgotpassword";
 	}
+	
+	
+	
+	/**
+	 * this method is used to send otp to email and to show enter otp page
+	 * @param model
+	 * @param domain
+	 * @return
+	 */
+	
+	@RequestMapping(value="/forgotpasswordpost",method = RequestMethod.POST)
+	public String forgotPasswordPost( Model model , @ModelAttribute (value = "forgotpsdomain") UserDomain domain) {
+		
+		
+		
+		
+		
+		return "otp";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * to logout the user and to invalidate the session
