@@ -48,11 +48,11 @@ public class UserServiceImpl implements UserService {
 			System.out.println(dateOfBirth);
 			userEntity.setFullName(domain.getFullName());
 			userEntity.setUserName(domain.getUserName());
-			userEntity.setPassword(domain.getPassword());
+			userEntity.setPassword(domain.getConfirmPassword());
 			userEntity.setPhNo(domain.getPhNo());
 			userEntity.setEmail(domain.getEmail());
 			userEntity.setGender(domain.getGender());
-			userEntity.setConfirmPassword(domain.getConfirmPassword());
+			
 			
 			userEntity.setDateOfBirth(date);
 			userEntity.setProfilePic(base64Encoded);
