@@ -90,6 +90,6 @@ input[type="password"]:focus {
 		</form>
 
 	</div>
-	<b style="color: limegreen; font-size: 20px;">${userMessage}</b>
+	<b style="color: limegreen; font-size: 20px; text-align: center;">${userMessage}</b>
 </body>
 </html>

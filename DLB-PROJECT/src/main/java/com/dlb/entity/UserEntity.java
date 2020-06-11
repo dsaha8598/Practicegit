@@ -29,8 +29,7 @@ public class UserEntity {
 	private String userName;
 	@Column(name = "Password")
 	private String password;
-	@Column(name = "confirmPassword")
-	private String confirmPassword;
+	
 	@Column(name = "gender")
 	private String gender;
 	@Column(name = "EmailID")
@@ -140,12 +139,6 @@ public class UserEntity {
 		this.profilePic = profilePic;
 	}
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
+	
 
 }

@@ -206,32 +206,6 @@ public class UserController {
 		return "otp";
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * to logout the user and to invalidate the session
