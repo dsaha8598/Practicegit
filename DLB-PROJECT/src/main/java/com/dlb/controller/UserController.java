@@ -77,7 +77,7 @@ public class UserController {
 	 * @param domain
 	 * @return
 	 */
-	@RequestMapping(value = "/signupPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/signupPost", method = RequestMethod.GET)
 	public String storeUserdata(Model model, @RequestParam("file") MultipartFile imageFile,
 			@ModelAttribute(name = "signUpdomain") UserDomain domain) {
 		System.out.println("UserController.storeUserdata()");
@@ -98,7 +98,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.POST)
+	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.GET)
 	public String showHomeAppPage(Model model, HttpServletResponse response, HttpServletRequest request,
 			@RequestParam("email") String email, @RequestParam("password") String pwd) {
 
@@ -128,7 +128,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.GET)
+	@RequestMapping(value = "/loginPostCredentials", method = RequestMethod.GET)
 	public String getHomePageRequest(Model model, HttpServletResponse response, HttpServletRequest request) {
 		logger.info("executing to displaying home page for get call {}");
 
@@ -179,10 +179,13 @@ public class UserController {
 
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
 
-	public String forgotPasswordPage() {
+	public String forgotPasswordPage(Model model) {
 		logger.info("Displaying Generating new password page {}");
+		UserDomain forgotPwdDomain=new UserDomain();
+		 model.addAttribute("forgotPwdDomain", forgotPwdDomain);
 		return "forgotpassword";
 	}
+	
 
 	/**
 	 * to logout the user and to invalidate the session

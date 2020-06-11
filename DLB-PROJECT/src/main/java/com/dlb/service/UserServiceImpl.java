@@ -91,6 +91,17 @@ public class UserServiceImpl implements UserService {
 		else {
 			return null;
 		}
+	}
+		
+		public UserEntity checkEmail(String email) {
+			
+			UserEntity entity=userRepo.getByUserName(email);
+			if(entity.getEmail().equals(email)) {
+				return entity;
+			}
+			else {
+				return null;
+			}
 		
 	}
 	

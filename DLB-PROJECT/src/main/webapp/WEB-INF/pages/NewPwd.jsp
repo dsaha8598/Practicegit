@@ -9,6 +9,7 @@
 </head> 
 <body>
 <div align="center">
+<form action="newpassword" modelAttribute="domain" method="post">
 <h1 align="center"><font color="darkblue">Create New Password</font></h1>
 <form>
 <div><label for="Otp">Enter OTP:</label>
