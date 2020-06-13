@@ -35,6 +35,7 @@ public class UserMailSender {
 			helper.setText(otp);
 			helper.setSubject("notification from Apna_Dukan_Social");
 			helper.setSentDate(new Date());
+			sender.send(message);
 
 		} catch (Exception e) {
 			e.printStackTrace();
