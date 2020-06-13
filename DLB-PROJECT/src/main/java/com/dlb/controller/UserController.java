@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dlb.entity.UserEntity;
 import com.dlb.model.UserDomain;
 import com.dlb.service.UserServiceImpl;
+import com.sun.xml.bind.v2.TODO;
 
 @Controller
 public class UserController {
@@ -77,7 +78,7 @@ public class UserController {
 	 * @param domain
 	 * @return
 	 */
-	@RequestMapping(value = "/signupPost", method = RequestMethod.GET)
+	@RequestMapping(value = "/signupPost", method = RequestMethod.POST)
 	public String storeUserdata(Model model, @RequestParam("file") MultipartFile imageFile,
 			@ModelAttribute(name = "signUpdomain") UserDomain domain) {
 		System.out.println("UserController.storeUserdata()");
@@ -98,7 +99,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.GET)
+	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.POST)
 	public String showHomeAppPage(Model model, HttpServletResponse response, HttpServletRequest request,
 			@RequestParam("email") String email, @RequestParam("password") String pwd) {
 
@@ -128,7 +129,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/loginPostCredentials", method = RequestMethod.GET)
+	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.GET)
 	public String getHomePageRequest(Model model, HttpServletResponse response, HttpServletRequest request) {
 		logger.info("executing to displaying home page for get call {}");
 
@@ -172,20 +173,39 @@ public class UserController {
 	}
 
 	/**
-	 * this method is used for forgotpassword
+	 * this method is used to show forgotpassword page to insert email 
 	 * 
 	 * @return
 	 */
 
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
 
-	public String forgotPasswordPage(Model model) {
+	public String forgotPasswordPage(Model model ) {
 		logger.info("Displaying Generating new password page {}");
-		UserDomain forgotPwdDomain=new UserDomain();
-		 model.addAttribute("forgotPwdDomain", forgotPwdDomain);
+		UserDomain forgotpsdomain=new UserDomain();
+		model.addAttribute("forgotpsdomain", forgotpsdomain);
 		return "forgotpassword";
 	}
 	
+	
+	
+	/**
+	 * this method is used to send otp to email and to show enter otp page
+	 * @param model
+	 * @param domain
+	 * @return
+	 */
+	
+	@RequestMapping(value="/forgotpasswordpost",method = RequestMethod.POST)
+	public String forgotPasswordPost( Model model , @ModelAttribute (value = "forgotpsdomain") UserDomain domain) {
+		
+		
+		
+		
+		
+		return "otp";
+		
+	}
 
 	/**
 	 * to logout the user and to invalidate the session
@@ -218,4 +238,3 @@ public class UserController {
 	}
 
 }
-	
