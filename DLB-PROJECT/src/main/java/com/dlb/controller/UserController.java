@@ -199,13 +199,24 @@ public class UserController {
 	@RequestMapping(value="/forgotpasswordpost",method = RequestMethod.POST)
 	public String forgotPasswordPost( Model model , @ModelAttribute (value = "forgotpsdomain") UserDomain domain) {
 		
+		System.out.println("UserController.forgotPasswordPost()");
 		
-		
-		
+		String sendEmailtoUser = service.sendEmailtoUser(domain);
 		
 		return "otp";
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * to logout the user and to invalidate the session

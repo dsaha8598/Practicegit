@@ -16,4 +16,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	
 	@Query(value="from UserEntity where email=:email and password=:password")
 	public UserEntity getByEmailAndPassword(String email,String password);
+	
+	@Query(value = "select uid from UserEntity where email=:email")
+	public int getUidbyEmail(String email);
 }

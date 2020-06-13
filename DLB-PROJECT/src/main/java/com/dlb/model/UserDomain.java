@@ -12,6 +12,7 @@ public class UserDomain {
 	private String gender;
 	private String email;
 	private Long phNo;
+	private String otp;
 
 	private String dateOfBirth;
 
@@ -85,6 +86,14 @@ public class UserDomain {
 
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
 	}
 
 	@Override
