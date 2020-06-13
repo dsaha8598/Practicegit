@@ -18,5 +18,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	public UserEntity getByEmailAndPassword(String email,String password);
 	
 	@Query(value = "select uid from UserEntity where email=:email")
-	public int getUidbyEmail(String email);
+	public Integer getUidbyEmail(String email);
 }

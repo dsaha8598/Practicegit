@@ -32,9 +32,11 @@ public class UserMailSender {
 			message = sender.createMimeMessage();
 			helper = new MimeMessageHelper(message, true);
 			helper.setTo(email);
-			helper.setText(otp);
+			helper.setText(otp, true);
 			helper.setSubject("notification from Apna_Dukan_Social");
 			helper.setSentDate(new Date());
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
