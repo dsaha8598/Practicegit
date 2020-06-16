@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dlb.entity.UserEntity;
 import com.dlb.model.UserDomain;
 import com.dlb.service.UserServiceImpl;
-import com.sun.xml.bind.v2.TODO;
+import com.dlb.validation.SecurityValidations;
 
 @Controller
 public class UserController {
@@ -29,6 +28,9 @@ public class UserController {
 	 */
 	@Autowired
 	private UserServiceImpl service;
+
+	@Autowired
+	private SecurityValidations validations;
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	/***
@@ -82,6 +84,7 @@ public class UserController {
 	public String storeUserdata(Model model, @RequestParam("file") MultipartFile imageFile,
 			@ModelAttribute(name = "signUpdomain") UserDomain domain) {
 		System.out.println("UserController.storeUserdata()");
+		validations.validateSignUpUser(imageFile, domain);
 		UserEntity userid = service.createUserAccount(domain, imageFile);
 		if (userid != null) {
 			model.addAttribute("userMessage", "Account created Successfuly, Login to continue");
@@ -107,7 +110,12 @@ public class UserController {
 		if (oldsession != null) {
 			oldsession.invalidate(); // destroying the existing session
 		}
-
+		String msg = "";
+		msg = validations.validateLoginData(email, pwd);
+		if (!msg.isEmpty()) {
+			model.addAttribute("msg", msg);
+			return "Login";
+		}
 		UserEntity entity = service.checkPassword(email, pwd);// email,email);
 		if (entity != null) {
 			HttpSession session = request.getSession(true); // creating a new session
@@ -156,7 +164,7 @@ public class UserController {
 	}
 
 	/**
-	 * this method is used to show the user profile by username by queryparameter
+	 * this method is used to show the user profile by user name by query parameter
 	 * 
 	 * @param name
 	 * @return
@@ -173,50 +181,42 @@ public class UserController {
 	}
 
 	/**
-	 * this method is used to show forgotpassword page to insert email 
+	 * this method is used to show forgotpassword page to insert email
 	 * 
 	 * @return
 	 */
 
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
 
-	public String forgotPasswordPage(Model model ) {
+	public String forgotPasswordPage(Model model) {
 		logger.info("Displaying Generating new password page {}");
-		UserDomain forgotpsdomain=new UserDomain();
+		UserDomain forgotpsdomain = new UserDomain();
 		model.addAttribute("forgotpsdomain", forgotpsdomain);
 		return "forgotpassword";
 	}
-	
-	
-	
+
 	/**
 	 * this method is used to send otp to email and to show enter otp page
+	 * 
 	 * @param model
 	 * @param domain
 	 * @return
 	 */
-	
-	@RequestMapping(value="/forgotpasswordpost",method = RequestMethod.POST)
-	public String forgotPasswordPost( Model model , @ModelAttribute (value = "forgotpsdomain") UserDomain domain) {
-		
+
+	@RequestMapping(value = "/forgotpasswordpost", method = RequestMethod.POST)
+	public String forgotPasswordPost(Model model, @ModelAttribute(value = "forgotpsdomain") UserDomain domain) {
+
 		System.out.println("UserController.forgotPasswordPost()");
-		
-		String sendEmailtoUser = service.sendEmailtoUser(domain);
-		
+		int count = validations.validationForForgotPassword(domain.getEmail());
+		if (count == 0) {
+			model.addAttribute("msg", "No account found with this emil id");
+			model.addAttribute("forgotpsdomain", domain);
+			return "forgotpassword";
+		}
+		service.sendEmailtoUser(domain);
 		return "otp";
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * to logout the user and to invalidate the session
