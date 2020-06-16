@@ -35,11 +35,11 @@ public class UserEntity {
 	@Column(name = "EmailID")
 	private String email;
 	@Column(name = "PhoneNUM")
-
 	private Long phNo;
-
 	@Column(name = "DoB")
 	private Date dateOfBirth;
+	@Column(name = "otp")
+	private String otp;
 
 	@Column(name = "Profile_pic", length = 10000)
 	private String profilePic;
@@ -113,6 +113,14 @@ public class UserEntity {
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
 	}
 
 	public Date getCreatedDate() {

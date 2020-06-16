@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dlb.controller.UserController;
 import com.dlb.entity.UserEntity;
+import com.dlb.generator.CustomGenerator;
+import com.dlb.mailsender.UserMailSender;
 import com.dlb.model.UserDomain;
 import com.dlb.repository.UserRepository;
 
@@ -25,6 +27,9 @@ import com.dlb.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private UserMailSender sender;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	UserEntity userid = null;
@@ -97,6 +102,33 @@ public class UserServiceImpl implements UserService {
 	public UserEntity getByEmailAndPassword(String email,String password) {
 		UserEntity entity=userRepo.getByEmailAndPassword(email, password);
 		return entity;
+	}
+	
+	/**
+	 * this method is used to send email with otp
+	 * @param email
+	 * @return
+	 */
+	
+	
+	public String sendEmailtoUser(UserDomain domain) {
+		System.out.println("UserServiceImpl.sendEmailtoUser() start");
+		String otp=CustomGenerator.generateOTP();
+		String email=domain.getEmail();
+	
+		
+		String sendMail = sender.sendMail(email, otp);
+		
+		int uid= userRepo.getUidbyEmail(email);
+		Optional<UserEntity> findById = userRepo.findById(uid);
+		UserEntity entity=findById.get();
+		entity.setOtp(otp);
+		UserEntity save = userRepo.save(entity);
+		
+		System.out.println("UserServiceImpl.sendEmailtoUser() ended");
+		
+		return sendMail;
+		
 	}
 
 }
