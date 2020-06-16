@@ -214,7 +214,8 @@ public class UserController {
 			return "forgotpassword";
 		}
 		service.sendEmailtoUser(domain);
-		return "otp";
+		model.addAttribute("msg","password update link has been sent to your email id");
+		return "forgotpassword";
 
 	}
 

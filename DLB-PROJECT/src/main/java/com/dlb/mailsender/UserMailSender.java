@@ -24,21 +24,21 @@ public class UserMailSender {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	public String sendMail(String email, String otp) {
-		logger.info("********************************send mail started*****************");
+		logger.info("sending email to the user email id");
 
 		try {
-			System.out.println("UserMailSender.sendMail() started");
+			logger.info("UserMailSender.sendMail() started");
 
 			message = sender.createMimeMessage();
 			helper = new MimeMessageHelper(message, true);
 			helper.setTo(email);
-			helper.setText(otp);
+			helper.setText("here is the link http://localhost:9092/updatePassword/"+email+" to update password with OTP"+otp);
 			helper.setSubject("notification from Apna_Dukan_Social");
 			helper.setSentDate(new Date());
 			sender.send(message);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("Problem occured while sendin email  {}:"+e);
 		}
 		return "success";
 
