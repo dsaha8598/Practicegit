@@ -33,7 +33,7 @@ public class SecurityValidations {
 		}
         //validating email
 		if (domain.getEmail() != null) {
-			if (!domain.getEmail().contains("@gmail.com") & !domain.getEmail().contains("@GMAIL.COM")) {
+			if (!domain.getEmail().contains("@gmail.com") && !domain.getEmail().contains("@GMAIL.COM")) {
 				throw new RuntimeException("validation failed {}: Email Id is not valid");
 			}
 			if (repo.getCountByEmail(domain.getEmail()) != 0) {
