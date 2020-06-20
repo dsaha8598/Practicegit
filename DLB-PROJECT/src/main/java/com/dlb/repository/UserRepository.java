@@ -18,5 +18,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	public UserEntity getByEmailAndPassword(String email,String password);
 	
 	@Query(value = "select uid from UserEntity where email=:email")
-	public Integer getUidbyEmail(String email);
+	public int getUidbyEmail(String email);
+	
+	@Query(value = "select count(*) from UserEntity where email=:email")
+	public int getCountByEmail(String email);
 }

@@ -58,8 +58,9 @@ input[type="email"]:focus {
 		<form action="forgotpasswordpost" modelAttribute="forgotpsdomain" method="post">
 			<div class="form-inline">
 				<label for="email">Email id:</label> <input type="email"
-					class="form-control" name="email" placeholder="Enter email">
+					class="form-control" name="email" placeholder="Enter email" value=${forgotpsdomain.email }>
 			</div>
+			<div class="form-inline" style="color:red">${msg }</div>
 			<br> 
 	<div>
 	<button type="submit" class="btn btn-success btn-lg">Submit</button>
