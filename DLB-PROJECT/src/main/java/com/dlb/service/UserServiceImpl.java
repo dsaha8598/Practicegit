@@ -141,5 +141,18 @@ public class UserServiceImpl implements UserService {
 		return sendMail;
 		
 	}
+	
+	
+	
+	
+	public UserEntity saveUpdatedPassword(UserDomain domain) {
+		
+		UserEntity userEntity=new UserEntity();
+		
+		
+		
+		return null;
+		
+	}
 
 }

@@ -85,7 +85,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/signupPost", method = RequestMethod.POST)
 	public String storeUserdata(Model model, @RequestParam("file") MultipartFile imageFile,
-			@Valid@ModelAttribute(name = "signUpdomain") UserDomain domain, BindingResult result) {
+			@Valid @ModelAttribute(name = "signUpdomain") UserDomain domain, BindingResult result) {
 		System.out.println("UserController.storeUserdata()");
 		validations.validateSignUpUser(imageFile, domain);
 		UserEntity userid = service.createUserAccount(domain, imageFile);
@@ -217,7 +217,7 @@ public class UserController {
 			return "forgotpassword";
 		}
 		service.sendEmailtoUser(domain);
-		model.addAttribute("msg","password update link has been sent to your email id");
+		model.addAttribute("msg", "password update link has been sent to your email id");
 		return "forgotpassword";
 
 	}
@@ -251,5 +251,42 @@ public class UserController {
 		logger.info("User logged out successfuly");
 		return "Login";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
+	/**
+	 * this method is to show password updation page
+	 * 
+	 * @return
+	 */
+
+	@RequestMapping(value = "/PasswordUpdation", method = RequestMethod.GET)
+	 public String showUpdatePwd(Model model) {
+		logger.info(" displaying password updation  page {}");
+		UserDomain domain=new UserDomain();
+		model.addAttribute("domain", domain);
+		
+		return "PasswordUpdation";
+	}
+	
+	@RequestMapping(value = "/updatePwd",method = RequestMethod.POST)
+	public String setUpdatedPassword(Model model,@ModelAttribute(value = "domain") UserDomain domain) {
+		
+		UserEntity saveUpdatedPassword = service.saveUpdatedPassword(domain);
+		return "Login";
+		
+	}
 }

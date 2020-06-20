@@ -20,7 +20,11 @@
 				</div>
 				</form>
     
-    <a href="logOut?email=${domain.email}">logout</a>
+    <a href="logOut?email=${domain.email}">logout</a><br>
+    
+    
+    <a href="PasswordUpdation" class="btn btn-warning"
+			role="button">Update Password</a>
     </body>
     
     </html>
