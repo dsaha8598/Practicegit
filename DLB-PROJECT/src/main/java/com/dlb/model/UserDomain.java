@@ -1,10 +1,11 @@
 package com.dlb.model;
 
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
 
 public class UserDomain {
 
 	private Integer uid;
+	
 	private String fullName;
 	private String userName;
 	private String password;

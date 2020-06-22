@@ -96,6 +96,17 @@ public class UserServiceImpl implements UserService {
 		else {
 			return null;
 		}
+	}
+		
+		public UserEntity checkEmail(String email) {
+			
+			UserEntity entity=userRepo.getByUserName(email);
+			if(entity.getEmail().equals(email)) {
+				return entity;
+			}
+			else {
+				return null;
+			}
 		
 	}
 	
@@ -119,7 +130,7 @@ public class UserServiceImpl implements UserService {
 		
 		String sendMail = sender.sendMail(email, otp);
 		
-		int uid= userRepo.getUidbyEmail(email);
+		Integer uid= userRepo.getUidbyEmail(email);
 		Optional<UserEntity> findById = userRepo.findById(uid);
 		UserEntity entity=findById.get();
 		entity.setOtp(otp);
@@ -128,6 +139,19 @@ public class UserServiceImpl implements UserService {
 		System.out.println("UserServiceImpl.sendEmailtoUser() ended");
 		
 		return sendMail;
+		
+	}
+	
+	
+	
+	
+	public UserEntity saveUpdatedPassword(UserDomain domain) {
+		
+		UserEntity userEntity=new UserEntity();
+		
+		
+		
+		return null;
 		
 	}
 

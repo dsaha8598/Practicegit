@@ -32,10 +32,16 @@ public class UserMailSender {
 			message = sender.createMimeMessage();
 			helper = new MimeMessageHelper(message, true);
 			helper.setTo(email);
+
+			helper.setText(otp, true);
+
 			helper.setText("here is the link http://localhost:9092/updatePassword/"+email+" to update password with OTP"+otp);
+
 			helper.setSubject("notification from Apna_Dukan_Social");
 			helper.setSentDate(new Date());
+
 			sender.send(message);
+
 
 		} catch (Exception e) {
 			logger.info("Problem occured while sendin email  {}:"+e);

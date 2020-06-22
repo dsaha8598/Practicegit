@@ -141,7 +141,7 @@ body {
 	</div>
 
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function(){
 
             $('#full').hide();
@@ -363,14 +363,7 @@ body {
                }
 
             }
-
-
-
-
-
-
-
-            $('#file').keyup(function(){
+  $('#file').keyup(function(){
                 image_check();
             });
 
