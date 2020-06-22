@@ -3,12 +3,14 @@ package com.dlb.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dlb.entity.UserEntity;
 import com.dlb.model.UserDomain;
 import com.dlb.service.UserServiceImpl;
+
 import com.dlb.validation.SecurityValidations;
 
 @Controller
@@ -82,7 +85,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/signupPost", method = RequestMethod.POST)
 	public String storeUserdata(Model model, @RequestParam("file") MultipartFile imageFile,
-			@ModelAttribute(name = "signUpdomain") UserDomain domain) {
+			@Valid @ModelAttribute(name = "signUpdomain") UserDomain domain, BindingResult result) {
 		System.out.println("UserController.storeUserdata()");
 		validations.validateSignUpUser(imageFile, domain);
 		UserEntity userid = service.createUserAccount(domain, imageFile);
@@ -214,7 +217,7 @@ public class UserController {
 			return "forgotpassword";
 		}
 		service.sendEmailtoUser(domain);
-		model.addAttribute("msg","password update link has been sent to your email id");
+		model.addAttribute("msg", "password update link has been sent to your email id");
 		return "forgotpassword";
 
 	}
@@ -248,5 +251,42 @@ public class UserController {
 		logger.info("User logged out successfuly");
 		return "Login";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
+	/**
+	 * this method is to show password updation page
+	 * 
+	 * @return
+	 */
+
+	@RequestMapping(value = "/PasswordUpdation", method = RequestMethod.GET)
+	 public String showUpdatePwd(Model model) {
+		logger.info(" displaying password updation  page {}");
+		UserDomain domain=new UserDomain();
+		model.addAttribute("domain", domain);
+		
+		return "PasswordUpdation";
+	}
+	
+	@RequestMapping(value = "/updatePwd",method = RequestMethod.POST)
+	public String setUpdatedPassword(Model model,@ModelAttribute(value = "domain") UserDomain domain) {
+		
+		UserEntity saveUpdatedPassword = service.saveUpdatedPassword(domain);
+		return "Login";
+		
+	}
 }
