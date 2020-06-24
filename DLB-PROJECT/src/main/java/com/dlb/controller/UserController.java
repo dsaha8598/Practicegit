@@ -127,7 +127,7 @@ public class UserController {
 			model.addAttribute("domain", entity);
 			return "AppHomePage";
 		} else if (entity == null) {
-			model.addAttribute("msg", "invalid userName or Password");
+			model.addAttribute("userMessage", "invalid userName or Password");
 			return "Login";
 		}
 		return "AppHomePage";
@@ -286,7 +286,7 @@ public class UserController {
 	public String setUpdatedPassword(Model model,@ModelAttribute(value = "domain") UserDomain domain) {
 		
 		UserEntity saveUpdatedPassword = service.saveUpdatedPassword(domain);
-		return "Login";
+		return "AppHomePage";
 		
 	}
 }

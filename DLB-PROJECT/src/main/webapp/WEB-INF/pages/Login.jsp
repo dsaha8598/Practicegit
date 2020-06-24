@@ -88,8 +88,8 @@ input[type="password"]:focus {
 					Forgot Password</a>
 			
 		</form>
-
+       <b style="color: red; font-size: 20px; text-align: center;">${userMessage}</b>
 	</div>
-	<b style="color: limegreen; font-size: 20px; text-align: center;">${userMessage}</b>
+	
 </body>
 </html>

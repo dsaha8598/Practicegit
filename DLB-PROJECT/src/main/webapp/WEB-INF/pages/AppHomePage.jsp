@@ -7,6 +7,11 @@
     <html>
     <head>
     <link rel="shortcut icon" type="image/png" href="images/b1.jp">
+    <script>
+function logOut(){
+	alert("Are you sure, you want to log out?")
+	}
+</script>
     </head>
     <body>
     <h1 style="color:green;text-align:center">THIS IS THE HOME LANDING PAGE UNDERCONSTRUCTION</h1>
@@ -20,7 +25,7 @@
 				</div>
 				</form>
     
-    <a href="logOut?email=${domain.email}">logout</a><br>
+    <a href="logOut?email=${domain.email}"><button onclick="logOut()">logout</button></a><br>
     
     
     <a href="PasswordUpdation" class="btn btn-warning"

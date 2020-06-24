@@ -11,7 +11,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	@Query(value ="select uid from UserEntity where userName=:userName")
 	public int getUidbyUsername(String userName);
 
-	@Query(value="from UserEntity where email=:userName")
+	@Query(value="select * from DLB_USER_MASTER where EmailID=?",nativeQuery = true)
 	public UserEntity getByUserName(String userName);
 	
 	@Query(value="from UserEntity where email=:email and password=:password")
