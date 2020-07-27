@@ -66,8 +66,12 @@ input[type="password"]:focus {
 		<form action="updatePwd" modelAttribute="domain" 
 			method="post">
 			<div class="form-inline">
+				 <input type="hidden"
+					class="form-control" name="email" value="${domain.email}">
+			</div>
+			<div class="form-inline">
 				<label for="email">New Password:</label> <input type="password"
-					class="form-control" name="newPassword" 
+					class="form-control" name="password" 
 					placeholder="Enter password">
 			</div>
 			<br>

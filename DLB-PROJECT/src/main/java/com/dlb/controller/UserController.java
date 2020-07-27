@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,8 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dlb.entity.UserEntity;
 import com.dlb.model.UserDomain;
+import com.dlb.security.JwtUtill;
+import com.dlb.security.UserDetailsSerrviceImpl;
 import com.dlb.service.UserServiceImpl;
-
 import com.dlb.validation.SecurityValidations;
 
 @Controller
@@ -34,6 +36,13 @@ public class UserController {
 
 	@Autowired
 	private SecurityValidations validations;
+
+	@Autowired
+	UserDetailsSerrviceImpl userDetailsSerrviceImpl;
+
+	@Autowired
+	private JwtUtill jwtutil;
+
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	/***
@@ -43,15 +52,13 @@ public class UserController {
 	 */
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String showHome() {
+	public String showHome() throws Exception {
 		logger.info(" Executing home page {}");
 		return "HomePage";
-
 	}
 
 	/**
 	 * this method is to show login page
-	 * 
 	 * @return
 	 */
 
@@ -63,7 +70,6 @@ public class UserController {
 
 	/**
 	 * this method is to show signup page
-	 * 
 	 * @return
 	 */
 
@@ -78,7 +84,6 @@ public class UserController {
 
 	/**
 	 * to recieve the user data from UI
-	 * 
 	 * @param model
 	 * @param domain
 	 * @return
@@ -100,75 +105,41 @@ public class UserController {
 
 	/**
 	 * to capture the login credentials and validate user login
-	 * 
 	 * @param response
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.POST)
+	@RequestMapping(value = "/loginPostCredentials", method = { RequestMethod.GET, RequestMethod.POST })
 	public String showHomeAppPage(Model model, HttpServletResponse response, HttpServletRequest request,
-			@RequestParam("email") String email, @RequestParam("password") String pwd) {
+			@RequestParam(value = "email", required = true) String email,
+			@RequestParam(value = "password", required = true) String pwd) {
 
 		HttpSession oldsession = request.getSession(false); // getting existing session
-		if (oldsession != null) {
-			oldsession.invalidate(); // destroying the existing session
+		if (oldsession != null && oldsession.getAttribute("email") != null) {
+			oldsession.invalidate();
 		}
 		String msg = "";
-		msg = validations.validateLoginData(email, pwd);
+		msg = validations.validateLoginData(email, pwd);	
 		if (!msg.isEmpty()) {
 			model.addAttribute("msg", msg);
 			return "Login";
 		}
 		UserEntity entity = service.checkPassword(email, pwd);// email,email);
 		if (entity != null) {
-			HttpSession session = request.getSession(true); // creating a new session
-			session.setAttribute("email", email);
-			session.setAttribute("password", pwd);
+			userDetailsSerrviceImpl.setUserNameAndPassword(email, pwd);
+			UserDetails userDetails = userDetailsSerrviceImpl.loadUserByUsername(email);
+			String jwtToken = jwtutil.generateToken(userDetails);
+			String sessionValue = "Bearer " + jwtToken;
+			HttpSession newsession = request.getSession(true);
+			newsession.setAttribute("Bearer", sessionValue);
+			newsession.setAttribute("email", email);
 			model.addAttribute("domain", entity);
-			return "AppHomePage";
-		} else if (entity == null) {
-			model.addAttribute("userMessage", "invalid userName or Password");
-			return "Login";
 		}
-		return "AppHomePage";
-	}
-
-	/**
-	 * to display home landing page if user press refresh button on browser
-	 * 
-	 * @param response
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/loinPostCredentials", method = RequestMethod.GET)
-	public String getHomePageRequest(Model model, HttpServletResponse response, HttpServletRequest request) {
-		logger.info("executing to displaying home page for get call {}");
-
-		UserDomain domain = new UserDomain();
-		HttpSession oldsession = request.getSession(false); // getting existing session
-
-		if (oldsession == null) {
-			throw new RuntimeException("*******Unautherized Acess,Login to continue*************************");
-		}
-		if (oldsession != null) {
-			String email = (String) oldsession.getAttribute("email"); // getting email from session
-			String password = (String) oldsession.getAttribute("password");
-			if (email == null || password == null) {
-				throw new RuntimeException(
-						"***********Unautherized Acess,Login to continue \n" + "***********************");
-			}
-
-			UserEntity entity = service.getByEmailAndPassword(email, password);
-			model.addAttribute("domain", entity);
-			oldsession.invalidate();
-		}
-		logger.info("Method executed successfully to display home page for get call{}");
 		return "AppHomePage";
 	}
 
 	/**
 	 * this method is used to show the user profile by user name by query parameter
-	 * 
 	 * @param name
 	 * @return
 	 */
@@ -185,7 +156,6 @@ public class UserController {
 
 	/**
 	 * this method is used to show forgotpassword page to insert email
-	 * 
 	 * @return
 	 */
 
@@ -200,7 +170,6 @@ public class UserController {
 
 	/**
 	 * this method is used to send otp to email and to show enter otp page
-	 * 
 	 * @param model
 	 * @param domain
 	 * @return
@@ -224,7 +193,6 @@ public class UserController {
 
 	/**
 	 * to logout the user and to invalidate the session
-	 * 
 	 * @param request
 	 * @param response
 	 * @param userName
@@ -251,42 +219,25 @@ public class UserController {
 		logger.info("User logged out successfuly");
 		return "Login";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/**
 	 * this method is to show password updation page
-	 * 
 	 * @return
 	 */
-
 	@RequestMapping(value = "/PasswordUpdation", method = RequestMethod.GET)
-	 public String showUpdatePwd(Model model) {
+	public String showUpdatePwd(Model model,@RequestParam("email")String email) {
 		logger.info(" displaying password updation  page {}");
-		UserDomain domain=new UserDomain();
+		UserDomain domain = new UserDomain();
+		domain.setEmail(email);
 		model.addAttribute("domain", domain);
-		
+
 		return "PasswordUpdation";
 	}
-	
-	@RequestMapping(value = "/updatePwd",method = RequestMethod.POST)
-	public String setUpdatedPassword(Model model,@ModelAttribute(value = "domain") UserDomain domain) {
-		
+
+	@RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
+	public String setUpdatedPassword(Model model, @ModelAttribute(value = "domain") UserDomain domain) {
 		UserEntity saveUpdatedPassword = service.saveUpdatedPassword(domain);
 		return "AppHomePage";
-		
+
 	}
 }

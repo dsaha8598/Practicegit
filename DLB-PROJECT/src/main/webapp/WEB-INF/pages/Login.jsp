@@ -63,7 +63,7 @@ input[type="password"]:focus {
 	<div align="center" class="container">
 		<h2 style="color: navyblue; text-align: center;">Login Here...</h2>
 		<br>
-		<form action="loinPostCredentials" modelAttribute="domain"
+		<form action="loginPostCredentials" modelAttribute="domain"
 			method="post">
 			<div class="form-inline">
 				<label for="email">Email id:</label> <input type="email"

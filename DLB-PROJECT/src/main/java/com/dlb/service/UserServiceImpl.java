@@ -27,28 +27,28 @@ import com.dlb.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private UserMailSender sender;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	UserEntity userid = null;
 
-	public UserEntity createUserAccount(UserDomain domain,MultipartFile imageFile) {
+	public UserEntity createUserAccount(UserDomain domain, MultipartFile imageFile) {
 		logger.info("Processing to save user creation data {}");
 		UserEntity userEntity = new UserEntity();
 		String dateOfBirth = domain.getDateOfBirth();
-		
+
 		try {
-			
-			 byte[] bytes=imageFile.getBytes();
-						 ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-					    BufferedImage image=ImageIO.read(bis);
-					    ByteArrayOutputStream pngContent = new ByteArrayOutputStream();
-				         ImageIO.write(image, "png", pngContent);
-					   byte[] encodeBase64 = Base64.encodeBase64(pngContent.toByteArray());//.encode(null);   
-						   String base64Encoded = new String(encodeBase64, "UTF-8");
-			
+
+			byte[] bytes = imageFile.getBytes();
+			ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+			BufferedImage image = ImageIO.read(bis);
+			ByteArrayOutputStream pngContent = new ByteArrayOutputStream();
+			ImageIO.write(image, "png", pngContent);
+			byte[] encodeBase64 = Base64.encodeBase64(pngContent.toByteArray());// .encode(null);
+			String base64Encoded = new String(encodeBase64, "UTF-8");
+
 			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth);
 			System.out.println(dateOfBirth);
 			userEntity.setFullName(domain.getFullName());
@@ -57,102 +57,95 @@ public class UserServiceImpl implements UserService {
 			userEntity.setPhNo(domain.getPhNo());
 			userEntity.setEmail(domain.getEmail());
 			userEntity.setGender(domain.getGender());
-			
-			
+
 			userEntity.setDateOfBirth(date);
 			userEntity.setProfilePic(base64Encoded);
 
 			userid = userRepo.save(userEntity);
 			logger.info("saved user account creation data {}");
 		} catch (Exception exception) {
-			throw new RuntimeException(""+exception);
+			throw new RuntimeException("" + exception);
 		}
 		return userid;
 	}
-	
+
 	/**
 	 * this mwhtod is used to get userobject by username
+	 * 
 	 * @param userName
 	 * @return
 	 */
-	
 
 	public UserEntity showUserProfile(String userName) {
 		// TODO Auto-generated method stub
-		
+
 		int uidbyUsername = userRepo.getUidbyUsername(userName);
 		Optional<UserEntity> optional = userRepo.findById(uidbyUsername);
 		UserEntity userEntity = optional.get();
-	
+
 		return userEntity;
 	}
-	
-	public UserEntity checkPassword(String email,String password) {
-		
-		UserEntity entity=userRepo.getByUserName(email);
-		if(entity.getPassword().equals(password)) {
+
+	public UserEntity checkPassword(String email, String password) {
+
+		UserEntity entity = userRepo.getByUserName(email);
+		if (entity.getPassword().equals(password)) {
 			return entity;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
-		
-		public UserEntity checkEmail(String email) {
-			
-			UserEntity entity=userRepo.getByUserName(email);
-			if(entity.getEmail().equals(email)) {
-				return entity;
-			}
-			else {
-				return null;
-			}
-		
+
+	public UserEntity checkEmail(String email) {
+
+		UserEntity entity = userRepo.getByUserName(email);
+		if (entity.getEmail().equals(email)) {
+			return entity;
+		} else {
+			return null;
+		}
+
 	}
-	
-	public UserEntity getByEmailAndPassword(String email,String password) {
-		UserEntity entity=userRepo.getByEmailAndPassword(email, password);
+
+	public UserEntity getByEmailAndPassword(String email, String password) {
+		UserEntity entity = userRepo.getByEmailAndPassword(email, password);
 		return entity;
 	}
-	
+
 	/**
 	 * this method is used to send email with otp
+	 * 
 	 * @param email
 	 * @return
 	 */
-	
-	
+
 	public String sendEmailtoUser(UserDomain domain) {
 		System.out.println("UserServiceImpl.sendEmailtoUser() start");
-		String otp=CustomGenerator.generateOTP();
-		String email=domain.getEmail();
-	
-		
+		String otp = CustomGenerator.generateOTP();
+		String email = domain.getEmail();
+
 		String sendMail = sender.sendMail(email, otp);
-		
-		Integer uid= userRepo.getUidbyEmail(email);
+
+		Integer uid = userRepo.getUidbyEmail(email);
 		Optional<UserEntity> findById = userRepo.findById(uid);
-		UserEntity entity=findById.get();
+		UserEntity entity = findById.get();
 		entity.setOtp(otp);
 		UserEntity save = userRepo.save(entity);
-		
+
 		System.out.println("UserServiceImpl.sendEmailtoUser() ended");
-		
+
 		return sendMail;
-		
+
 	}
-	
-	
-	
-	
+
 	public UserEntity saveUpdatedPassword(UserDomain domain) {
-		
-		UserEntity userEntity=new UserEntity();
-		
-		
-		
-		return null;
-		
+		UserEntity userEntity=userRepo.getByUserName(domain.getEmail());
+		if(domain.getConfirmPassword().equals(domain.getConfirmPassword())) {
+			userEntity.setPassword(domain.getConfirmPassword());
+		}
+
+		return userRepo.save(userEntity);
+
 	}
 
 }

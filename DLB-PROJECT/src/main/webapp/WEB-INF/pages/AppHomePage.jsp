@@ -9,7 +9,7 @@
     <link rel="shortcut icon" type="image/png" href="images/b1.jp">
     <script>
 function logOut(){
-	alert("Are you sure, you want to log out?")
+	alert("Are you sure, you want to log out?"),
 	}
 </script>
     </head>
@@ -28,7 +28,7 @@ function logOut(){
     <a href="logOut?email=${domain.email}"><button onclick="logOut()">logout</button></a><br>
     
     
-    <a href="PasswordUpdation" class="btn btn-warning"
+    <a href="PasswordUpdation?email=${domain.email}" class="btn btn-warning"
 			role="button">Update Password</a>
     </body>
     
