@@ -35,7 +35,7 @@ public class UserMailSender {
 
 			helper.setText(otp, true);
 
-			helper.setText("here is the link http://localhost:9092/updatePassword/"+email+" to update password with OTP"+otp);
+			helper.setText("here is the link http://localhost:9092/PasswordUpdation/"+email+" to update password with OTP"+otp);
 
 			helper.setSubject("notification from Apna_Dukan_Social");
 			helper.setSentDate(new Date());
