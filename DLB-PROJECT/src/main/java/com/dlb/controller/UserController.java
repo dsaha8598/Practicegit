@@ -166,6 +166,7 @@ public class UserController {
 		UserDomain forgotpsdomain = new UserDomain();
 		model.addAttribute("forgotpsdomain", forgotpsdomain);
 		return "forgotpassword";
+		//dlb project
 	}
 
 	/**
