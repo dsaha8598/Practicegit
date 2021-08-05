@@ -1,0 +1,49 @@
+
+<div class="header">
+    <div class="button">
+        <button class="loginbutton" id="adminLoginButton" [routerLink]="['admin']">Admin Login</button>
+    </div>
+    <app-header></app-header>
+    
+</div>
+
+
+<div class="bodyContent">
+
+    <div class="paragraph">Book Domestic and International Flight Tickets</div>
+
+    <div class="searchMain">
+    <div class="searchPlace">
+        <input class="inputForm" type="text" placeholder="From"/>
+    </div>
+    <div class="searchPlace">
+        <input class="inputForm" type="text" placeholder="To"/>
+    </div>
+    <div class="search">
+        <input class="inputForm" onfocus="(this.type='date')" placeholder="Departure"/>
+    </div>
+    <div class="search">
+        <input class="inputForm" onfocus="(this.type='date')" placeholder="Return"/>
+    </div>
+    <div class="searchButtonContainer">
+        <button class="searchButton">Search</button>
+    </div>
+</div>
+
+<div class="offerContainer">
+    <div class="offer">
+        Diwali offer
+    </div>
+    <div class="offer">
+        Diwali offer
+    </div>
+    <div class="offer">
+        Diwali offer
+    </div>
+</div>
+
+    
+</div>
+<div class="footer">
+    <app-footer></app-footer>
+</div>
