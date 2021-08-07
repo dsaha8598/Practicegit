@@ -1,0 +1,6 @@
+/*
+ALTER TABLE tds.user_organization
+DROP CONSTRAINT UQ_USER_ORGANIZATION;
+
+GO
+*/

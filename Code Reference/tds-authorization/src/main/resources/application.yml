@@ -1,0 +1,265 @@
+spring:
+  profiles:
+    active: local,override
+  mail:
+    host: ${spring-mail-host}
+    port: ${spring-mail-port}
+    username: ${spring-mail-username}
+    password: ${spring-mail-password}
+    properties:
+      mail:
+        smtp:
+          auth: ${spring-mail-properties-mail-smtp-auth}
+          starttls:
+            enable: ${spring-mail-properties-mail-smtp-starttls-enable}
+  jpa:
+    show-sql: ${jpa_show_sql}
+    properties:
+      hibernate:
+        format_sql: false
+        ## Hibernate Properties
+        # The SQL dialect makes Hibernate generate better SQL for the chosen database
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        # Hibernate ddl auto (create, create-drop, validate, update)
+        ddl-auto: update
+
+  application:
+    name: authorization
+  # Redis Config
+  cache:
+    type: redis
+  servlet:
+    multipart:
+      max-file-size: ${multipart-max-file-size}
+      max-request-size: ${multipart-max-request-size}
+  cloud:
+    kubernetes:
+      reload:
+        enabled: ${kubernetes_reload_enabled}
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  redis:
+    host: ${redis-host}
+    port: ${redis-port}
+    password: ${redis-password}
+    ssl: ${redis-ssl}
+  mvc:
+    dispatch-options-request: true
+  flyway:
+    enabled: ${spring-flyway-enabled}
+  data:
+    redis:
+      repositories:
+        enabled: false
+cosmos:
+  policy:
+    retry_max_attempts: ${cosmos-policy-retry_max_attempts}
+    fixed_backoff_time_ms: ${cosmos-policy-fixed_backoff_time_ms}
+    growing_backoff_time_ms: ${cosmos-policy-growing_backoff_time_ms}
+  socket:
+    read_timeout_in_millis: ${cosmos-socket-read_timeout_in_millis}
+    connection_timeout_in_millis: ${cosmos-socket-connection_timeout_in_millis}
+  pool:
+    pool_timeout_in_millis: ${cosmos-pool-pool_timeout_in_millis}
+  core:
+    local:
+      connections: -1
+    remote:
+      connections: -1
+  max:
+    local:
+      connections: -1
+    remote:
+      connections: -1
+logging:
+  pattern:
+    console: "${tds_logging_pattern}"
+  level:
+    com.ey.in.tds: ${tds_root_log_level}
+    io.jaegertracing.internal.reporters.LoggingReporter: ${custom_log_package_level}
+zuul:
+  host:
+    connect-timeout-millis: 600000
+    socket-timeout-millis: 600000
+    time-to-live: 600000
+  sensitiveHeaders: Cookie,Set-Cookie
+  routes:
+    tcs-masters:
+      path: /api/masters/tcs/**
+      url: ${tcs-masters-service-end-point}
+    tcs-returns:
+      path: /api/returns/tcs/**
+      url: ${tcs-returns-service-end-point}
+    tcs-challans:
+      path: /api/challans/tcs/**
+      url: ${tcs-challans-service-end-point}
+    tcs-onboarding:
+      path: /api/onboarding/tcs/**
+      url: ${tcs-onboarding-service-end-point}
+    tcs-ingestion:
+      path: /api/ingestion/tcs/**
+      url: ${tcs-ingestion-service-end-point}
+    tcs-reports:
+      path: /api/reports/tcs/**
+      url: ${tcs-reports-service-end-point}
+    challans:
+      path: /api/challans/**
+      url: ${challans-service-end-point}
+    dashboards:
+      path: /api/dashboards/**
+      url: ${dashboards-service-end-point}
+    fvu:
+      path: /api/fvu/**
+      url: ${fvu-service-end-point}/fvu
+    ingestion:
+      path: /api/ingestion/**
+      url: ${ingestion-service-end-point}
+    masters:
+      path: /api/masters/**
+      url: ${masters-service-end-point}
+    onboarding:
+      path: /api/onboarding/**
+      url: ${onboarding-service-end-point}
+    reports:
+      path: /api/reports/**
+      url: ${reports-service-end-point}
+    returns:
+      path: /api/returns/**
+      url: ${returns-service-end-point}
+    scheduler:
+      path: /api/scheduler/**
+      url: ${scheduler-service-end-point}
+    ui-logger:
+      path: /api/ui-logger/**
+      url: ${uilogger-service-end-point}
+    validation:
+      path: /api/validation/**
+      url: ${validation-service-end-point}
+    dividend-utils:
+      path: /api/dividend/util/reports**
+      url: ${dividendutil-service-end-point}
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+ribbon:
+  ReadTimeout: 600000
+  ConnectTimeout: 600000
+  SocketTimeout: 600000
+server:
+  port: ${server-port}
+tds:
+  noauth:
+    antMatchersList: /api/ui-logger/log,/api/administration/props,/api/admin/redis-data/**,/error,/api/ingestion/batch/sftp/to/blob,/api/**/build-number,/api/onboarding/kyc/noAuth/**,/api/ingestion/invoice/pdf/blob/to/batch
+  props:
+    clientID: ${ui-props-client-id}
+    authority: ${ui-props-authority}
+    validateAuthority: ${ui-props-validate-authority}
+    redirectUri: ${ui-props-redirect-uri}
+    postLogoutRedirectUri: ${ui-props-logout-redirect-uri}
+    scope: ${ui-props-scope-as-user}
+    hostName: ${ui-props-host-name}
+
+ssl:
+  store:
+    type: PKCS12
+  key:
+    store:
+      path: /opt/tomcat/redis.keystore
+      password: changeme
+  trust:
+    store:
+      path: /opt/tomcat/redis.pkcs12
+      password: changeme
+endpoint:
+  authorization:
+    mappings:
+      authorization:
+        path: /api/authorization/permission
+        authorities: HAS_ACCESS
+      ingestion:
+        path: /api/ingestion/**
+        authorities: HAS_ACCESS, TRANSACTIONS, TRANSACTIONS_INVOICE_EXCEL, TRANSACTIONS_INVOICE_EXCEL_RESIDENT_LIST, TRANSACTIONS_INVOICE_EXCEL_NONRESIDENT_LIST, TRANSACTIONS_INVOICE_EXCEL_IMPORT, TRANSACTIONS_INVOICE_EXCEL_STATUS_LIST, TRANSACTIONS_INVOICE_PDF, TRANSACTIONS_INVOICE_PDF_RESIDENT_LIST, TRANSACTIONS_INVOICE_PDF_NONRESIDENT_LIST, TRANSACTIONS_INVOICE_PDF_IMPORT, TRANSACTIONS_INVOICE_PDF_STATUS_LIST, TRANSACTIONS_INVOICE_SAP, TRANSACTIONS_INVOICE_SAP_RESIDENT_LIST, TRANSACTIONS_INVOICE_SAP_NONRESIDENT_LIST, TRANSACTIONS_INVOICE_SAP_STATUS_LIST, TRANSACTIONS_INVOICE_MISMATCHES, TRANSACTIONS_INVOICE_MISMATCHES_SUMMARY_LIST, TRANSACTIONS_INVOICE_MISMATCHES_MOIDFY_ACTION, TRANSACTIONS_INVOICE_MISMATCHES_RECTIFICATION_EXPORT, TRANSACTIONS_INVOICE_MISMATCHES_RECTIFICATION_IMPORT, TRANSACTIONS_INVOICE_MISMATCHES_DETAILED_LIST, TRANSACTIONS_GL, TRANSACTIONS_GL_IMPORT, TRANSACTIONS_GL_EXPORT, TRANSACTIONS_GL_STATUS_LIST, TRANSACTIONS_GL_SUMMARY_MATRIX, TRANSACTIONS_PROVISIONS, TRANSACTIONS_PROVISIONS_IMPORT, TRANSACTIONS_PROVISIONS_EXPORT, TRANSACTIONS_PROVISIONS_STATUS_LIST, TRANSACTIONS_PROVISIONS_SUMMARY_MATRIX, TRANSACTIONS_ADVANCES, TRANSACTIONS_ADVANCES_IMPORT, TRANSACTIONS_ADVANCES_EXPORT, TRANSACTIONS_ADVANCES_STATUS_LIST, TRANSACTIONS_ADVANCES_SUMMARY_MATRIX
+      validation:
+        path: /api/validation/**
+        authorities: HAS_ACCESS, VALIDATION_AO, VALIDATION_AO_REPORT_EXPORT, VALIDATION_AO_IMPORT, VALIDATION_AO_STATUS, VALIDATION_LDC, VALIDATION_LDC_REPORT_EXPORT, VALIDATION_LDC_IMPORT, VALIDATION_LDC_STATUS, VALIDATION, VALIDATION_PAN, VALIDATION_PAN_REPORT_EXPORT, VALIDATION_PAN_IMPORT, VALIDATION_PAN_STATUS, NOP_MASTER, NOP_LIST, CESS_MASTER, CESS_LIST, CESS_TYPE_MASTER, CESS_TYPE_LIST, SURCHARGE_MASTER, SURCHARGE_LIST, TDS_RATE_MASTER, TDS_RATE_LIST, IPFM_MASTER, IPFM_LIST, DEDUCTOR_MASTER, DEDUCTOR_LIST, ARTICLE_MASTER, ARTICLE_LIST
+      masters:
+        path: /api/masters/**
+        authorities: HAS_ACCESS, MASTERS, NOP_MASTER, NOP_LIST, CESS_MASTER, CESS_LIST, CESS_TYPE_MASTER, CESS_TYPE_LIST, SURCHARGE_MASTER, SURCHARGE_LIST, TDS_RATE_MASTER, TDS_RATE_LIST, IPFM_MASTER, IPFM_LIST, DEDUCTOR_MASTER, DEDUCTOR_LIST, ARTICLE_MASTER, ARTICLE_LIST
+      returns:
+        path: /api/returns/**
+        authorities: HAS_ACCESS, FILING, FILING_RETURNS, FILING_JUSTIFICATION, FILING_FORM16, FILING_REVISED, FILING_DELAYED
+      challans:
+        path: /api/challans/**
+        authorities: HAS_ACCESS, CHALLANS, CHALLANS_TDS_SUMMARY, CHALLANS_GENERATE, CHALLANS_APPROVE, CHALLANS_UPLOAD_RECEIPT, CHALLANS_LIST, CHALLANS_PENDING_APPROVALS, CHALLANS_RECEIPT_STATUS_LIST, SETTINGS, HOME, REPORTS, FILING, DASHBOARDS, SETTINGS_ORGANIZATION, SETTINGS_PROFILE_VIEW, SETTINGS_NOTIFICATION_VIEW, SETTINGS_NOTIFICATION_CREATE, SETTINGS_NOTIFICATION_UPDATE, SETTINGS_NOTIFICATION_DELETE, VALIDATION_AO, VALIDATION_AO_REPORT_EXPORT, VALIDATION_AO_IMPORT, VALIDATION_AO_STATUS, VALIDATION_LDC, VALIDATION_LDC_REPORT_EXPORT, VALIDATION_LDC_IMPORT, VALIDATION_LDC_STATUS, VALIDATION, VALIDATION_PAN, VALIDATION_PAN_REPORT_EXPORT, VALIDATION_PAN_IMPORT, VALIDATION_PAN_STATUS, NOP_MASTER, NOP_LIST, CESS_MASTER, CESS_LIST, CESS_TYPE_MASTER, CESS_TYPE_LIST, SURCHARGE_MASTER, SURCHARGE_LIST, TDS_RATE_MASTER, TDS_RATE_LIST, IPFM_MASTER, IPFM_LIST, DEDUCTOR_MASTER, DEDUCTOR_LIST, ARTICLE_MASTER, ARTICLE_LIST
+      onboarding:
+        path: /api/onboarding/**
+        authorities: HAS_ACCESS, MASTERS, DEDUCTEE_MASTER, DEDUCTEE_CREATE, DEDUCTEE_LIST, DEDUCTEE_UPDATE, DEDUCTEE_IMPORT, DEDUCTEE_PAN_REPORT_EXPORT, AO_MASTER, AO_CREATE, AO_LIST, AO_UPDATE, AO_IMPORT, AO_PERIODIC_REPORT_EXPORT, LDC_MASTER, LDC_CREATE, LDC_LIST, LDC_IMPORT, LDC_PERIODIC_REPORT_EXPORT, KEYWORD_MASTER, KEYWORD_MASTER_CREATE, KEYWORD_MASTER_VIEW, ONBOARDING_MASTER, KEYWORD_MASTER_UPDATE, ROLE_MASTER
+      dashboards:
+        path: /api/dashboards/**
+        authorities: HAS_ACCESS, DASHBOARD, DASHBOARD_LDC, DASHBOARD_SECTION, DASHBOARD_DEDUCTEE
+      reports:
+        path: /api/reports/**
+        authorities: HAS_ACCESS, REPORTS
+feign:
+  masters:
+    app:
+      url: ${masters-service-end-point}
+  challans:
+    app:
+      url: ${challans-service-end-point}
+  dashboards:
+    app:
+      url: ${dashboards-service-end-point}
+  fvu:
+    app:
+      url: ${fvu-service-end-point}
+  ingestion:
+    app:
+      url: ${ingestion-service-end-point}
+  onboarding:
+    app:
+      url: ${onboarding-service-end-point}
+  reports:
+    app:
+      url: ${reports-service-end-point}
+  returns:
+    app:
+      url: ${returns-service-end-point}
+  scheduler:
+    app:
+      url: ${scheduler-service-end-point}
+  ui-logger:
+    app:
+      url: ${uilogger-service-end-point}
+  validation:
+    app:
+      url: ${validation-service-end-point}
+  authorization:
+    app:
+      url: ${authorization-service-end-point}
+exception:
+  email:
+    id: ${exception-email-id}
+    enabled: ${exception-email-enabled}
+session:
+  buster:
+    enabled: ${session-buster-enabled}
+opentracing:
+  jaeger:
+    http-sender:
+      url: ${jaeger_http_sender_url}
+ops:
+  team:
+    email:
+      id: ${ops_team_email_id}
+datasource:
+  masters:
+    dbname: ${datasource-masters-dbname}
+    host: ${datasource-masters-host}
+    port: ${datasource-masters-port}
+    username: ${datasource-masters-username}
+    password: ${datasource-masters-password}

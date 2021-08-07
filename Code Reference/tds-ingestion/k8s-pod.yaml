@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tds-ingestion
+#  namespace: tfo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tds-ingestion
+  template:
+    metadata:
+      labels:
+        app: tds-ingestion
+    spec:
+      containers:
+        - name: tds-ingestion
+          image: citfodvcr.azurecr.io/tds-ingestion-sql
+          #resources:
+          # limits:
+          #  memory: "2Gi"
+          # cpu: "300m"
+          #requests:
+          # memory: "500Mi"
+          #cpu: "200m"
+          envFrom:
+            - configMapRef:
+                name: tds-sql-config
+            - secretRef:
+                name: tds-sql-secrets
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: tfo-dev-deployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tds-ingestion
+  # namespace: tfo
+spec:
+  #type: NodePort
+  ports:
+    - port: 80
+  selector:
+    app: tds-ingestion

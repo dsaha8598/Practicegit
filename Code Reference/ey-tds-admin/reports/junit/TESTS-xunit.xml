@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<testsuite name="HeadlessChrome 0.0.0 (Windows 10 0.0.0)" package="" timestamp="2019-06-10T05:33:00" id="0" hostname="DESKTOP-TH9LUSI" tests="3" errors="1" failures="3" time="3.375">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/75.0.3738.0 Safari/537.36"/>
+  </properties>
+  <testcase name="AoldcvalidationComponent should create" time="1.299" classname="AoldcvalidationComponent">
+    <failure type="">Error: No value accessor for form control with unspecified name attribute
+    at _throwError (node_modules/@angular/forms/fesm5/forms.js:2144:1)
+    at setUpControl (node_modules/@angular/forms/fesm5/forms.js:2054:1)
+    at NgModel._setUpStandalone (node_modules/@angular/forms/fesm5/forms.js:4845:1)
+    at NgModel._setUpControl (node_modules/@angular/forms/fesm5/forms.js:4832:1)
+    at NgModel.ngOnChanges (node_modules/@angular/forms/fesm5/forms.js:4762:1)
+    at checkAndUpdateDirectiveInline (node_modules/@angular/core/fesm5/core.js:22095:1)
+    at checkAndUpdateNodeInline (node_modules/@angular/core/fesm5/core.js:23363:1)
+    at checkAndUpdateNode (node_modules/@angular/core/fesm5/core.js:23325:1)
+    at debugCheckAndUpdateNode (node_modules/@angular/core/fesm5/core.js:23959:1)
+    at debugCheckDirectivesFn (node_modules/@angular/core/fesm5/core.js:23919:1)
+</failure>
+  </testcase>
+  <testcase name="AoldcvalidationComponent should return export" time="1.112" classname="AoldcvalidationComponent">
+    <failure type="">Error: No value accessor for form control with unspecified name attribute
+    at _throwError (node_modules/@angular/forms/fesm5/forms.js:2144:1)
+    at setUpControl (node_modules/@angular/forms/fesm5/forms.js:2054:1)
+    at NgModel._setUpStandalone (node_modules/@angular/forms/fesm5/forms.js:4845:1)
+    at NgModel._setUpControl (node_modules/@angular/forms/fesm5/forms.js:4832:1)
+    at NgModel.ngOnChanges (node_modules/@angular/forms/fesm5/forms.js:4762:1)
+    at checkAndUpdateDirectiveInline (node_modules/@angular/core/fesm5/core.js:22095:1)
+    at checkAndUpdateNodeInline (node_modules/@angular/core/fesm5/core.js:23363:1)
+    at checkAndUpdateNode (node_modules/@angular/core/fesm5/core.js:23325:1)
+    at debugCheckAndUpdateNode (node_modules/@angular/core/fesm5/core.js:23959:1)
+    at debugCheckDirectivesFn (node_modules/@angular/core/fesm5/core.js:23919:1)
+</failure>
+  </testcase>
+  <testcase name="AoldcvalidationComponent should click export excel button in dropdown" time="0.964" classname="AoldcvalidationComponent">
+    <failure type="">Error: No value accessor for form control with unspecified name attribute
+    at _throwError (node_modules/@angular/forms/fesm5/forms.js:2144:1)
+    at setUpControl (node_modules/@angular/forms/fesm5/forms.js:2054:1)
+    at NgModel._setUpStandalone (node_modules/@angular/forms/fesm5/forms.js:4845:1)
+    at NgModel._setUpControl (node_modules/@angular/forms/fesm5/forms.js:4832:1)
+    at NgModel.ngOnChanges (node_modules/@angular/forms/fesm5/forms.js:4762:1)
+    at checkAndUpdateDirectiveInline (node_modules/@angular/core/fesm5/core.js:22095:1)
+    at checkAndUpdateNodeInline (node_modules/@angular/core/fesm5/core.js:23363:1)
+    at checkAndUpdateNode (node_modules/@angular/core/fesm5/core.js:23325:1)
+    at debugCheckAndUpdateNode (node_modules/@angular/core/fesm5/core.js:23959:1)
+    at debugCheckDirectivesFn (node_modules/@angular/core/fesm5/core.js:23919:1)
+</failure>
+    <failure type="">Error: No value accessor for form control with unspecified name attribute
+    at _throwError (node_modules/@angular/forms/fesm5/forms.js:2144:1)
+    at setUpControl (node_modules/@angular/forms/fesm5/forms.js:2054:1)
+    at NgModel._setUpStandalone (node_modules/@angular/forms/fesm5/forms.js:4845:1)
+    at NgModel._setUpControl (node_modules/@angular/forms/fesm5/forms.js:4832:1)
+    at NgModel.ngOnChanges (node_modules/@angular/forms/fesm5/forms.js:4762:1)
+    at checkAndUpdateDirectiveInline (node_modules/@angular/core/fesm5/core.js:22095:1)
+    at checkAndUpdateNodeInline (node_modules/@angular/core/fesm5/core.js:23363:1)
+    at checkAndUpdateNode (node_modules/@angular/core/fesm5/core.js:23325:1)
+    at debugCheckAndUpdateNode (node_modules/@angular/core/fesm5/core.js:23959:1)
+    at debugCheckDirectivesFn (node_modules/@angular/core/fesm5/core.js:23919:1)
+</failure>
+  </testcase>
+  <system-out>
+    <![CDATA[
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

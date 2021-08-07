@@ -1,0 +1,152 @@
+spring:
+  profiles:
+    active: local,override
+  mail:
+    host: ${spring-mail-host}
+    port: ${spring-mail-port}
+    username: ${spring-mail-username}
+    password: ${spring-mail-password}
+    properties:
+      mail:
+        smtp:
+          auth: ${spring-mail-properties-mail-smtp-auth}
+          starttls:
+            enable: ${spring-mail-properties-mail-smtp-starttls-enable}
+  application:
+    name: returns
+  # Redis Config
+  cache:
+    type: redis
+  datasource:
+    url: ${spring-datasource-url}
+    username: ${spring-datasource-username}
+    password: ${spring-datasource-password}
+  redis:
+    host: ${redis-host}
+    port: ${redis-port}
+    password: ${redis-password}
+    ssl: ${redis-ssl}
+  cloud:
+    kubernetes:
+      reload:
+        enabled: ${kubernetes_reload_enabled}
+  sftp:
+    host: ${spring-sftp-host}
+    user: ${spring-sftp-user}
+    password: ${spring-sftp-password}
+    privateKey: ${spring-sftp-privateKey}
+    classpath: ${spring-sftp-classpath}
+    privateKeyPassphrase: ${spring-sftp-privateKeyPassphrase}
+  servlet:
+    multipart:
+      max-file-size: ${multipart-max-file-size}
+      max-request-size: ${multipart-max-request-size}
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+        ## Hibernate Properties
+        # The SQL dialect makes Hibernate generate better SQL for the chosen database
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        # Hibernate ddl auto (create, create-drop, validate, update)
+        ddl-auto: update
+
+  data:
+    redis:
+      repositories:
+        enabled: false
+spark:
+  notebooks:
+    invoice_excel:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${invoice-job-id}
+    provisions:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${provision-job-id}
+    advances:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${advances-job-id}
+    gl:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${gl-job-id}
+server:
+  port: ${server-port}
+management:
+  endpoint:
+    restart:
+      enabled: true
+logging:
+  pattern:
+    console: "${tds_logging_pattern}"
+  level:
+    com.ey.in.tds: ${tds_root_log_level}
+    io.jaegertracing.internal.reporters.LoggingReporter: ${custom_log_package_level}
+cosmos:
+  policy:
+    retry_max_attempts: ${cosmos-policy-retry_max_attempts}
+    fixed_backoff_time_ms: ${cosmos-policy-fixed_backoff_time_ms}
+    growing_backoff_time_ms: ${cosmos-policy-growing_backoff_time_ms}
+  socket:
+    read_timeout_in_millis: ${cosmos-socket-read_timeout_in_millis}
+    connection_timeout_in_millis: ${cosmos-socket-connection_timeout_in_millis}
+  pool:
+    pool_timeout_in_millis: ${cosmos-pool-pool_timeout_in_millis}
+  core:
+    local:
+      connections: -1
+    remote:
+      connections: -1
+  max:
+    local:
+      connections: -1
+    remote:
+      connections: -1
+feign:
+  masters:
+    app:
+      url: ${masters-service-end-point}
+  ingestion:
+    app:
+      url: ${ingestion-service-end-point}
+  validation:
+    app:
+      url: ${validation-service-end-point}
+  onboarding:
+    app:
+      url: ${onboarding-service-end-point}
+  authorization:
+    app:
+      url: ${authorization-service-end-point}
+  challans:
+    app:
+      url: ${challans-service-end-point}
+exception:
+  email:
+    id: ${exception-email-id}
+    enabled: ${exception-email-enabled}
+opentracing:
+  jaeger:
+    http-sender:
+      url: ${jaeger_http_sender_url}
+ops:
+  team:
+    email:
+      id: ${ops_team_email_id}
+page_size: ${page_size}
+datasource:
+  masters:
+    dbname: ${datasource-masters-dbname}
+    host: ${datasource-masters-host}
+    port: ${datasource-masters-port}
+    username: ${datasource-masters-username}
+    password: ${datasource-masters-password}
+tds:
+  from-email: ${declaration_from_email}
+
+app.screenshot.enabled: false
+app.ack.num.enabled: true
+app.chrome.driver.path: /usr/local/bin/chromedriver
+app.temp.file.delete: true
+report.io.dir.path: /opt/tomcat
+app.error.xml.gen.enabled: false

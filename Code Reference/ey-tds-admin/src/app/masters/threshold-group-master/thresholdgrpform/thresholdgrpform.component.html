@@ -1,0 +1,244 @@
+<div class="ui-g-6 mx-0">
+  <h2 class="fs-22">{{ headingMsg }} threshold group master</h2>
+</div>
+<div class="ui-g-6 text-right">
+  <span *HasAnyAuthority="['THRESHOLD_GROUP_UPDATE']">
+    <button
+      (click)="stateChanger('edit')"
+      type="button"
+      class="ui-button btn-primary"
+      *ngIf="actionState === 'VIEW'"
+    >
+      Edit
+    </button>
+  </span>
+</div>
+<div class="ui-g-12">
+  <form [formGroup]="thresholdGrpForm">
+    <div class="row">
+      <div class="col-sm-12 my-20">
+        <label>
+          Tax to be applied on transaction after annual threshold has breached?
+        </label>
+        <div class="row">
+          <div class="col-sm-1">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                formControlName="taxApplicability"
+                [value]="true"
+                type="radio"
+                name="taxApplicability"
+                id="taxApplicabilityyes"
+              />
+              <label class="form-check-label" for="taxApplicabilityyes">
+                Yes
+              </label>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                [value]="false"
+                formControlName="taxApplicability"
+                type="radio"
+                name="taxApplicability"
+                id="taxApplicabilityno"
+              />
+              <label class="form-check-label" for="taxApplicabilityno">
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{ 'field-invalid': submitted && f.groupName.errors }"
+      >
+        <label for="groupName">Group name</label>
+        <input
+          type="text"
+          formControlName="groupName"
+          placeholder="Enter group name"
+          class="input-ctrl"
+          pInputText
+        />
+        <div *ngIf="submitted && f.groupName.errors" class="error-feedback">
+          <div *ngIf="f.groupName.errors?.required">
+            Please enter group name.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.nature.errors
+        }"
+      >
+        <label for="nature">Nature of payment</label>
+        <ng-multiselect-dropdown
+          [placeholder]="'Please select nature of payment'"
+          [data]="getnatureofpaymentlist"
+          [(ngModel)]="natureOfpaymentList"
+          [settings]="dropdownSettings"
+          [disabled]="isDeducteeStatus"
+          formControlName="nature"
+        >
+        </ng-multiselect-dropdown>
+        <div *ngIf="submitted && f.nature.errors" class="error-feedback">
+          <div *ngIf="submitted && f.nature.errors?.required">
+            Please select nature of payment.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.thresholdAmount.errors
+        }"
+      >
+        <label for="thresholdAmount">Threshold amount</label>
+        <input
+          type="number"
+          placeholder="0"
+          class="input-ctrl w-100"
+          formControlName="thresholdAmount"
+          pInputText
+        />
+        <div
+          *ngIf="submitted && f.thresholdAmount.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.thresholdAmount.errors?.required">
+            Please enter threshold amount.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.applicableFrom.errors
+        }"
+      >
+        <label for="inputCity"> Applicable from</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            id="applicableFrom"
+            formControlName="applicableFrom"
+            ngbDatepicker
+            placement="auto"
+            #applicableFrom="ngbDatepicker"
+            [value]="
+              thresholdGrpForm.getRawValue().applicableFrom | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="applicableFrom.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.applicableFrom.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.applicableFrom.errors?.required">
+            Please enter applicable from.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid':
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+        }"
+      >
+        <label for="inputState">Applicable to (optional)</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            [minDate]="minDate"
+            (click)="d.toggle()"
+            name="dp"
+            formControlName="applicableTo"
+            ngbDatepicker
+            placement="auto"
+            #d="ngbDatepicker"
+            [value]="
+              thresholdGrpForm.getRawValue().applicableTo | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="d.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+          "
+          class="error-feedback"
+        >
+          <p *ngIf="applicableToDateError">
+            Applicable to date must be more than that of Applicable from date.
+          </p>
+          <p *ngIf="f.applicableTo.errors?.required">
+            Please enter applicable to.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="ui-inputgroup">
+      <button (click)="goBack()" type="button" class="ui-button btn-utility">
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+
+      <button
+        (click)="addThreshold('addNew')"
+        type="button"
+        class="ui-button btn-secondary"
+        *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+      >
+        <i class="fas fa-save"></i> Save &amp; Add New
+      </button>
+      <button
+        (click)="addThreshold('back')"
+        type="button"
+        class="ui-button btn-primary"
+        *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+      >
+        <i class="fas fa-save"></i> Save
+      </button>
+      <button
+        (click)="updateThreashold()"
+        type="button"
+        class="ui-button btn-primary"
+        *ngIf="actionState === 'EDIT'"
+      >
+        Update
+      </button>
+    </div>
+  </form>
+</div>

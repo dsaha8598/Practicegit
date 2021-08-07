@@ -1,0 +1,97 @@
+/*
+ * Application global variables.
+ */
+
+// Set Font Awesome font path
+$fa-font-path: "~@fortawesome/fontawesome-free-webfonts/webfonts";
+
+// ---------------------------------------------------------------------------
+// Bootstrap variables
+//
+// Override Bootstrap variables here to suite your theme.
+// Copy variables you want to customize from node_modules/bootstrap/scss/_variables.scss
+
+//
+// Color system
+//
+
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #868e96;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+$blue: #0073dd;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$teal: #20c997;
+$cyan: #17a2b8;
+
+$dot: #f4f7fb;
+$dot-br: #edeff4;
+$charcoal: #4a4a4a;
+$bg-lg-blue: #f8fbff;
+$bg-lg-blue1: #e5f0ff;
+$bg-sea-blue1: #00aeae;
+$btn-sec: #f2f0f0;
+$orange: #f5a623;
+$teal: #009878;
+$br-card: #dbd9d9;
+$bg-sec-body: #eff1f6;
+$bg-card-b: #f6f6f6;
+
+$theme-colors: (
+  primary: $blue,
+  secondary: $gray-600,
+  success: $green,
+  info: $cyan,
+  warning: $yellow,
+  danger: $red,
+  light: $gray-100,
+  dark: $gray-800
+);
+
+// Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used
+// in components.
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+
+// Color Primary palette
+$yellow: #ffe600;
+$gray-dark: #2e2e38;
+$gray-alternate: #2e2e38;
+$gray-light: #808080;
+$gray-tint1: #747480;
+$gray-tint2: #c4c4cd;
+$gray-tint3: #f6f6fa;
+$black: #000000;
+$white: #ffffff;
+// $white: #f6f6fa;
+// Color Secondary Palette
+$LinkBlue: #336699;
+$Special-use-Red: #f04c3e;
+$Blue: #00a3ae;
+$Purple: #91278f;
+$Green: #2c973e;
+$Lilac: #ac98db;
+$Blue-50: #7fd1d6;
+$Purple-50: #c893c7;
+$Green-50: #95cb89;
+$Lilac-50: #d8d2e0;
+$Yellow-50: #fff27f;
+$cancel: #2e2e38;
+$disabled-c: #dcdcdc;
+$drop: #737272;
+$close-ash: #cccccc;
+$gray-border: #2e2e38;

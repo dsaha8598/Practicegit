@@ -1,0 +1,30 @@
+@import "../../../../src/theme/theme-variables";
+
+$bar-color: $yellow;
+$ball-color: $yellow;
+
+.loading-wrapper {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 9999;
+  background-color: transparentize($color: #ffffff, $amount: 0.2);
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  .message-container {
+    display: flex;
+    padding: 40px 70px;
+    text-align: center;
+    width: 500px;
+    font-size: 14px;
+    background-color: $white;
+    color: $black;
+  }
+}

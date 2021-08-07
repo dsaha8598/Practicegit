@@ -1,0 +1,899 @@
+<div class="cuSt-steps mt-30">
+  <!-- <p-steps
+    [model]="items"
+    [(activeIndex)]="activeIndex"
+    class="cust-steps two-cust-step"
+    [readonly]="false"
+  ></p-steps> -->
+  <div class="ui-g" *ngIf="activeIndex == 0">
+    <div class="ui-g-8 mx-auto">
+      <form [formGroup]="tenantFormGroup" novalidate>
+        <div class="form-row">
+          <div class="ui-g-12">
+            <div
+              class="ui-inputgroup"
+              [ngClass]="{
+                'field-invalid':
+                  tenantNameSubmitted &&
+                  tenantFormGroup.get('tenantName').errors
+              }"
+            >
+              <label class="fs-14">Tenant Name</label>
+              <input
+                id="input"
+                class="input-ctrl"
+                type="text"
+                placeholder="Enter tenant name"
+                formControlName="tenantName"
+                [(ngModel)]="tenantname"
+                name="tenantName"
+                ngDefaultControl
+                pInputText
+              />
+              <div
+                *ngIf="
+                  tenantNameSubmitted &&
+                  tenantFormGroup.get('tenantName').errors
+                "
+                class="error-feedback"
+              >
+                <div *ngIf="tenantFormGroup.get('tenantName').errors">
+                  Please enter tenant name.
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="ui-g-12">
+            <div
+              class="ui-inputgroup"
+              [ngClass]="{
+                'field-invalid':
+                  groupNameSubmitted && tenantFormGroup.get('groupName').errors
+              }"
+            >
+              <label class="fs-14">Group Name</label>
+              <input
+                id="input"
+                class="input-ctrl"
+                type="text"
+                placeholder="Enter group name"
+                formControlName="groupName"
+                [(ngModel)]="groupName"
+                name="groupName"
+                ngDefaultControl
+                pInputText
+              />
+              <div
+                *ngIf="
+                  groupNameSubmitted && tenantFormGroup.get('groupName').errors
+                "
+                class="error-feedback"
+              >
+                <div *ngIf="tenantFormGroup.get('groupName').errors">
+                  Please enter group name.
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </form>
+      <div class="mb-20">
+        <div class="ui-inputgroup mt-20 text-center">
+          <button
+            type="button"
+            class="ui-button btn-primary min-w-40"
+            (click)="goBack()"
+          >
+            Back
+          </button>
+          <button
+            type="button"
+            class="ui-button btn-primary min-w-40"
+            (click)="continue()"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ui-g" *ngIf="activeIndex == 1">
+    <div>
+      <div class="ui-g-12">
+        <form [formGroup]="databaseConfigurationsForm">
+          <div class="text-center my-20">
+            <h4 class="fs-18 mb-0">Database Configurations</h4>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted && f.contactpoints.untouched
+              }"
+            >
+              <label for="">Contact-points</label>
+              <input
+                type="text"
+                formControlName="contactpoints"
+                name="contactpoints"
+                placeholder="Enter contact points"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted &&
+                  (databaseConfigurationsForm.get('contactpoints').untouched ||
+                    databaseConfigurationsForm.get('contactpoints').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter contact points
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted && f.username.untouched
+              }"
+            >
+              <label for="">User Name</label>
+              <input
+                type="text"
+                formControlName="username"
+                name="username"
+                placeholder="Enter Username"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted &&
+                  (databaseConfigurationsForm.get('username').untouched ||
+                    databaseConfigurationsForm.get('username').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter username
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="ui-g-6">
+              <div
+                class="ui-inputgroup"
+                [ngClass]="{
+                  'field-invalid': submitted && f.password.untouched
+                }"
+              >
+                <label for="">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  formControlName="password"
+                  placeholder="Enter Password"
+                  class="input-ctrl"
+                  ngDefaultControl
+                />
+                <div
+                  *ngIf="
+                    submitted &&
+                    (databaseConfigurationsForm.get('password').untouched ||
+                      databaseConfigurationsForm.get('password').errors)
+                  "
+                  class="error-feedback"
+                >
+                  Please enter password
+                </div>
+              </div>
+            </div>
+            <div
+              class="ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted && f.keyspace.untouched
+              }"
+            >
+              <div class="ui-inputgroup">
+                <label for="">Keyspace Name</label>
+                <input
+                  type="text"
+                  name="keyspace"
+                  formControlName="keyspace"
+                  placeholder="Enter Key Space"
+                  class="input-ctrl"
+                  ngDefaultControl
+                />
+                <div
+                  *ngIf="
+                    submitted &&
+                    (databaseConfigurationsForm.get('keyspace').untouched ||
+                      databaseConfigurationsForm.get('keyspace').errors)
+                  "
+                  class="error-feedback"
+                >
+                  Please enter keyspace
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="ui-g-6">
+              <div
+                class="ui-inputgroup"
+                [ngClass]="{
+                  'field-invalid': submitted && f.schemaAction.untouched
+                }"
+              >
+                <label for="">Schema Action</label>
+                <input
+                  type="text"
+                  name="schemaAction"
+                  formControlName="schemaAction"
+                  placeholder="Enter schema Action"
+                  class="input-ctrl"
+                  ngDefaultControl
+                />
+                <div
+                  *ngIf="
+                    submitted &&
+                    (databaseConfigurationsForm.get('schemaAction').untouched ||
+                      databaseConfigurationsForm.get('schemaAction').errors)
+                  "
+                  class="error-feedback"
+                >
+                  Please enter schema action
+                </div>
+              </div>
+            </div>
+            <div class="ui-g-6">
+              <div class="ui-inputgroup">
+                <label for="">&nbsp;</label>
+                <p-checkbox label="SSL" binary="true" formControlName="ssl">
+                </p-checkbox>
+              </div>
+            </div>
+            <div class="ui-g-6">
+              <div
+                class="ui-inputgroup"
+                [ngClass]="{
+                  'field-invalid': submitted && f.port.untouched
+                }"
+              >
+                <label for="">Port</label>
+                <input
+                  type="text"
+                  name="port"
+                  formControlName="port"
+                  placeholder="Enter port"
+                  class="input-ctrl"
+                  ngDefaultControl
+                />
+                <div
+                  *ngIf="
+                    submitted &&
+                    (databaseConfigurationsForm.get('port').untouched ||
+                      databaseConfigurationsForm.get('port').errors)
+                  "
+                  class="error-feedback"
+                >
+                  Please enter port
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="ui-g-12">
+        <hr class="my-10" />
+        <form action="" [formGroup]="blobConfigurationForm">
+          <div class="text-center">
+            <h4 class="fs-18 mb-0">Blob Configurations</h4>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-12"
+              [ngClass]="{
+                'field-invalid': submitted1 && f1.host.untouched
+              }"
+            >
+              <label for="">Protocol</label>
+              <input
+                type="text"
+                formControlName="host"
+                name="host"
+                placeholder="Enter Protocol"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted1 &&
+                  (blobConfigurationForm.get('host').untouched ||
+                    blobConfigurationForm.get('host').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter protocal
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup ui-g-12"
+              [ngClass]="{
+                'field-invalid': submitted1 && f1.username.untouched
+              }"
+            >
+              <label for="">Account name</label>
+              <input
+                type="text"
+                formControlName="username"
+                name="username"
+                placeholder="Enter account name"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted1 &&
+                  (blobConfigurationForm.get('username').untouched ||
+                    blobConfigurationForm.get('username').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter username
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup w-100"
+              [ngClass]="{
+                'field-invalid': submitted1 && f1.container.untouched
+              }"
+            >
+              <label for="" class="ui-g-12 py-0">Container</label>
+              <div class="">
+                <div class="ui-g-6">
+                  <input
+                    type="text"
+                    formControlName="container"
+                    name="container"
+                    placeholder="Enter Container"
+                    class="input-ctrl"
+                    ngDefaultControl
+                  />
+                  <div
+                    *ngIf="
+                      submitted1 &&
+                      (blobConfigurationForm.get('container').untouched ||
+                        blobConfigurationForm.get('container').errors)
+                    "
+                    class="error-feedback"
+                  >
+                    Please enter container
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup w-100"
+              [ngClass]="{
+                'field-invalid': submitted1 && f1.accountkey.untouched
+              }"
+            >
+              <label for="" class="ui-g-12 py-0">Account Key</label>
+              <div class="">
+                <div class="ui-g-6">
+                  <input
+                    type="text"
+                    formControlName="accountkey"
+                    name="accountkey"
+                    placeholder="Enter Account Key"
+                    class="input-ctrl"
+                    ngDefaultControl
+                  />
+                  <div
+                    *ngIf="
+                      submitted1 &&
+                      (blobConfigurationForm.get('accountkey').untouched ||
+                        blobConfigurationForm.get('accountkey').errors)
+                    "
+                    class="error-feedback"
+                  >
+                    Please enter accountkey
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="ui-g-12">
+        <hr class="my-10" />
+        <form [formGroup]="sftpConfigurationForm">
+          <div class="text-center">
+            <h4 class="fs-18 mb-20">SFTP Configurations</h4>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted2 && f2.host.untouched
+              }"
+            >
+              <label for="">Host Name</label>
+              <input
+                type="text"
+                formControlName="host"
+                name="host"
+                placeholder="Enter Hostname"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted2 &&
+                  (sftpConfigurationForm.get('host').untouched ||
+                    sftpConfigurationForm.get('host').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter hostname
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted2 && f2.username.untouched
+              }"
+            >
+              <label for="">User Name</label>
+              <input
+                type="text"
+                formControlName="username"
+                name="username"
+                placeholder="Enter Username"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted2 &&
+                  (sftpConfigurationForm.get('username').untouched ||
+                    sftpConfigurationForm.get('username').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter username
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted2 && f2.password.untouched
+              }"
+            >
+              <label for="" class="ui-g-12 py-0">Password</label>
+              <input
+                type="password"
+                formControlName="password"
+                name="password"
+                placeholder="Enter Password"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted2 &&
+                  (sftpConfigurationForm.get('password').untouched ||
+                    sftpConfigurationForm.get('password').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter password
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted2 && f2.privateKey.untouched
+              }"
+            >
+              <label for="" class="ui-g-12 py-0">PrivateKey</label>
+              <input
+                type="text"
+                formControlName="privateKey"
+                name="privatekey"
+                placeholder="Enter privateKey"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted2 &&
+                  (sftpConfigurationForm.get('privateKey').untouched ||
+                    sftpConfigurationForm.get('privateKey').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter privateKey
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted2 && f2.classpath.untouched
+              }"
+            >
+              <label for="">Classpath</label>
+              <input
+                type="text"
+                formControlName="classpath"
+                name="host"
+                placeholder="Enter Classpath"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted2 &&
+                  (sftpConfigurationForm.get('classpath').untouched ||
+                    sftpConfigurationForm.get('classpath').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter classpath
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup ui-g-12"
+              [ngClass]="{
+                'field-invalid': submitted2 && f2.privateKeyPassphrase.untouched
+              }"
+            >
+              <label for="">Private Key Passphrase</label>
+              <textarea
+                type="text"
+                style="width:100%"
+                formControlName="privateKeyPassphrase"
+                name="privateKeyPassphrase"
+                placeholder="Enter Private Key Passphrase"
+                class="input-ctrl"
+                ngDefaultControl
+              ></textarea>
+              <div
+                *ngIf="
+                  submitted2 &&
+                  (sftpConfigurationForm.get('privateKeyPassphrase')
+                    .untouched ||
+                    sftpConfigurationForm.get('privateKeyPassphrase').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter privateKeyPassphrase
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="ui-g-12">
+        <hr class="my-10" />
+        <form [formGroup]="powerbiConfigurationsForm">
+          <div class="text-center">
+            <h4 class="fs-18 mb-20">PowerBI Configurations</h4>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted3 && p.uriAccess.untouched
+              }"
+            >
+              <label for="">URI Access</label>
+              <input
+                type="text"
+                formControlName="uriAccess"
+                name="uriAccess"
+                placeholder="Enter uri access"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted3 &&
+                  (powerbiConfigurationsForm.get('uriAccess').untouched ||
+                    powerbiConfigurationsForm.get('uriAccess').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter uri access
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted3 && p.uriEmbed.untouched
+              }"
+            >
+              <label for="">URI Embed</label>
+              <input
+                type="text"
+                formControlName="uriEmbed"
+                name="uriEmbed"
+                placeholder="Enter uri embed"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted3 &&
+                  (powerbiConfigurationsForm.get('uriEmbed').untouched ||
+                    powerbiConfigurationsForm.get('uriEmbed').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter uri embed
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted3 && p.grantType.untouched
+              }"
+            >
+              <label for="">Grant type</label>
+              <input
+                type="text"
+                formControlName="grantType"
+                name="grantType"
+                placeholder="Enter grant type"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted3 &&
+                  (powerbiConfigurationsForm.get('grantType').untouched ||
+                    powerbiConfigurationsForm.get('grantType').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter grant type
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted3 && p.resource.untouched
+              }"
+            >
+              <label for="">Resource</label>
+              <input
+                type="text"
+                formControlName="resource"
+                name="resource"
+                placeholder="Enter resource"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted3 &&
+                  (powerbiConfigurationsForm.get('resource').untouched ||
+                    powerbiConfigurationsForm.get('resource').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter resource
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted3 && p.clientId.untouched
+              }"
+            >
+              <label for="">Client Id</label>
+              <input
+                type="text"
+                formControlName="clientId"
+                name="clientId"
+                placeholder="Enter client id"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted3 &&
+                  (powerbiConfigurationsForm.get('clientId').untouched ||
+                    powerbiConfigurationsForm.get('clientId').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter client id
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted3 && p.clientSecreat.untouched
+              }"
+            >
+              <label for="">Client Secret</label>
+              <input
+                type="text"
+                formControlName="clientSecreat"
+                name="clientSecreat"
+                placeholder="Enter client secret"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted3 &&
+                  (powerbiConfigurationsForm.get('clientSecreat').untouched ||
+                    powerbiConfigurationsForm.get('clientSecreat').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter client secret
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted3 && p.username.untouched
+              }"
+            >
+              <label for="">Username</label>
+              <input
+                type="text"
+                formControlName="username"
+                name="username"
+                placeholder="Enter Username"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted3 &&
+                  (powerbiConfigurationsForm.get('username').untouched ||
+                    powerbiConfigurationsForm.get('username').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter username
+              </div>
+            </div>
+            <div
+              class="ui-inputgroup ui-g-6"
+              [ngClass]="{
+                'field-invalid': submitted3 && p.password.untouched
+              }"
+            >
+              <label for="">Password</label>
+              <input
+                type="password"
+                formControlName="password"
+                name="username"
+                placeholder="Enter Password"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted3 &&
+                  (powerbiConfigurationsForm.get('password').untouched ||
+                    powerbiConfigurationsForm.get('password').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter password
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div
+              class="ui-inputgroup ui-g-12"
+              [ngClass]="{
+                'field-invalid': submitted3 && p.groupId.untouched
+              }"
+            >
+              <label for="">Group Id</label>
+              <input
+                type="text"
+                formControlName="groupId"
+                name="groupId"
+                placeholder="Enter Group Id"
+                class="input-ctrl"
+                ngDefaultControl
+              />
+              <div
+                *ngIf="
+                  submitted3 &&
+                  (powerbiConfigurationsForm.get('groupId').untouched ||
+                    powerbiConfigurationsForm.get('groupId').errors)
+                "
+                class="error-feedback"
+              >
+                Please enter groupId
+              </div>
+            </div>
+          </div>
+          <div formArrayName="reports">
+            <div
+              class=""
+              *ngFor="let field of reportsForm.controls; let i = index"
+            >
+              <div [formGroupName]="i">
+                <div class="form-row">
+                  <div class="ui-inputgroup ui-g-5">
+                    <label for="">Report Name</label>
+                    <input
+                      type="text"
+                      formControlName="reportName"
+                      name="reportName"
+                      placeholder="Enter report name"
+                      class="input-ctrl"
+                      ngDefaultControl
+                    />
+                  </div>
+                  <div class="ui-inputgroup ui-g-5">
+                    <label for="">Report Id</label>
+                    <input
+                      type="text"
+                      formControlName="reportId"
+                      name="reportId"
+                      placeholder="Enter report id"
+                      class="input-ctrl"
+                      ngDefaultControl
+                    />
+                  </div>
+                  <div class="ui-inputgroup ui-g-2 mt-28">
+                    <button
+                      class="ui-button btn-secondary"
+                      (click)="removeContact(i)"
+                    >
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="my-20">
+              <button class="ui-button btn-primary" (click)="addReports()">
+                <i class="fa fa-plus" aria-hidden="true"></i> Add New Report
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="col-sm-12 ui-g-6 mt-20 text-center" *ngIf="isAddTenant">
+          <button
+            (click)="back()"
+            type="button"
+            class="ui-button btn-secondary"
+          >
+            Prev
+          </button>
+          <button
+            (click)="submitConfigurations()"
+            type="button"
+            class="ui-button btn-primary"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

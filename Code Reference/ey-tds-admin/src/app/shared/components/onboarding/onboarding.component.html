@@ -1,0 +1,1352 @@
+<div class="container">
+  <div class="ui-g-6">
+    <h2 class="fs-18 mb-10">
+      TDS configuration
+    </h2>
+  </div>
+  <div class="ui-g-12">
+    <ngb-tabset [destroyOnHide]="false">
+      <ngb-tab title="Scope & Invoice process">
+        <ng-template ngbTabContent>
+          <div class="cuSt-steps mt-30">
+            <p-steps
+              [model]="items"
+              [(activeIndex)]="activeIndex"
+              class="cust-steps two-cust-step"
+              [readonly]="false"
+            >
+            </p-steps>
+            <div class="row" *ngIf="activeIndex == 0">
+              <div class="col-sm-7 mx-auto">
+                <form action="" [formGroup]="scopeForm">
+                  <div class="row mb-20">
+                    <div class="col-sm-12 px-0">
+                      <label for="surchargebasis" class="mb-20 sub-Heading-tab"
+                        >Scope Process</label
+                      >
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="PAN/LDC Validation"
+                        binary="true"
+                        formControlName="panValidation"
+                        (onChange)="pushConfigValues($event, 1, 1, '')"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="Invoices excel uploads or Hardcopy Invoice Reading (Includes Provisions & Advances) with Section Determination"
+                        formControlName="InvoiceExcelUploading"
+                        binary="true"
+                        (onChange)="changeValidations($event, 2)"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        ngDefaultControl
+                        label="Rate Prediction - Validation of client section/rate with tool determined (Monthly/Quarterly/Annually) as Diagnostic approach (Includes Provisions &
+                      Advances)"
+                        binary="true"
+                        formControlName="ratePrediction"
+                        (onChange)="changeValidations($event, 3)"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="Dividends(masters, transaction processing, liability computation)"
+                        formControlName="dividend"
+                        ngDefaultControl
+                        binary="true"
+                        (onChange)="changeValidations($event, 8)"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="Filing form 15 CA/ CB"
+                        formControlName="generate15CACB"
+                        ngDefaultControl
+                        binary="true"
+                        (onChange)="pushConfigValues($event, 9, 1, '')"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="Filing form 15 G/H"
+                        formControlName="dvndFileForm15gh"
+                        ngDefaultControl
+                        binary="true"
+                        (onChange)="pushConfigValues($event, 10, 1, '')"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="Monthly Compliance (mainly TDS calculation, challan generation)"
+                        [disabled]="
+                          scopeForm.getRawValue().panValidation == false ||
+                          scopeForm.getRawValue().ratePrediction == false
+                        "
+                        formControlName="monthlyCompliance"
+                        (onChange)="pushConfigValues($event, 4, 1, '')"
+                        ngDefaultControl
+                        binary="true"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="Quarterly Returns"
+                        ngDefaultControl
+                        binary="true"
+                        formControlName="quertarlyReturns"
+                        (onChange)="pushConfigValues($event, 5, 1, '')"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="Clause 34a"
+                        ngDefaultControl
+                        binary="true"
+                        formControlName="clause34a"
+                        [disabled]="
+                          scopeForm.getRawValue().ratePrediction == false
+                        "
+                        (onChange)="pushConfigValues($event, 6, 1, '')"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="TRACES Defaults, console and Justifications"
+                        [disabled]="
+                          scopeForm.getRawValue().quertarlyReturns == false
+                        "
+                        formControlName="traceDefaults"
+                        ngDefaultControl
+                        binary="true"
+                        (onChange)="pushConfigValues($event, 7, 1, '')"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="All the above"
+                        formControlName="allAbove"
+                        ngDefaultControl
+                        binary="true"
+                        (onChange)="selectDeselectAllAbove($event)"
+                      >
+                      </p-checkbox>
+                    </div>
+                  </div>
+                </form>
+                <div class="row mb-20" *ngIf="isInvoice">
+                  <form action="" [formGroup]="invoiceFileForm">
+                    <div class="col-sm-12 px-0">
+                      <label for="surchargebasis" class="mb-20 sub-Heading-tab"
+                        >Type of Invoice Process</label
+                      >
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="SAP"
+                        binary="true"
+                        formControlName="sap"
+                        (onChange)="pushInvoiceTypes($event, 1)"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="EXCEL"
+                        formControlName="excel"
+                        binary="true"
+                        (onChange)="pushInvoiceTypes($event, 2)"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        ngDefaultControl
+                        label="PDF"
+                        binary="true"
+                        formControlName="pdf"
+                        (onChange)="pushInvoiceTypes($event, 3)"
+                      >
+                      </p-checkbox>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-checkbox
+                        label="All the above"
+                        formControlName="all"
+                        binary="true"
+                        (onChange)="selectallInvoiceTypes($event)"
+                      >
+                      </p-checkbox>
+                    </div>
+                  </form>
+                </div>
+                <p style="color: red" *ngIf="isInvalidForm1">
+                  Please Select at least one option in all categories
+                </p>
+                <div class="mb-20" *ngIf="isInvoice">
+                  <div class="ui-inputgroup mt-20 text-center">
+                    <button
+                      type="button"
+                      class="ui-button btn-primary min-w-50"
+                      (click)="onSubmit(1)"
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </div>
+                <div class="mb-20" *ngIf="!isInvoice">
+                  <div class="ui-inputgroup mt-20 text-center">
+                    <button
+                      type="button"
+                      class="ui-button btn-primary min-w-50"
+                      (click)="onSubmit(2)"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="activeIndex == 1">
+              <div class="col-sm-10 mx-auto" *ngIf="isInvoice">
+                <form action="" [formGroup]="invoiceForm">
+                  <div class="row mb-20">
+                    <div class="col-sm-12 px-0">
+                      <label for="surchargebasis" class="mb-20 sub-Heading-tab"
+                        >Invoice Process</label
+                      >
+                      <label
+                        for="surchargebasis"
+                        class="mb-20 sub-Heading-tab ml-60"
+                        >Priority</label
+                      >
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <p-checkbox
+                              label="Invoice Description"
+                              binary="true"
+                              formControlName="invoiceDescription"
+                              (onChange)="
+                                pushConfigValues($event, 1, 2, 'InvoiceDesc')
+                              "
+                            >
+                            </p-checkbox>
+                          </div>
+                          <div class="col-sm-2">
+                            <select
+                              name="invoicePriority"
+                              id="sorting"
+                              [(ngModel)]="invoicePriority"
+                              formControlName="invoicePriority"
+                              (change)="
+                                selectedPriorities($event, 'InvoiceDesc')
+                              "
+                            >
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <p-checkbox
+                              label="PO Description"
+                              formControlName="poDescription"
+                              binary="true"
+                              (onChange)="
+                                pushConfigValues($event, 2, 2, 'PODesc')
+                              "
+                            >
+                            </p-checkbox>
+                          </div>
+                          <div class="col-sm-2">
+                            <select
+                              name="poPriority"
+                              id="sorting"
+                              [(ngModel)]="poPriority"
+                              formControlName="poPriority"
+                              (change)="selectedPriorities($event, 'PODesc')"
+                            >
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <p-checkbox
+                              ngDefaultControl
+                              label="GL Code"
+                              binary="true"
+                              formControlName="glDescription"
+                              (onChange)="
+                                pushConfigValues($event, 3, 2, 'GLDesc')
+                              "
+                            >
+                            </p-checkbox>
+                          </div>
+                          <div class="col-sm-2">
+                            <select
+                              name="glPriority"
+                              id="sorting"
+                              [(ngModel)]="glPriority"
+                              formControlName="glPriority"
+                              (change)="selectedPriorities($event, 'GLDesc')"
+                            >
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <p-checkbox
+                              label="HSN/SAC Code"
+                              formControlName="sac"
+                              ngDefaultControl
+                              binary="true"
+                              (onChange)="
+                                pushConfigValues($event, 4, 2, 'SACDesc')
+                              "
+                            >
+                            </p-checkbox>
+                          </div>
+                          <div class="col-sm-2">
+                            <select
+                              name="sac"
+                              id="sorting"
+                              [(ngModel)]="sacPriority"
+                              formControlName="sacPriority"
+                              (change)="selectedPriorities($event, 'SACDesc')"
+                            >
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <p-checkbox
+                              label="Vendor Master"
+                              ngDefaultControl
+                              binary="true"
+                              formControlName="vendorMaster"
+                              (onChange)="
+                                pushConfigValues($event, 5, 2, 'VendorMaster')
+                              "
+                            >
+                            </p-checkbox>
+                          </div>
+                          <div class="col-sm-2">
+                            <select
+                              name="vendorPriority"
+                              id="sorting"
+                              [(ngModel)]="vendorPriority"
+                              formControlName="vendorPriority"
+                              (change)="
+                                selectedPriorities($event, 'VendorMaster')
+                              "
+                            >
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 mb-10 px-0">
+                      <label for="surchargebasis" class="mb-20 sub-Heading-tab"
+                        >Provision Tracking Periods</label
+                      >
+                    </div>
+                    <div class="col-sm-3 mb-10">
+                      <p-radioButton
+                        label="Yearly"
+                        name="provisionPeriod"
+                        value="Yearly"
+                        binary="true"
+                        formControlName="provisionPeriod"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-3">
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Quarterly"
+                        name="provisionPeriod"
+                        value="Quarterly"
+                        binary="true"
+                        formControlName="provisionPeriod"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-3">
+                      <p-radioButton
+                        label="Monthly"
+                        name="provisionPeriod"
+                        value="Monthly"
+                        formControlName="provisionPeriod"
+                        binary="true"
+                      >
+                      </p-radioButton>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 mb-10 px-0">
+                      <label
+                        for="pertransactionlimit"
+                        class="mb-20 sub-Heading-tab"
+                        >Annual / Per Transaction Limit for Rate
+                        Determination?</label
+                      >
+                    </div>
+                    <div class="col-sm-3 mb-10">
+                      <p-radioButton
+                        label="Enable"
+                        name="pertransactionlimit"
+                        value="Yes"
+                        binary="true"
+                        formControlName="pertransactionlimit"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-4">
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Disable"
+                        name="pertransactionlimit"
+                        value="No"
+                        binary="true"
+                        formControlName="pertransactionlimit"
+                      >
+                      </p-radioButton>
+                    </div>
+                    `
+                    <div
+                      class="col-sm-12 bg-gray my-10 p-10"
+                      *ngIf="
+                        invoiceForm.getRawValue().pertransactionlimit === 'Yes'
+                      "
+                    >
+                      <div class="row">
+                        <div class="col-sm-6" *ngFor="let item of sectionsList">
+                          <p-checkbox
+                            label="{{ item.nature }}"
+                            name="selectedValues"
+                            ngDefaultControl
+                            value="{{ item.section }}"
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="selectedSections"
+                          >
+                          </p-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 mb-10 px-0">
+                      <label
+                        for="interestCalculationType"
+                        class="mb-20 sub-Heading-tab"
+                        >Select Period for Interest Calulation</label
+                      >
+                    </div>
+                    <div class="col-sm-6 mb-10">
+                      <p-radioButton
+                        label="Interest as per 30 day period"
+                        name="interestCalculationType"
+                        value="30days"
+                        binary="true"
+                        formControlName="interestCalculationType"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-6">
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Interest as per calendar month"
+                        name="interestCalculationType"
+                        value="calendarMonth"
+                        binary="true"
+                        formControlName="interestCalculationType"
+                      >
+                      </p-radioButton>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 mb-10 px-0">
+                      <label for="roundingoff" class="mb-20 sub-Heading-tab"
+                        >Select Rounding Off</label
+                      >
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-radioButton
+                        label="Decimal Round off"
+                        name="roundingoff"
+                        value="Decimal"
+                        binary="true"
+                        formControlName="roundoff"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Round off to nearest 1 Rupee"
+                        name="roundingoff"
+                        value="Roundoffto1"
+                        binary="true"
+                        formControlName="roundoff"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-radioButton
+                        label="Round off to nearest 10 Rupees"
+                        name="roundingoff"
+                        value="Roundoffto10"
+                        formControlName="roundoff"
+                        binary="true"
+                      >
+                      </p-radioButton>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 mt-15 mb-10 px-0">
+                      <label for="surchargebasis" class="mb-20 sub-Heading-tab"
+                        >Provision-Invoice Adjustment</label
+                      >
+                    </div>
+                    <div class="col-sm-12">
+                      <p-radioButton
+                        label="Basis PO number"
+                        name="provisionProcessing"
+                        value="POTRACKING"
+                        binary="true"
+                        formControlName="provisionProcessing"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-12 ml-30">
+                      <label for="provisionProcessing" class="mb-20"
+                        >Note: Provision and invoice records should have PO
+                        numbers</label
+                      >
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-radioButton
+                        label="FIFO logic with exceptional case is applicable for a yearly provisions as the FIFO is not applicable when the PO is raised in the previous year and invoice is provided in current year"
+                        name="provisionProcessing"
+                        value="FIFO"
+                        binary="true"
+                        formControlName="provisionProcessing"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-12">
+                      <p-radioButton
+                        ngDefaultControl
+                        label="FIFO (Vendor-Section based)"
+                        name="provisionProcessing"
+                        value="VENDORSECTION"
+                        binary="true"
+                        formControlName="provisionProcessing"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-12 ml-30">
+                      <label for="provisionProcessing" class="mb-20"
+                        >Note: FIFO is not applicable when PO is raised in the
+                        previous year and invoice is issued in current
+                        year</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 mt-15 mb-10 px-0">
+                      <label
+                        for="advanceProcessing"
+                        class="mb-20 sub-Heading-tab"
+                        >Advance-Invoice Adjustment</label
+                      >
+                    </div>
+                    <div class="col-sm-12">
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Basis advance indicator number"
+                        name="advanceProcessing"
+                        value="ADVANCEINDICATOR"
+                        binary="true"
+                        formControlName="advanceProcessing"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-12 ml-30">
+                      <label for="advanceProcessing" class="mb-20"
+                        >Note: Advance and invoice records should have an
+                        indicator number</label
+                      >
+                    </div>
+                    <div class="col-sm-12">
+                      <p-radioButton
+                        label="Basis PO number"
+                        name="advanceProcessing"
+                        value="PO"
+                        binary="true"
+                        formControlName="advanceProcessing"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-12 ml-30">
+                      <label for="advanceProcessing" class="mb-20"
+                        >Note: Advance and invoice records should have PO
+                        numbers</label
+                      >
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-radioButton
+                        label="FIFO (Vendor-Section based)"
+                        name="advanceProcessing"
+                        value="FIFO"
+                        binary="true"
+                        formControlName="advanceProcessing"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Hybrid"
+                        name="advanceProcessing"
+                        value="HYBRID"
+                        binary="true"
+                        formControlName="advanceProcessing"
+                      >
+                      </p-radioButton>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 mt-15 mb-10 px-0">
+                      <label
+                        for="creditnoteProcessing"
+                        class="mb-20 sub-Heading-tab"
+                        >Credit note processing</label
+                      >
+                    </div>
+                    <div class="col-sm-12 mb-10">
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Forward adjustment"
+                        name="creditProcessing"
+                        value="AA"
+                        binary="true"
+                        formControlName="creditProcessing"
+                      >
+                      </p-radioButton>
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Backward adjustment"
+                        name="creditProcessing"
+                        value="A"
+                        binary="true"
+                        formControlName="creditProcessing"
+                      >
+                      </p-radioButton>
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Reject credit notes"
+                        name="creditProcessing"
+                        value="R"
+                        binary="true"
+                        formControlName="creditProcessing"
+                      >
+                      </p-radioButton>
+                    </div>
+                    <div
+                      class="col-sm-12 mt-15 mb-10 px-0"
+                      *ngIf="isChallanProcessing"
+                    >
+                      <label
+                        for="challanProcessing"
+                        class="mb-20 sub-Heading-tab"
+                        >Challan Processing</label
+                      >
+                    </div>
+                    <div class="col-sm-12 mb-10" *ngIf="isChallanProcessing">
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Single consolidated challan"
+                        name="challanProcessing"
+                        [value]="false"
+                        binary="true"
+                        formControlName="challanProcessing"
+                      >
+                      </p-radioButton>
+                      <p-radioButton
+                        ngDefaultControl
+                        label="Multiple section-wise challan"
+                        name="challanProcessing"
+                        [value]="true"
+                        binary="true"
+                        formControlName="challanProcessing"
+                      >
+                      </p-radioButton>
+                    </div>
+                  </div>
+                  <div
+                    class="col-sm-12 mt-15 mb-10 px-0"
+                    *ngIf="isDividendProcessing"
+                  >
+                    <label class="mb-20 sub-Heading-tab"
+                      >Dividend processing</label
+                    >
+                  </div>
+                  <!-- Client Rule Matrix  start-->
+                  <div
+                    class="col-sm-12 mt-15 mb-10 px-0"
+                    *ngIf="isDividendProcessing"
+                  >
+                    <label class="mb-20 sub-Heading-tab"
+                      >Client specific rule matrix</label
+                    >
+                    <label
+                      for="TREATY_BENEFITS_IN_ABSENCE_OF_DOCS"
+                      class="mb-20 sub-Heading-tab"
+                      >Treaty benefits to be provided in the absence of
+                      documents/declarations [viz. Tax Residency Certificate, No
+                      Permanent Establishment declaration etc.]</label
+                    >
+                  </div>
+                  <div class="col-sm-12 mb-10" *ngIf="isDividendProcessing">
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label
+                          for="clientRules_1_KEY"
+                          class="mb-20 sub-Heading-tab"
+                          style="font-weight: normal;"
+                          >Key/Strategic Shareholders</label
+                        >
+                      </div>
+                      <div class="col-sm-2" class="clientMatrix">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="Yes"
+                          name="clientRules_1_KEY"
+                          [value]="true"
+                          binary="true"
+                          formControlName="clientRules_1_KEY"
+                        >
+                        </p-radioButton>
+                      </div>
+                      <div class="col-sm-2" style="display: inline-flex;">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="No"
+                          name="clientRules_1_KEY"
+                          [value]="false"
+                          binary="true"
+                          formControlName="clientRules_1_KEY"
+                        >
+                        </p-radioButton>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label
+                          for="clientRules_1_All"
+                          class="mb-20 sub-Heading-tab"
+                          style="font-weight: normal;"
+                          >Non-key/Strategic shareholders</label
+                        >
+                      </div>
+                      <div class="col-sm-2" class="clientMatrix">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="Yes"
+                          name="clientRules_1_All"
+                          [value]="true"
+                          binary="true"
+                          formControlName="clientRules_1_All"
+                        >
+                        </p-radioButton>
+                      </div>
+                      <div class="col-sm-2" style="display: inline-flex;">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="No"
+                          name="clientRules_1_All"
+                          [value]="false"
+                          binary="true"
+                          formControlName="clientRules_1_All"
+                        >
+                        </p-radioButton>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-sm-12 mt-15 mb-10 px-0"
+                    *ngIf="isDividendProcessing"
+                  >
+                    <label
+                      for="TREATY_BENEFITS_BY_INDEMNITY"
+                      class="mb-20 sub-Heading-tab"
+                      >Treaty benefits to be provided on the basis of indemnity
+                      obtained from the shareholder in the absence of
+                      documents/declarations</label
+                    >
+                  </div>
+                  <div class="col-sm-12 mb-10" *ngIf="isDividendProcessing">
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label
+                          for="clientRules_2_KEY"
+                          class="mb-20 sub-Heading-tab"
+                          style="font-weight: normal;"
+                          >Key/Strategic Shareholders</label
+                        >
+                      </div>
+                      <div class="col-sm-2" class="clientMatrix">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="Yes"
+                          name="clientRules_2_KEY"
+                          [value]="true"
+                          binary="true"
+                          formControlName="clientRules_2_KEY"
+                        >
+                        </p-radioButton>
+                      </div>
+                      <div class="col-sm-2" style="display: inline-flex;">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="No"
+                          name="clientRules_2_KEY"
+                          [value]="false"
+                          binary="true"
+                          formControlName="clientRules_2_KEY"
+                        >
+                        </p-radioButton>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label
+                          for="clientRules_2_All"
+                          class="mb-20 sub-Heading-tab"
+                          style="font-weight: normal;"
+                          >Non-key/Strategic shareholders</label
+                        >
+                      </div>
+                      <div class="col-sm-2" class="clientMatrix">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="Yes"
+                          name="clientRules_2_All"
+                          [value]="true"
+                          binary="true"
+                          formControlName="clientRules_2_All"
+                        >
+                        </p-radioButton>
+                      </div>
+                      <div class="col-sm-2" style="display: inline-flex;">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="No"
+                          name="clientRules_2_All"
+                          [value]="false"
+                          binary="true"
+                          formControlName="clientRules_2_All"
+                        >
+                        </p-radioButton>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="col-sm-12 mt-15 mb-10 px-0"
+                    *ngIf="isDividendProcessing"
+                  >
+                    <label
+                      for="TREATY_BENEFITS_AS_PER_MFN_CLAUSE"
+                      class="mb-20 sub-Heading-tab"
+                      >Benefit of beneficial rate as per Most Favoured
+                      Nation('MFN') clause to be provided</label
+                    >
+                  </div>
+                  <div class="col-sm-12 mb-10" *ngIf="isDividendProcessing">
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label
+                          for="clientRules_3_KEY"
+                          class="mb-20 sub-Heading-tab"
+                          style="font-weight: normal;"
+                          >Key/Strategic Shareholders</label
+                        >
+                      </div>
+                      <div class="col-sm-2" class="clientMatrix">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="Yes"
+                          name="clientRules_3_KEY"
+                          [value]="true"
+                          binary="true"
+                          formControlName="clientRules_3_KEY"
+                        >
+                        </p-radioButton>
+                      </div>
+                      <div class="col-sm-2" style="display: inline-flex;">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="No"
+                          name="clientRules_3_KEY"
+                          [value]="false"
+                          binary="true"
+                          formControlName="clientRules_3_KEY"
+                        >
+                        </p-radioButton>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label
+                          for="clientRules_3_All"
+                          class="mb-20 sub-Heading-tab"
+                          style="font-weight: normal;"
+                          >Non-key/Strategic shareholders</label
+                        >
+                      </div>
+                      <div class="col-sm-2" class="clientMatrix">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="Yes"
+                          name="clientRules_3_All"
+                          [value]="true"
+                          binary="true"
+                          formControlName="clientRules_3_All"
+                        >
+                        </p-radioButton>
+                      </div>
+                      <div class="col-sm-2" style="display: inline-flex;">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="No"
+                          name="clientRules_3_All"
+                          [value]="false"
+                          binary="true"
+                          formControlName="clientRules_3_All"
+                        >
+                        </p-radioButton>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="isCompanyDeductor">
+                    <div
+                      class="col-sm-12 mt-15 mb-10 px-0"
+                      *ngIf="isDividendProcessing"
+                    >
+                      <label
+                        for="TREATY_BENEFITS_TO_FII_FPI_GDR"
+                        class="mb-20 sub-Heading-tab"
+                        >Treaty benefits to be provided to the category of
+                        shareholders (viz.GDR's purchased in foreign
+                        currency)</label
+                      >
+                    </div>
+                    <div class="col-sm-12 mb-10" *ngIf="isDividendProcessing">
+                      <div class="row">
+                        <div class="col-sm-5">
+                          <label
+                            for="clientRules_4_KEY"
+                            class="mb-20 sub-Heading-tab"
+                            style="font-weight: normal;"
+                            >Key/Strategic Shareholders</label
+                          >
+                        </div>
+                        <div class="col-sm-2" class="clientMatrix">
+                          <p-radioButton
+                            ngDefaultControl
+                            label="Yes"
+                            name="clientRules_4_KEY"
+                            [value]="true"
+                            binary="true"
+                            formControlName="clientRules_4_KEY"
+                          >
+                          </p-radioButton>
+                        </div>
+                        <div class="col-sm-2" style="display: inline-flex;">
+                          <p-radioButton
+                            ngDefaultControl
+                            label="No"
+                            name="clientRules_4_KEY"
+                            [value]="false"
+                            binary="true"
+                            formControlName="clientRules_4_KEY"
+                          >
+                          </p-radioButton>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-5">
+                          <label
+                            for="clientRules_4_All"
+                            class="mb-20 sub-Heading-tab"
+                            style="font-weight: normal;"
+                            >Non-key/Strategic shareholders</label
+                          >
+                        </div>
+                        <div class="col-sm-2" class="clientMatrix">
+                          <p-radioButton
+                            ngDefaultControl
+                            label="Yes"
+                            name="clientRules_4_All"
+                            [value]="true"
+                            binary="true"
+                            formControlName="clientRules_4_All"
+                          >
+                          </p-radioButton>
+                        </div>
+                        <div class="col-sm-2" style="display: inline-flex;">
+                          <p-radioButton
+                            ngDefaultControl
+                            label="No"
+                            name="clientRules_4_All"
+                            [value]="false"
+                            binary="true"
+                            formControlName="clientRules_4_All"
+                          >
+                          </p-radioButton>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="isBusinessMutualDeductor">
+                    <div
+                      class="col-sm-12 mt-15 mb-10 px-0"
+                      *ngIf="isDividendProcessing"
+                    >
+                      <label
+                        for="TREATY_BENEFITS_TO_MUTUAL_FUND_BUSINESS_TRUST_DEDUCTOR_TYPE"
+                        class="mb-20 sub-Heading-tab"
+                        >Treaty benefits to be provided to all category of
+                        shareholders where the deductor is business trust/
+                        mutual fund</label
+                      >
+                    </div>
+                    <div class="col-sm-12 mb-10" *ngIf="isDividendProcessing">
+                      <div class="row">
+                        <div class="col-sm-5">
+                          <label
+                            for="clientRules_5_KEY"
+                            class="mb-20 sub-Heading-tab"
+                            style="font-weight: normal;"
+                            >Key/Strategic Shareholders</label
+                          >
+                        </div>
+                        <div class="col-sm-2" class="clientMatrix">
+                          <p-radioButton
+                            ngDefaultControl
+                            label="Yes"
+                            name="clientRules_5_KEY"
+                            [value]="true"
+                            binary="true"
+                            formControlName="clientRules_5_KEY"
+                          >
+                          </p-radioButton>
+                        </div>
+                        <div class="col-sm-2" style="display: inline-flex;">
+                          <p-radioButton
+                            ngDefaultControl
+                            label="No"
+                            name="clientRules_5_KEY"
+                            [value]="false"
+                            binary="true"
+                            formControlName="clientRules_5_KEY"
+                          >
+                          </p-radioButton>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-5">
+                          <label
+                            for="clientRules_5_All"
+                            class="mb-20 sub-Heading-tab"
+                            style="font-weight: normal;"
+                            >Non-key/Strategic shareholders</label
+                          >
+                        </div>
+                        <div class="col-sm-2" class="clientMatrix">
+                          <p-radioButton
+                            ngDefaultControl
+                            label="Yes"
+                            name="clientRules_5_All"
+                            [value]="true"
+                            binary="true"
+                            formControlName="clientRules_5_All"
+                          >
+                          </p-radioButton>
+                        </div>
+                        <div class="col-sm-2" style="display: inline-flex;">
+                          <p-radioButton
+                            ngDefaultControl
+                            label="No"
+                            name="clientRules_5_All"
+                            [value]="false"
+                            binary="true"
+                            formControlName="clientRules_5_All"
+                          >
+                          </p-radioButton>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="col-sm-12 mt-15 mb-10 px-0"
+                    *ngIf="isDividendProcessing"
+                  >
+                    <label
+                      for="APPLY_SURCHARGE_AND_CESS_AS_PER_LDC"
+                      class="mb-20 sub-Heading-tab"
+                      >Surcharge and cess to be applied on the TDS rate as per
+                      the lower withholding tax certificate</label
+                    >
+                  </div>
+                  <div class="col-sm-12 mb-10" *ngIf="isDividendProcessing">
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label
+                          for="clientRules_6_KEY"
+                          class="mb-20 sub-Heading-tab"
+                          style="font-weight: normal;"
+                          >Key/Strategic Shareholders</label
+                        >
+                      </div>
+                      <div class="col-sm-2" class="clientMatrix">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="Yes"
+                          name="clientRules_6_KEY"
+                          [value]="true"
+                          binary="true"
+                          formControlName="clientRules_6_KEY"
+                        >
+                        </p-radioButton>
+                      </div>
+                      <div class="col-sm-2" style="display: inline-flex;">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="No"
+                          name="clientRules_6_KEY"
+                          [value]="false"
+                          binary="true"
+                          formControlName="clientRules_6_KEY"
+                        >
+                        </p-radioButton>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <label
+                          for="clientRules_6_All"
+                          class="mb-20 sub-Heading-tab"
+                          style="font-weight: normal;"
+                          >Non-key/Strategic shareholders</label
+                        >
+                      </div>
+                      <div class="col-sm-2" class="clientMatrix">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="Yes"
+                          name="clientRules_6_All"
+                          [value]="true"
+                          binary="true"
+                          formControlName="clientRules_6_All"
+                        >
+                        </p-radioButton>
+                      </div>
+                      <div class="col-sm-2" style="display: inline-flex;">
+                        <p-radioButton
+                          ngDefaultControl
+                          label="No"
+                          name="clientRules_6_All"
+                          [value]="false"
+                          binary="true"
+                          formControlName="clientRules_6_All"
+                        >
+                        </p-radioButton>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Client Rule Matrix  end-->
+
+                  <div
+                    class="col-sm-12 mt-15 mb-10 px-0"
+                    *ngIf="isDividendProcessing"
+                  >
+                    <label
+                      for="dvndDdtPaidBeforeEOY"
+                      class="mb-20 sub-Heading-tab"
+                      >Is Dividend Distribution Tax paid on dividend declared
+                      before 31st March, 2020</label
+                    >
+                  </div>
+                  <div class="col-sm-12 mb-10" *ngIf="isDividendProcessing">
+                    <p-radioButton
+                      ngDefaultControl
+                      label="Yes"
+                      name="dvndDdtPaidBeforeEOY"
+                      [value]="true"
+                      binary="true"
+                      formControlName="dvndDdtPaidBeforeEOY"
+                    >
+                    </p-radioButton>
+                    <p-radioButton
+                      ngDefaultControl
+                      label="No"
+                      name="dvndDdtPaidBeforeEOY"
+                      [value]="false"
+                      binary="true"
+                      formControlName="dvndDdtPaidBeforeEOY"
+                    >
+                    </p-radioButton>
+                  </div>
+                  <!-- 15CACB filling...-->
+                  <div
+                    class="col-sm-12 mt-15 mb-10 px-0"
+                    *ngIf="is15CACBProcessing"
+                  >
+                    <label
+                      for="dvndPrepForm15CaCb"
+                      class="mb-20 sub-Heading-tab"
+                      >Preparation of Form 15CB</label
+                    >
+                  </div>
+
+                  <div class="col-sm-12 mb-10" *ngIf="is15CACBProcessing">
+                    <p-radioButton
+                      ngDefaultControl
+                      label="Only Part C of Form 15CA"
+                      name="dvndPrepForm15CaCb"
+                      value="ONLY_PART_C_OF_FORM_15_CA"
+                      binary="true"
+                      formControlName="dvndPrepForm15CaCb"
+                    >
+                    </p-radioButton>
+                    <p-radioButton
+                      ngDefaultControl
+                      label="Part A or B of Form 15CA"
+                      name="dvndPrepForm15CaCb"
+                      value="PART_A_OR_B_OF_FORM_15_CA"
+                      binary="true"
+                      formControlName="dvndPrepForm15CaCb"
+                    >
+                    </p-radioButton>
+                  </div>
+
+                  <div class="row">
+                    <!-- Commented GL account codes for future use -->
+                    <!-- <div class="col-sm-12 mt-15 mb-10 px-0" *ngIf="isGlAccount">
+                      <label for="surchargebasis" class="mb-20 sub-Heading-tab">GL Account Number</label>
+                    </div>
+                    <div class="col-sm-12 mb-10 form-group" *ngIf="isGlAccount">
+                      <tag-input editable="true" addOnBlur="true" placeholder="Enter Account Number"
+                        formControlName="accountNumber" [(ngModel)]="accountNum">
+                      </tag-input>
+                    </div> -->
+                    <p style="color: red" *ngIf="isInvalidForm2">
+                      Please Select at least three invoice process options with
+                      priorities
+                    </p>
+                    <div class="mb-20 col-sm-12 text-center">
+                      <div class="ui-inputgroup mt-20">
+                        <button
+                          type="button"
+                          class="ui-button btn-secondary w-40"
+                          (click)="onSubmit(0)"
+                        >
+                          Prev
+                        </button>
+                        <button
+                          type="button"
+                          class="ui-button btn-primary"
+                          (click)="onSubmit(2)"
+                        >
+                          {{ !isOnboardingView ? 'Submit' : 'Update' }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>Manage roles</ng-template>
+        <ng-template ngbTabContent>
+          <ey-roles-permissions
+            *ngIf="!showRoleForm"
+            [deductorPAN]="deductorPAN"
+            [action]="actionType"
+            (manageForm)="roleFormBehaviorHandler($event)"
+          >
+          </ey-roles-permissions>
+
+          <ey-roles-permission-form
+            *ngIf="rolespopup && showRoleForm"
+            (listHandler)="roleListBehaviorHandler($event)"
+            [formActionType]="roleFormActionType"
+            [deductorPan]="deductorPAN"
+            [scopeType]="moduleType"
+            (manageForm)="roleFormBehaviorHandler($event)"
+            (closeRoles)="closeRoles($event)"
+          >
+          </ey-roles-permission-form>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>Custom Transformation </ng-template>
+        <ng-template ngbTabContent>
+          <ey-customtransformation
+            [custTransform]="custTransform"
+            [deductorInputId]="deductorPAN"
+          >
+          </ey-customtransformation>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>

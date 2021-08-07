@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema targetNamespace="http://incometaxindiaefiling.gov.in/common"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns ="http://incometaxindiaefiling.gov.in/common">
+	<xs:element name="CreationInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SWVersionNo" />
+				<xs:element ref="SWCreatedBy" />
+				<xs:element ref="XMLCreatedBy" />
+				<xs:element ref="XMLCreationDate" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Form_Details">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FormName" />
+				<xs:element ref="AssessmentYear" />
+				<xs:element ref="SchemaVer" />
+				<xs:element ref="FormVer" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FormVer">
+		<xs:simpleType>
+			<xs:restriction base="xs:decimal">
+				<xs:enumeration value="1" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FormName">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="FORM15H" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SchemaVer">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="V1.0" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SWCreatedBy">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="50"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SWVersionNo">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1" />
+				<xs:maxLength value="10" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="XMLCreatedBy">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="50"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AssessmentYear">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[1-9]{1}[0-9]{3}"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="XMLCreationDate" type="xs:date" />
+</xs:schema>

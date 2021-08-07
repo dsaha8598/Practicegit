@@ -1,0 +1,2766 @@
+<div class="ui-g-12 px-0">
+  <div class="">
+    <div class="ui-g">
+      <div class="ui-g-6 mx-0">
+        <h2 class="fs-22">{{ headingMsg }} Deductor / Collector Master</h2>
+      </div>
+      <!--  <div class="ui-g-6 text-right">
+        <span *HasAnyAuthority="['DEDUCTOR_UPDATE']">
+          <button
+            (click)="stateChanger('edit', data)"
+            type="button"
+            class="ui-button btn-primary"
+            *ngIf="actionState === 'VIEW'"
+          >
+            Edit
+          </button>
+        </span>
+      </div>
+      -->
+      <div class="ui-g-12">
+        <form [formGroup]="deductorForm" novalidate>
+          <div class="cuSt-steps mt-30">
+            <p-steps
+              [model]="items"
+              [(activeIndex)]="activeIndex"
+              class="cust-steps two-cust-step"
+              [readonly]="false"
+            >
+            </p-steps>
+            <div *ngIf="activeIndex == 0">
+              <div class="form-row">
+                <div class="form-group" formGroupName="scopeGroup">
+                  <div
+                    class="ui-inputgroup ui-g-12"
+                    [ngClass]="{
+                      'field-invalid': submitted && f.scopeGroup.errors
+                    }"
+                  >
+                    <label>Choose at least one module</label>
+                    <br />
+                    <div class="form-row">
+                      <div class="ui-inputgroup ui-g-4">
+                        <div class="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            formControlName="Tds"
+                            id="Tds"
+                            (change)="changeModule()"
+                          />
+                          <label class="custom-control-label" for="Tds"
+                            >TDS</label
+                          >
+                        </div>
+                      </div>
+                      <div class="ui-inputgroup ui-g-4">
+                        <div class="custom-control custom-checkbox">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            formControlName="Tcs"
+                            id="Tcs"
+                            (change)="changeModule()"
+                          />
+                          <label class="custom-control-label" for="Tcs"
+                            >TCS</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="error-feedback"
+                      *ngIf="
+                        submitted &&
+                        f.scopeGroup.errors &&
+                        f.scopeGroup.errors.requireOneCheckboxToBeChecked
+                      "
+                    >
+                      Please select atleast one configuration
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row mtn-30">
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid': submitted && f.deductorCode.errors
+                  }"
+                >
+                  <label for="inputCity">Deductor / Collector code</label>
+                  <input
+                    type="text"
+                    formControlName="deductorCode"
+                    placeholder="DEDUC01"
+                    class="input-ctrl"
+                    ngDefaultControl
+                  />
+                  <div
+                    *ngIf="submitted && f.deductorCode.errors"
+                    class="error-feedback"
+                  >
+                    <div *ngIf="f.deductorCode.errors.required">
+                      Please enter deductor / collector name.
+                    </div>
+
+                    <div *ngIf="f.deductorCode.errors.pattern">
+                      Please check the pattern e.g.DEDUCTOR001.
+                    </div>
+                    <div *ngIf="f.deductorCode.errors.maxlength">
+                      Maximum length allowed is only 25 characters.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid': submitted && f.deductorSalutation.errors
+                  }"
+                >
+                  <label for="inputCity">Deductor / Collector salutation</label>
+                  <input
+                    type="text"
+                    formControlName="deductorSalutation"
+                    placeholder="Mr/Ms/Mrs"
+                    class="input-ctrl"
+                    ngDefaultControl
+                  />
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid': submitted && f.deductorName.errors
+                  }"
+                >
+                  <label for="">Deductor / Collector name</label>
+                  <input
+                    type="text"
+                    formControlName="deductorName"
+                    placeholder="Enter deductor / collector name"
+                    class="input-ctrl"
+                    ngDefaultControl
+                    pInputText
+                  />
+                  <div
+                    *ngIf="submitted && f.deductorName.errors"
+                    class="error-feedback"
+                  >
+                    <div *ngIf="f.deductorName.errors.required">
+                      Please enter deductor / collector name
+                    </div>
+                    <div *ngIf="f.deductorName.errors.maxlength">
+                      Deductor/Collector code must not exceed 50 characters
+                    </div>
+                    <div *ngIf="f.deductorName.errors.pattern">
+                      Pleace check the pattern e.g.Deductor001 Test.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  field-invalid
+                  [ngClass]="{ 'field-invalid': submitted && f.pan.errors }"
+                >
+                  <label for="">Deductor / Collector PAN</label>
+                  <input
+                    type="text"
+                    maxlength="10"
+                    formControlName="pan"
+                    pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                    (input)="
+                      panStatusValidator(deductorForm.controls.pan.value)
+                    "
+                    placeholder="Enter deductor / collector pan"
+                    class="input-ctrl"
+                    ngDefaultControl
+                    pInputText
+                  />
+                  <div
+                    class="error-feedback"
+                    *ngIf="deductorForm.controls.pan.errors?.panValid"
+                  >
+                    Given PAN already exist. Please enter a valid PAN.
+                  </div>
+                  <div
+                    *ngIf="submitted && deductorForm.controls.pan.errors"
+                    class="error-feedback"
+                  >
+                    <div *ngIf="deductorForm.controls.pan.errors.required">
+                      Please enter deductor / collector pan.
+                    </div>
+                    <div *ngIf="deductorForm.controls.pan.errors.pattern">
+                      PAN must contain first 5 Uppercase Alphabets then 4
+                      Numerics and then an Uppercase Alphabet.
+                    </div>
+
+                    <div *ngIf="deductorForm.controls.pan.errors.maxlength">
+                      Deductor / Collector pan must not exceed 10 characters
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid':
+                      submitted && deductorForm.get('residentialStatus').errors
+                  }"
+                >
+                  <label for="">Deductor / Collector residential status</label>
+                  <p-dropdown
+                    [options]="residentialstatuslist"
+                    [value]="deductorForm.getRawValue().residentialStatus"
+                    ngDefaultControl
+                    formControlName="residentialStatus"
+                  >
+                  </p-dropdown>
+                  <div
+                    *ngIf="
+                      submitted && deductorForm.get('residentialStatus').errors
+                    "
+                    class="error-feedback"
+                  >
+                    Please select deductor / collector residential status
+                  </div>
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid':
+                      submitted && deductorForm.get('deductorTypeName').errors
+                  }"
+                >
+                  <label for="">Deductor / Collector type</label>
+                  <p-dropdown
+                    [options]="resideductortyprlist"
+                    [value]="deductorForm.getRawValue().deductorTypeName"
+                    ngDefaultControl
+                    formControlName="deductorTypeName"
+                  ></p-dropdown>
+                  <div
+                    *ngIf="
+                      submitted && deductorForm.get('deductorTypeName').errors
+                    "
+                    class="error-feedback"
+                  >
+                    Please select deductor / collector type
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid':
+                      submitted && deductorForm.get('status').errors
+                  }"
+                >
+                  <label for="">Deductor / Collector status</label>
+                  <p-dropdown
+                    [options]="statuslist"
+                    [value]="deductorForm.getRawValue().status"
+                    ngDefaultControl
+                    formControlName="status"
+                  ></p-dropdown>
+                  <div
+                    *ngIf="submitted && deductorForm.get('status').errors"
+                    class="error-feedback"
+                  >
+                    Please select deductor / collector residential status
+                  </div>
+                </div>
+                <div class="ui-inputgroup ui-g-4">
+                  <label for="">Dividend Deductor type</label>
+                  <p-dropdown
+                    [options]="getDividendDeductorlist"
+                    [value]="deductorForm.getRawValue().dvndDeductorTypeName"
+                    ngDefaultControl
+                    formControlName="dvndDeductorTypeName"
+                  ></p-dropdown>
+                </div>
+                <div class="ui-inputgroup ui-g-4">
+                  <label for="">Mode of payment (optional)</label>
+                  <p-dropdown
+                    [options]="modeofpaymentlist"
+                    [value]="deductorForm.getRawValue().modeOfPaymentId"
+                    ngDefaultControl
+                    formControlName="modeOfPaymentType"
+                  ></p-dropdown>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="ui-inputgroup ui-g-4">
+                  <label for="">Due date of tax payment (optional)</label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      placeholder="dd-mm-yyyy"
+                      name="dueDateOfTaxPayment"
+                      formControlName="dueDateOfTaxPayment"
+                      ngbDatepicker
+                      placement="auto"
+                      #dueDateOfTaxPayment="ngbDatepicker"
+                      [value]="
+                        deductorForm.getRawValue().dueDateOfTaxPayment
+                          | date: 'dd-MM-yyyy'
+                      "
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-secondary calendar fs-14"
+                        (click)="dueDateOfTaxPayment.toggle()"
+                        type="button"
+                      >
+                        <i class="fas fa-calendar-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{ 'field-invalid': submitted && f.email.errors }"
+                >
+                  <label for="">Email</label>
+                  <input
+                    type="email"
+                    maxlength="50"
+                    formControlName="email"
+                    class="input-ctrl"
+                    placeholder="Enter email address"
+                    ngDefaultControl
+                    pInputText
+                  />
+                  <div
+                    *ngIf="submitted && f.email.errors"
+                    class="error-feedback"
+                  >
+                    <div *ngIf="f.email.errors.required">
+                      Please enter the email address.
+                    </div>
+                    <div *ngIf="f.email.errors.email">
+                      Please enter a valid email address.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid': submitted && f.emailAlternate.errors
+                  }"
+                >
+                  <label for="">Email (Alternate) (optional)</label>
+                  <input
+                    type="email"
+                    maxlength="50"
+                    formControlName="emailAlternate"
+                    class="input-ctrl"
+                    placeholder="Enter email address"
+                    ngDefaultControl
+                    pInputText
+                  />
+                  <div
+                    *ngIf="submitted && f.emailAlternate.errors"
+                    class="error-feedback"
+                  >
+                    <div *ngIf="f.emailAlternate.errors.email">
+                      Please enter a valid email address.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid': submitted && f.phoneNumber.errors
+                  }"
+                >
+                  <label for="">Mobile number</label>
+                  <input
+                    type="text"
+                    minlength="10"
+                    maxlength="10"
+                    numberlengthvalidator
+                    formControlName="phoneNumber"
+                    class="input-ctrl"
+                    placeholder="9999999999"
+                    ngDefaultControl
+                    pInputText
+                  />
+                  <div
+                    *ngIf="submitted && f.phoneNumber.errors"
+                    class="error-feedback"
+                  >
+                    <div *ngIf="f.phoneNumber.errors.required">
+                      Please enter the mobile number.
+                    </div>
+                    <div *ngIf="f.phoneNumber.errors.maxlength">
+                      Please enter a valid 10 digit mobile number.
+                    </div>
+                    <div *ngIf="f.phoneNumber.errors.minlength">
+                      Please enter a valid 10 digit mobile number.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid': submitted && f.phoneNumberAlternate.errors
+                  }"
+                >
+                  <label for="">Mobile number (Alternate) (optional)</label>
+                  <input
+                    type="text"
+                    minlength="10"
+                    maxlength="10"
+                    numberlengthvalidator
+                    formControlName="phoneNumberAlternate"
+                    class="input-ctrl"
+                    placeholder="9999999999"
+                    ngDefaultControl
+                    pInputText
+                  />
+                  <div
+                    *ngIf="submitted && f.phoneNumberAlternate.errors"
+                    class="error-feedback"
+                  >
+                    <div *ngIf="f.phoneNumberAlternate.errors.maxlength">
+                      Please enter a valid 10 digit mobile number.
+                    </div>
+                    <div *ngIf="f.phoneNumberAlternate.errors.minlength">
+                      Please enter a valid 10 digit mobile number.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid': submitted && f.gstin.errors
+                  }"
+                >
+                  <label for="gstin"
+                    >Goods and Services Tax Number (GSTIN)</label
+                  >
+                  <input
+                    type="text"
+                    minlength="15"
+                    maxlength="15"
+                    formControlName="gstin"
+                    class="input-ctrl"
+                    placeholder="Enter GSTIN Ex.22AAAAA0000S1Z2"
+                    ngDefaultControl
+                    pInputText
+                    (input)="gstinNumberValidationCheck($event)"
+                  />
+                  <div
+                    *ngIf="submitted && deductorForm.controls.gstin.errors"
+                    class="error-feedback"
+                  >
+                    <div *ngIf="deductorForm.controls.gstin.errors.required">
+                      Please enter GSTIN.
+                    </div>
+                    <div *ngIf="deductorForm.controls.gstin.errors.pattern">
+                      GSTIN pattern example:22AAAAP1234S1Z2
+                    </div>
+                    <div *ngIf="deductorForm.controls.gstin.errors.maxlength">
+                      GSTIN number should be of 15 characters.
+                    </div>
+                    <div *ngIf="deductorForm.controls.gstin.errors.minlength">
+                      GSTIN number should be of 15 characters.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid': submitted && f.applicableFrom.errors
+                  }"
+                >
+                  <label for="inputCity"> Applicable from</label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      placeholder="dd-mm-yyyy"
+                      name="dp"
+                      id="applicableFrom"
+                      formControlName="applicableFrom"
+                      ngbDatepicker
+                      placement="auto"
+                      #applicableFrom="ngbDatepicker"
+                      [value]="
+                        deductorForm.getRawValue().applicableFrom
+                          | date: 'dd-MM-yyyy'
+                      "
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-secondary calendar fs-14"
+                        (click)="applicableFrom.toggle()"
+                        type="button"
+                      >
+                        <i class="fas fa-calendar-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="submitted && f.applicableFrom.errors"
+                    class="error-feedback"
+                  >
+                    <div *ngIf="f.applicableFrom.errors.required">
+                      Please enter applicable from.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="ui-inputgroup ui-g-4"
+                  [ngClass]="{
+                    'field-invalid':
+                      (submittedTo && f.applicableTo.errors) ||
+                      applicableToDateError
+                  }"
+                >
+                  <label for="inputState">Applicable To (optional)</label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      placeholder="dd-mm-yyyy"
+                      [minDate]="minDate"
+                      (click)="d.toggle()"
+                      name="dp2"
+                      formControlName="applicableTo"
+                      ngbDatepicker
+                      placement="auto"
+                      #d="ngbDatepicker"
+                      [value]="
+                        deductorForm.getRawValue().applicableTo
+                          | date: 'dd-MM-yyyy'
+                      "
+                    />
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-secondary calendar fs-14"
+                        (click)="d.toggle()"
+                        type="button"
+                      >
+                        <i class="fas fa-calendar-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="
+                      (submittedTo && f.applicableTo.errors) ||
+                      applicableToDateError
+                    "
+                    class="error-feedback"
+                  >
+                    <p *ngIf="applicableToDateError">
+                      Applicable to date must be more than that of Applicable
+                      from date.
+                    </p>
+                    <p *ngIf="f.applicableTo.errors.required">
+                      Please enter applicable to.
+                    </p>
+                  </div>
+                </div>
+                <div class="ui-inputgroup ui-g-8">
+                  <label for=""
+                    >Does deductor / collector have more than one branch?</label
+                  >
+                  <div class="form-check ui-g-2">
+                    <input
+                      class="form-check-input"
+                      formControlName="doesDeductorHasMorethanOneBranch"
+                      type="radio"
+                      name="doesDeductorHasMorethanOneBranch"
+                      id="payment_valueNo"
+                      [value]="true"
+                      ngDefaultControl
+                    />
+                    <label class="form-check-label" for="payment_valueNo">
+                      Yes
+                    </label>
+                  </div>
+                  <div class="form-check ui-g-2">
+                    <input
+                      class="form-check-input"
+                      formControlName="doesDeductorHasMorethanOneBranch"
+                      type="radio"
+                      name="doesDeductorHasMorethanOneBranch"
+                      id="payment_valueYes"
+                      [value]="false"
+                      ngDefaultControl
+                    />
+                    <label class="form-check-label" for="payment_valueYes">
+                      No
+                    </label>
+                    <div
+                      *ngIf="
+                        submitted && f.doesDeductorHasMorethanOneBranch.errors
+                      "
+                      class="error-feedback"
+                    >
+                      <div
+                        *ngIf="
+                          f.doesDeductorHasMorethanOneBranch.errors.required
+                        "
+                      >
+                        Is sub-nature of payment applicable is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-inputgroup text-center">
+                <button
+                  (click)="closePopup.emit(false)"
+                  type="button"
+                  class="ui-button btn-primary"
+                >
+                  <i class="fas fa-times-circle"></i> Close
+                </button>
+                <span>
+                  <button
+                    (click)="onNext()"
+                    type="button"
+                    class="ui-button btn-primary mr-3"
+                  >
+                    Next &nbsp;<i class="fas fa-arrow-right"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="activeIndex == 1">
+              <div *ngIf="tanListData?.length != 0">
+                <p-table
+                  #dt
+                  [columns]="selectedColumns"
+                  [paginator]="true"
+                  [rows]="5"
+                  [rowsPerPageOptions]="[5, 10, 20, 30]"
+                  [totalRecords]="tanListData?.length"
+                  [value]="tanListData"
+                  [scrollable]="true"
+                  scrollHeight="400px"
+                >
+                  <!-- <ng-template pTemplate="caption">
+                  <div class="ui-g mt-0">
+                    <div class="ui-g-12 ui-md-4 mx-0">
+                      <div style="text-align:left">
+                        <p-multiSelect
+                          [options]="cols"
+                          optionLabel="header"
+                          name="selectedColumns"
+                          selectedItemsLabel="{0} columns selected"
+                          [style]="{ minWidth: '200px' }"
+                          [(ngModel)]="selectedColumns"
+                          defaultLabel="Choose Columns"
+                          ngDefaultControl
+                        ></p-multiSelect>
+                      </div>
+                    </div>
+                    <div class="ui-inputgroup ui-inputgroup-cust ui-g-8 mx-0">
+                      <div class="relative">
+                        <input
+                          type="text"
+                          pInputText
+                          placeholder="Search"
+                          (input)="dt.filterGlobal($event.target.value, 'contains')"
+                          class="input-ctrl input-search-type"
+                        />
+                        <button
+                          type="submit"
+                          class="input-search pi pi-search"
+                        ></button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template> -->
+
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th
+                        *ngFor="let col of columns; let i = index"
+                        [pSortableColumn]="col.field"
+                        [style.width]="col.width"
+                      >
+                        {{ col.header }}
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                      </th>
+                    </tr>
+                  </ng-template>
+                  <ng-template
+                    pTemplate="body"
+                    let-rowData
+                    let-columns="columns"
+                  >
+                    <tr>
+                      <td
+                        *ngFor="let col of columns; let i = index"
+                        [style.width]="col.width"
+                      >
+                        <span *ngIf="col.type == 'action'">
+                          <a (click)="removeTableTan(rowData)">Remove</a></span
+                        >
+
+                        <span *ngIf="col.type != 'action'">{{
+                          rowData[col.field]
+                        }}</span>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage" let-columns>
+                    <tr>
+                      <td [attr.colspan]="columns.length">
+                        No records found
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+              <div class="form-row">
+                <div id="doesDeductorHasMorethanOne" class="ui-g-12">
+                  <div formArrayName="tanList">
+                    <div
+                      *ngFor="let address of getTanList.controls; let i = index"
+                      class="bg-light py-20 px-5 ui-g-12"
+                    >
+                      <div
+                        [formGroupName]="i"
+                        *ngIf="
+                          !actionHandler && i == getTanList.controls.length - 1
+                        "
+                      >
+                        <div>
+                          <h3>Enter TAN Details #{{ i + 1 }}</h3>
+                        </div>
+                        <div class="form-row">
+                          <div
+                            class="ui-inputgroup ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls.tan.errors
+                            }"
+                          >
+                            <label for="">TAN</label>
+                            <input
+                              type="text"
+                              maxlength="10"
+                              class="input-ctrl"
+                              placeholder="Enter tan"
+                              formControlName="tan"
+                              ngDefaultControl
+                              pattern="[A-Z]{4}[0-9]{5}[A-Z]{1}"
+                              pInputText
+                            />
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls.tan.errors
+                              "
+                              class="error-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.tan.errors
+                                    .required
+                                "
+                              >
+                                Please enter Deductor/Collector TAN.
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.tan.errors
+                                    .pattern
+                                "
+                              >
+                                TAN must contain first 4 Alphabets then 5
+                                Numerics and then Alphabet.
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.tan.errors
+                                    .maxlength
+                                "
+                              >
+                                TAN no must not exceed 10 characters.
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="ui-inputgroup ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls.countryName
+                                  .errors
+                            }"
+                          >
+                            <label for="">Country</label>
+                            <p-dropdown
+                              [options]="allcountries"
+                              (onChange)="changeStatesHandler($event, i)"
+                              [value]="deductorForm.getRawValue().countryName"
+                              ngDefaultControl
+                              formControlName="countryName"
+                            ></p-dropdown>
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls.countryName
+                                  .errors
+                              "
+                              class="error-feedback"
+                            >
+                              Please select any country.
+                            </div>
+                          </div>
+                          <div
+                            class="ui-inputgroup ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls.stateName.errors
+                            }"
+                          >
+                            <label for="">State</label>
+                            <p-dropdown
+                              [options]="states"
+                              [value]="deductorForm.getRawValue().stateName"
+                              ngDefaultControl
+                              (onChange)="changeCityHandler($event, i)"
+                              formControlName="stateName"
+                            >
+                            </p-dropdown>
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls.stateName.errors
+                              "
+                              class="error-feedback"
+                            >
+                              Please enter state.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div
+                            class="ui-inputgroup ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls.townCityDistrict
+                                  .errors
+                            }"
+                          >
+                            <label for="">City</label>
+                            <p-dropdown
+                              [options]="cities"
+                              [value]="
+                                deductorForm.getRawValue().townCityDistrict
+                              "
+                              ngDefaultControl
+                              (onChange)="changestdHandler($event, i, 'tan')"
+                              formControlName="townCityDistrict"
+                            ></p-dropdown>
+
+                            <!--  <input
+                      type="text"
+                      maxlength="30"
+                      formControlName="townCityDistrict"
+                      class="input-ctrl"
+                      placeholder="enter town / city / district"
+                      ngDefaultControl
+                      pInputText
+                    />
+                    -->
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls.townCityDistrict
+                                  .errors
+                              "
+                              class="error-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls
+                                    .townCityDistrict.errors.required
+                                "
+                              >
+                                Please enter town / city.
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="ui-inputgroup ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls.stdCode.errors
+                            }"
+                          >
+                            <label for="">STD code</label>
+                            <input
+                              type="text"
+                              numberlengthvalidator
+                              formControlName="stdCode"
+                              class="input-ctrl"
+                              value="deductorForm.getRawValue().stdCode"
+                              placeholder="Enter STD code"
+                              ngDefaultControl
+                              pInputText
+                              disabled="true"
+                            />
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls.stdCode.errors
+                              "
+                              class="error-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.stdCode.errors
+                                    .required
+                                "
+                              >
+                                Please enter STD code.
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="ui-inputgroup ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls.pinCode.errors
+                            }"
+                          >
+                            <label for="">Pin code</label>
+                            <input
+                              type="text"
+                              numberlengthvalidator
+                              formControlName="pinCode"
+                              class="input-ctrl"
+                              placeholder="Enter pin code"
+                              ngDefaultControl
+                              pInputText
+                            />
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls.pinCode.errors
+                              "
+                              class="error-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.pinCode.errors
+                                    .required
+                                "
+                              >
+                                Please enter pin code.
+                              </div>
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.pinCode.errors
+                                    .maxlength
+                                "
+                              >
+                                Pin code must not exceed
+                                {{ pinCodeNumber }} digits.
+                              </div>
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.pinCode.errors
+                                    .minlength
+                                "
+                              >
+                                Pin code should be of
+                                {{ pinCodeNumber }} digits.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div
+                            class="ui-inputgroup ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls.areaLocality
+                                  .errors
+                            }"
+                          >
+                            <label for="">Area/Locality</label>
+                            <input
+                              type="text"
+                              maxlength="30"
+                              formControlName="areaLocality"
+                              class="input-ctrl"
+                              placeholder="Enter area / locality"
+                              ngDefaultControl
+                              pInputText
+                            />
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls.areaLocality
+                                  .errors
+                              "
+                              class="error-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.areaLocality
+                                    .errors.required
+                                "
+                              >
+                                Please enter area/locality.
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.areaLocality
+                                    .errors.maxlength
+                                "
+                              >
+                                Upto 30 characters are allowed.
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.areaLocality
+                                    .errors.pattern
+                                "
+                              >
+                                Only Alphanumaric and special characters are
+                                allowed.
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="ui-inputgroup mb-0 ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls
+                                  .roadStreetPostoffice.errors
+                            }"
+                          >
+                            <label for="">Road/street/post office</label>
+                            <input
+                              type="text"
+                              maxlength="30"
+                              formControlName="roadStreetPostoffice"
+                              class="input-ctrl"
+                              placeholder="Enter road/street/post office"
+                              ngDefaultControl
+                              pInputText
+                            />
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls
+                                  .roadStreetPostoffice.errors
+                              "
+                              class="error-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls
+                                    .roadStreetPostoffice.errors.required
+                                "
+                              >
+                                Please enter road/street/post-office.
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls
+                                    .roadStreetPostoffice.errors.maxlength
+                                "
+                              >
+                                Road/street/post office must not exceed 30
+                                characters.
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls
+                                    .roadStreetPostoffice.errors.pattern
+                                "
+                              >
+                                Only Alphanumaric and special characters are
+                                allowed.
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="ui-inputgroup mb-0 ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls
+                                  .nameBuildingVillage.errors
+                            }"
+                          >
+                            <label for="">Name of building</label>
+                            <input
+                              type="text"
+                              maxlength="30"
+                              formControlName="nameBuildingVillage"
+                              class="input-ctrl"
+                              placeholder="Enter name of building"
+                              ngDefaultControl
+                              pInputText
+                            />
+
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls
+                                  .nameBuildingVillage.errors
+                              "
+                              class="error-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls
+                                    .nameBuildingVillage.errors
+                                "
+                              >
+                                Please enter name of building
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls
+                                    .nameBuildingVillage.errors.maxlength
+                                "
+                              >
+                                Name of building must not exceed 30 characters.
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls
+                                    .nameBuildingVillage.errors.pattern
+                                "
+                              >
+                                Only Alphanumaric and special characters are
+                                allowed.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div
+                            class="ui-inputgroup ui-g-4"
+                            [ngClass]="{
+                              'field-invalid':
+                                submitted &&
+                                f.tanList.controls[i].controls.flatDoorBlockNo
+                                  .errors
+                            }"
+                          >
+                            <label for="">Flat/Door/Block No</label>
+                            <input
+                              type="text"
+                              maxlength="10"
+                              class="input-ctrl"
+                              placeholder="Enter flat/door/block no"
+                              formControlName="flatDoorBlockNo"
+                              ngDefaultControl
+                              pInputText
+                            />
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.tanList.controls[i].controls.flatDoorBlockNo
+                                  .errors
+                              "
+                              class="error-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.flatDoorBlockNo
+                                    .errors
+                                "
+                              >
+                                Please enter Flat/door/block No.
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.flatDoorBlockNo
+                                    .errors.maxlength
+                                "
+                              >
+                                Flat/door/block No must not exceed 10
+                                characters.
+                              </div>
+                              <div
+                                *ngIf="
+                                  f.tanList.controls[i].controls.flatDoorBlockNo
+                                    .errors.pattern
+                                "
+                              >
+                                Only Alphanumaric and special characters are
+                                allowed.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div>
+                            <h3>
+                              Enter Responsible Person Details #{{ i + 1 }}
+                            </h3>
+                          </div>
+                          <div class="form-row">
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.name.errors
+                              }"
+                            >
+                              <label for="">Name</label>
+                              <input
+                                type="text"
+                                class="input-ctrl"
+                                placeholder="Enter Name"
+                                formControlName="name"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.name.errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.name.errors
+                                      .required
+                                  "
+                                >
+                                  Please enter name.
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.pan.errors
+                              }"
+                            >
+                              <label for="">PAN</label>
+                              <input
+                                type="text"
+                                maxlength="10"
+                                formControlName="pan"
+                                pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                                placeholder="Enter pan"
+                                class="input-ctrl"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.pan.errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.pan.errors
+                                      .required
+                                  "
+                                >
+                                  Please enter pan.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.pan.errors
+                                      .pattern
+                                  "
+                                >
+                                  PAN must contain first 5 Uppercase Alphabets
+                                  then 4 Numerics and then an Uppercase
+                                  Alphabet.
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.designation
+                                    .errors
+                              }"
+                            >
+                              <label for="">Designation</label>
+                              <input
+                                type="text"
+                                class="input-ctrl"
+                                placeholder="Enter Designation"
+                                formControlName="designation"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.designation
+                                    .errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.designation
+                                      .errors.required
+                                  "
+                                >
+                                  Please enter designation.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.state.errors
+                              }"
+                            >
+                              <label for="">State</label>
+                              <p-dropdown
+                                [options]="states"
+                                [value]="deductorForm.getRawValue().state"
+                                ngDefaultControl
+                                (onChange)="changeCityHandler($event, i)"
+                                formControlName="state"
+                              ></p-dropdown>
+
+                              <!-- <input
+                        type="text"
+                        maxlength="30"
+                        formControlName="state"
+                        class="input-ctrl"
+                        placeholder="Enter State"
+                        ngDefaultControl
+                        pInputText
+                      /> -->
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.state.errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.state.errors
+                                      .required
+                                  "
+                                >
+                                  Please enter state.
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.city.errors
+                              }"
+                            >
+                              <label for="">City</label>
+                              <p-dropdown
+                                [options]="cities"
+                                [value]="deductorForm.getRawValue().city"
+                                ngDefaultControl
+                                (onChange)="
+                                  changestdHandler($event, i, 'person')
+                                "
+                                formControlName="city"
+                              ></p-dropdown>
+
+                              <!--  <input
+                      type="text"
+                      maxlength="30"
+                      formControlName="city"
+                      class="input-ctrl"
+                      placeholder="Enter City"
+                      ngDefaultControl
+                      pInputText
+                    />
+                    -->
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.city.errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.city.errors
+                                      .required
+                                  "
+                                >
+                                  Please enter city.
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.personstdCode
+                                    .errors
+                              }"
+                            >
+                              <label for="">STD code</label>
+                              <input
+                                type="text"
+                                numberlengthvalidator
+                                formControlName="personstdCode"
+                                class="input-ctrl"
+                                placeholder="Enter STD code"
+                                ngDefaultControl
+                                pInputText
+                                disabled="true"
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.personstdCode
+                                    .errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.personstdCode
+                                      .errors.required
+                                  "
+                                >
+                                  Please enter STD code.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.personpinCode
+                                    .errors
+                              }"
+                            >
+                              <label for="">Pin code</label>
+                              <input
+                                type="text"
+                                numberlengthvalidator
+                                formControlName="personpinCode"
+                                class="input-ctrl"
+                                placeholder="Enter pin code"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.personpinCode
+                                    .errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.personpinCode
+                                      .errors.required
+                                  "
+                                >
+                                  Please enter pin code.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls.personpinCode
+                                      .errors.maxlength
+                                  "
+                                >
+                                  Pin code must not exceed
+                                  {{ pinCodeNumber }} digits.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls.personpinCode
+                                      .errors.minlength
+                                  "
+                                >
+                                  Pin code should be {{ pinCodeNumber }} digits.
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.area.errors
+                              }"
+                            >
+                              <label for="">Area/Locality</label>
+                              <input
+                                type="text"
+                                maxlength="30"
+                                formControlName="area"
+                                class="input-ctrl"
+                                placeholder="Enter area / locality"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.area.errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.area.errors
+                                      .required
+                                  "
+                                >
+                                  Please enter area/locality.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.area.errors
+                                      .pattern
+                                  "
+                                >
+                                  Only Alphanumaric and special characters are
+                                  allowed.
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.streetName
+                                    .errors
+                              }"
+                            >
+                              <label for="">Street/Road Name</label>
+                              <input
+                                type="text"
+                                maxlength="30"
+                                formControlName="streetName"
+                                class="input-ctrl"
+                                placeholder="Please enter street Name/road Name"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.streetName
+                                    .errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.streetName
+                                      .errors.required
+                                  "
+                                >
+                                  Please enter street/road name.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.streetName
+                                      .errors.pattern
+                                  "
+                                >
+                                  Only Alphanumaric and special characters are
+                                  allowed.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.buildingName
+                                    .errors
+                              }"
+                            >
+                              <label for="">Name of Building</label>
+                              <input
+                                type="text"
+                                formControlName="buildingName"
+                                class="input-ctrl"
+                                placeholder="Enter Name of Building"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.buildingName
+                                    .errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.buildingName
+                                      .errors.required
+                                  "
+                                >
+                                  Please name of building.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.buildingName
+                                      .errors.pattern
+                                  "
+                                >
+                                  Only Alphanumaric and special characters are
+                                  allowed.
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls
+                                    .personflatDoorBlockNo.errors
+                              }"
+                            >
+                              <label for="">Flat/Door/Block No</label>
+                              <input
+                                type="text"
+                                maxlength="10"
+                                class="input-ctrl"
+                                placeholder="Enter flat/door/block no"
+                                formControlName="personflatDoorBlockNo"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls
+                                    .personflatDoorBlockNo.errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls
+                                      .personflatDoorBlockNo.errors
+                                  "
+                                >
+                                  Please enter Flat/door/block No.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls
+                                      .personflatDoorBlockNo.errors.pattern
+                                  "
+                                >
+                                  Only Alphanumaric and special characters are
+                                  allowed.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.email.errors
+                              }"
+                            >
+                              <label for="">Email</label>
+                              <input
+                                type="email"
+                                maxlength="50"
+                                formControlName="email"
+                                class="input-ctrl"
+                                placeholder="Enter email address"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.email.errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.email.errors
+                                      .required
+                                  "
+                                >
+                                  Please enter the email address.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.email.pattern
+                                  "
+                                >
+                                  Please enter a valid email address.
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.alternateEmail
+                                    .errors
+                              }"
+                            >
+                              <label for="">Email (Alternate) (optional)</label>
+                              <input
+                                type="email"
+                                maxlength="50"
+                                formControlName="alternateEmail"
+                                class="input-ctrl"
+                                placeholder="Enter email address"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div *ngIf="submitted" class="mb-34">
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls
+                                      .alternateEmailpattern
+                                  "
+                                >
+                                  Please enter a valid email address.
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.telephone
+                                    .errors
+                              }"
+                            >
+                              <label for="">Telephone</label>
+                              <input
+                                type="text"
+                                minlength="12"
+                                maxlength="12"
+                                numberlengthvalidator
+                                formControlName="telephone"
+                                class="input-ctrl w-100"
+                                placeholder="080-23232323"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.telephone
+                                    .errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.telephone
+                                      .errors.required
+                                  "
+                                >
+                                  Please enter the Telephone number.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.telephone
+                                      .errors.maxlength
+                                  "
+                                >
+                                  Telephone number should not exceed 12 digits.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.telephone
+                                      .errors.minlength
+                                  "
+                                >
+                                  Telephone number should be of 12 digits.
+                                </div>
+
+                                <!-- <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.telephone
+                                      .errors.pattern
+                                  "
+                                >
+                                  Please enter a valid telephone number.
+                                </div>
+                             -->
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls
+                                    .alternateTelephone.errors
+                              }"
+                            >
+                              <label for=""
+                                >Telephone (Alternate) (optional)</label
+                              >
+                              <input
+                                type="text"
+                                minlength="12"
+                                maxlength="12"
+                                numberlengthvalidator
+                                formControlName="alternateTelephone"
+                                class="input-ctrl w-100"
+                                placeholder="080-23232323"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls
+                                    .alternateTelephone.errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls
+                                      .alternateTelephone.errors.maxlength
+                                  "
+                                >
+                                  Telephone number should not exceed 12 digits.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls
+                                      .alternateTelephone.errors.minlength
+                                  "
+                                >
+                                  Telephone number should be of 12 digits.
+                                </div>
+                                <!--   <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.telephone
+                                      .errors.pattern
+                                  "
+                                >
+                                  Please enter a valid telephone number.
+                                </div>
+                              --></div>
+                            </div>
+                            <div
+                              class="ui-inputgroup ui-g-4"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls.mobilenumber
+                                    .errors
+                              }"
+                            >
+                              <label for="">Mobile Number</label>
+                              <input
+                                type="text"
+                                minlength="10"
+                                maxlength="10"
+                                numberlengthvalidator
+                                formControlName="mobilenumber"
+                                class="input-ctrl"
+                                placeholder="9999999999"
+                                ngDefaultControl
+                                pInputText
+                              />
+                              <div
+                                *ngIf="
+                                  submitted &&
+                                  f.tanList.controls[i].controls.mobilenumber
+                                    .errors
+                                "
+                                class="error-feedback"
+                              >
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.mobilenumber
+                                      .errors.required
+                                  "
+                                >
+                                  Please enter mobile number.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.mobilenumber
+                                      .errors.maxlength
+                                  "
+                                >
+                                  Entered mobile number should not exceed 10
+                                  digits.
+                                </div>
+                                <div
+                                  *ngIf="
+                                    f.tanList.controls[i].controls.mobilenumber
+                                      .errors.minlength
+                                  "
+                                >
+                                  Entered mobile number should be 10 digits.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div
+                              class="ui-inputgroup ui-g-6"
+                              [ngClass]="{
+                                'field-invalid':
+                                  submitted &&
+                                  f.tanList.controls[i].controls
+                                    .personAddressChange.errors
+                              }"
+                            >
+                              <label for="">Address Change</label>
+                              <div class="form-check ui-g-2">
+                                <input
+                                  class="form-check-input"
+                                  formControlName="personAddressChange"
+                                  type="radio"
+                                  name="personAddressChange"
+                                  id="personAddressChange"
+                                  [value]="true"
+                                  ngDefaultControl
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="personAddressChange"
+                                >
+                                  Yes
+                                </label>
+                              </div>
+                              <div class="form-check ui-g-2">
+                                <input
+                                  class="form-check-input"
+                                  formControlName="personAddressChange"
+                                  type="radio"
+                                  name="personAddressChange"
+                                  id="personAddressChange"
+                                  [value]="false"
+                                  ngDefaultControl
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="personAddressChange"
+                                >
+                                  No
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Dividend things-->
+                        <div class="first-row">
+                          <div>
+                            <p-checkbox
+                              class="dividend_15cacb"
+                              label="Dividend-Opt-In for form 15CA/CB?"
+                              formControlName="dvndOptedFor15CaCb"
+                              ngDefaultControl
+                              binary="true"
+                              (onChange)="enableDividendFields($event)"
+                            >
+                            </p-checkbox>
+                            <div
+                              *ngIf="
+                                deductorForm.getRawValue().tanList[i]
+                                  .dvndOptedFor15CaCb
+                              "
+                            >
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndPrincipalAreaOfBusiness.errors
+                                }"
+                              >
+                                <label for="">Principal area of business</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Principal area of business"
+                                  formControlName="dvndPrincipalAreaOfBusiness"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndPrincipalAreaOfBusiness.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndPrincipalAreaOfBusiness.errors
+                                        .required
+                                    "
+                                  >
+                                    Please enter Principal area .
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndNameOfBank.errors
+                                }"
+                              >
+                                <label for="">Name of Bank</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Bank Name"
+                                  formControlName="dvndNameOfBank"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndNameOfBank.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndNameOfBank.errors.required
+                                    "
+                                  >
+                                    Please enter Bank Name.
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="first-row"
+                              *ngIf="
+                                deductorForm.getRawValue().tanList[i]
+                                  .dvndOptedFor15CaCb
+                              "
+                            >
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndBranchOfBank.errors
+                                }"
+                              >
+                                <label for="">Branch of the bank</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Branch of the bank"
+                                  formControlName="dvndBranchOfBank"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndBranchOfBank.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndBranchOfBank.errors.required
+                                    "
+                                  >
+                                    Please enter Branch of the bank.
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndFatherOrHusbandName.errors
+                                }"
+                              >
+                                <label for="">Father's/Husband Name</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Father's/Husband Name"
+                                  formControlName="dvndFatherOrHusbandName"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndFatherOrHusbandName.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndFatherOrHusbandName.errors.required
+                                    "
+                                  >
+                                    Please enter Father's/Husband Name.
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndBsrCodeOfBankBranch.errors
+                                }"
+                              >
+                                <label for=""
+                                  >BSR code of the bank branch (7 digit)</label
+                                >
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  maxlength="7"
+                                  placeholder="Enter BSR code of the bank branch"
+                                  formControlName="dvndBsrCodeOfBankBranch"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndBsrCodeOfBankBranch.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <p
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndBsrCodeOfBankBranch.errors
+                                        ?.required
+                                    "
+                                  >
+                                    Please enter BSR Code .
+                                  </p>
+                                  <p
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndBsrCodeOfBankBranch.errors
+                                        ?.maxlength
+                                    "
+                                  >
+                                    Please enter 7 digits only.
+                                  </p>
+                                </div>
+                              </div>
+
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndNameOfPremisesBuildingVillage.errors
+                                }"
+                              >
+                                <label for=""
+                                  >Name of Premises/Building/Village</label
+                                >
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Name of Premises/Building/Village"
+                                  formControlName="dvndNameOfPremisesBuildingVillage"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndNameOfPremisesBuildingVillage.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndNameOfPremisesBuildingVillage
+                                        .errors.required
+                                    "
+                                  >
+                                    Please enter Name of
+                                    Premises/Building/Village.
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .accountantSalutation.errors
+                                }"
+                              >
+                                <label for="">Accountant Salutation</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Mr/Ms/Mrs"
+                                  formControlName="accountantSalutation"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                              </div>
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndAccountantName.errors
+                                }"
+                              >
+                                <label for="">Accountant Name</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Accountant Name"
+                                  formControlName="dvndAccountantName"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndAccountantName.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndAccountantName.errors.required
+                                    "
+                                  >
+                                    Please enter Accountant Name.
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndNameOfProprietorship.errors
+                                }"
+                              >
+                                <label for=""
+                                  >Name of proprietorship/firm</label
+                                >
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Name of proprietorship/firm"
+                                  formControlName="dvndNameOfProprietorship"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndNameOfProprietorship.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndNameOfProprietorship.errors
+                                        .required
+                                    "
+                                  >
+                                    Please enter proprietorship/firm.
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndFlatDoorBlockNo.errors
+                                }"
+                              >
+                                <label for="">Flat/Door/Block No</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Flat/Door/Block No"
+                                  formControlName="dvndFlatDoorBlockNo"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndFlatDoorBlockNo.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndFlatDoorBlockNo.errors.required
+                                    "
+                                  >
+                                    Please enter Flat/Door/Block No.
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndAreaLocality.errors
+                                }"
+                              >
+                                <label for="">Area/Locality</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Area/Locality"
+                                  formControlName="dvndAreaLocality"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndAreaLocality.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndAreaLocality.errors.required
+                                    "
+                                  >
+                                    Please enter Area/Locality.
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndTownCityDistrict.errors
+                                }"
+                              >
+                                <label for="">Town/City/District</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Town/City/District"
+                                  formControlName="dvndTownCityDistrict"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndTownCityDistrict.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndTownCityDistrict.errors.required
+                                    "
+                                  >
+                                    Please enter Town/City/District.
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls.dvndPinCode
+                                      .errors
+                                }"
+                              >
+                                <label for="">PIN Code</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  maxlength="6"
+                                  numberlengthvalidator
+                                  placeholder="Enter PIN Code"
+                                  formControlName="dvndPinCode"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls.dvndPinCode
+                                      .errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls.dvndPinCode
+                                        .errors.required
+                                    "
+                                  >
+                                    Please enter PIN Code.
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls.dvndCountry
+                                      .errors
+                                }"
+                              >
+                                <label for="">Country</label>
+                                <p-dropdown
+                                  [options]="allcountries"
+                                  (onChange)="changeStatesHandler($event)"
+                                  [value]="
+                                    deductorForm.getRawValue().dvndCountry
+                                  "
+                                  ngDefaultControl
+                                  formControlName="dvndCountry"
+                                ></p-dropdown>
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls.dvndCountry
+                                      .errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  Please select any country.
+                                </div>
+                              </div>
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls.dvndState
+                                      .errors
+                                }"
+                              >
+                                <label for="">State</label>
+                                <p-dropdown
+                                  [options]="states"
+                                  [value]="deductorForm.getRawValue().dvndState"
+                                  ngDefaultControl
+                                  formControlName="dvndState"
+                                ></p-dropdown>
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls.dvndState
+                                      .errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  Please enter state.
+                                </div>
+                              </div>
+
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndMembershipNumber.errors
+                                }"
+                              >
+                                <label for="">Membership Number</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Membership Number"
+                                  formControlName="dvndMembershipNumber"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndMembershipNumber.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndMembershipNumber.errors.required
+                                    "
+                                  >
+                                    Please enter Membership Number.
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndRoadStreetPostOffice.errors
+                                }"
+                              >
+                                <label for="">Road/Street/Post Office</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  maxlength="30"
+                                  placeholder="Enter Road/Street/Post Office"
+                                  formControlName="dvndRoadStreetPostOffice"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndRoadStreetPostOffice.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndRoadStreetPostOffice.errors
+                                        .required
+                                    "
+                                  >
+                                    Please enter Road/Street/Post Office.
+                                  </div>
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndRoadStreetPostOffice.errors
+                                        .maxlength
+                                    "
+                                  >
+                                    Road/street/post office must not exceed 30
+                                    characters.
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                class="ui-inputgroup ui-g-4"
+                                [ngClass]="{
+                                  'field-invalid':
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndRegistrationNumber.errors
+                                }"
+                              >
+                                <label for="">Registration Number</label>
+                                <input
+                                  type="text"
+                                  class="input-ctrl"
+                                  placeholder="Enter Registration Number"
+                                  formControlName="dvndRegistrationNumber"
+                                  ngDefaultControl
+                                  pInputText
+                                />
+                                <div
+                                  *ngIf="
+                                    submitted &&
+                                    f.tanList.controls[i].controls
+                                      .dvndRegistrationNumber.errors
+                                  "
+                                  class="error-feedback"
+                                >
+                                  <div
+                                    *ngIf="
+                                      f.tanList.controls[i].controls
+                                        .dvndRegistrationNumber.errors.required
+                                    "
+                                  >
+                                    Please enter Registration Number.
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="ui-inputgroup mb-0 ui-g-4" *ngIf="i !== 0">
+                          <button
+                            type="button"
+                            [disabled]="actionState === 'VIEW'"
+                            class="ui-button btn-secondary"
+                            (click)="removeTan(i)"
+                          >
+                            <i class=" fas fa-times"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class=" ui-inputgroup mt-10 ml-15">
+                  <button
+                    (click)="addTan()"
+                    type="button"
+                    *ngIf="
+                      deductorForm.getRawValue()
+                        .doesDeductorHasMorethanOneBranch
+                    "
+                    [disabled]="actionState === 'VIEW'"
+                    class="ui-button btn-primary"
+                  >
+                    <i class="fas fa-plus-circle"></i> Add New
+                  </button>
+                </div>
+              </div>
+              <div class="ui-inputgroup text-center">
+                <button
+                  (click)="activeIndex = 0"
+                  type="button"
+                  class="ui-button btn-primary"
+                >
+                  <i class="fas fa-arrow-left"></i> Prev
+                </button>
+                <button
+                  (click)="saveDeductor('back')"
+                  type="button"
+                  class="ui-button btn-primary"
+                  *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+                >
+                  <i class="fas fa-save"></i> Save
+                </button>
+                <span *HasAnyAuthority="['DEDUCTOR_UPDATE']">
+                  <button
+                    (click)="updateDeductor()"
+                    type="button"
+                    class="ui-button btn-primary"
+                    *ngIf="actionState === 'EDIT'"
+                  >
+                    Update
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- </p-tabPanel> -->
+    <!-- </p-tabView> -->
+  </div>
+</div>
+<!-- <ey-footer></ey-footer> -->

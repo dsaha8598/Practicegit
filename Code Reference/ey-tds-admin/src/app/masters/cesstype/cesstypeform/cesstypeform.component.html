@@ -1,0 +1,168 @@
+<div class="ui-g-6 mx-0">
+  <h2 class="fs-22">{{ headingMsg }} CessType Master</h2>
+</div>
+<div class="ui-g-6 text-right">
+  <span *HasAnyAuthority="['CESS_TYPE_UPDATE']">
+    <button
+      (click)="stateChanger('edit')"
+      type="button"
+      class="ui-button btn-primary"
+      *ngIf="actionState === 'VIEW'"
+    >
+      Edit
+    </button>
+  </span>
+</div>
+<div class="ui-g-12">
+  <form [formGroup]="cessTypeForm" novalidate>
+    <div
+      class="ui-inputgroup"
+      [ngClass]="{ 'field-invalid': submitted && f.cessType.errors }"
+    >
+      <label>Cess type</label>
+      <input
+        id="input"
+        class="input-ctrl"
+        maxlength="50"
+        type="text"
+        placeholder="Please Enter Cess Type"
+        formControlName="cessType"
+        name="cessType"
+        ngDefaultControl
+        pInputText
+      />
+      <div *ngIf="submitted && f.cessType.errors" class="error-feedback">
+        <div *ngIf="f.cessType.errors.required">
+          Please enter cess type.
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{ 'field-invalid': submitted && f.applicableFrom.errors }"
+      >
+        <label for="inputCity"> Applicable from</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            id="applicableFrom"
+            formControlName="applicableFrom"
+            ngbDatepicker
+            placement="auto"
+            #applicableFrom="ngbDatepicker"
+            [value]="
+              cessTypeForm.getRawValue().applicableFrom | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="applicableFrom.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.applicableFrom.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.applicableFrom.errors.required">
+            Please enter applicable from.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid':
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+        }"
+      >
+        <label for="inputState">Applicable to (optional)</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            [minDate]="minDate"
+            (click)="d.toggle()"
+            formControlName="applicableTo"
+            ngbDatepicker
+            placement="auto"
+            #d="ngbDatepicker"
+            [value]="
+              cessTypeForm.getRawValue().applicableTo | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="d.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+          "
+          class="error-feedback"
+        >
+          <p *ngIf="applicableToDateError">
+            Applicable to date must be more than that of Applicable from date.
+          </p>
+          <p *ngIf="f.applicableTo.errors.required">
+            Please enter applicable to.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="ui-inputgroup">
+        <button
+          (click)="goBack()"
+          id="1"
+          type="button"
+          class="ui-button btn-utility"
+        >
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <button
+          (click)="saveCessType('addNew')"
+          id="2"
+          type="button"
+          class="ui-button btn-secondary"
+          *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+        >
+          <i class="fas fa-save"></i> Save &amp; Add New
+        </button>
+        <button
+          (click)="saveCessType('back')"
+          id="3"
+          type="button"
+          class="ui-button btn-primary"
+          *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+        >
+          <i class="fas fa-save"></i> Save
+        </button>
+        <span *HasAnyAuthority="['CESS_TYPE_UPDATE']">
+          <button
+            (click)="updateCessType()"
+            type="button"
+            class="ui-button btn-primary"
+            *ngIf="actionState === 'EDIT'"
+          >
+            Update
+          </button>
+        </span>
+      </div>
+    </div>
+  </form>
+</div>

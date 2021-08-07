@@ -1,0 +1,306 @@
+<div class="ui-g-6 mx-0">
+  <h2 class="fs-22">{{ headingMsg }} Due date trackerMaster</h2>
+</div>
+<div class="ui-g-6 text-right">
+  <span *HasAnyAuthority="['NOP_UPDATE']">
+    <button
+      (click)="stateChanger('edit')"
+      type="button"
+      class="ui-button btn-primary"
+      *ngIf="actionState === 'VIEW'"
+    >
+      Edit
+    </button>
+  </span>
+</div>
+<div class="ui-g-12">
+  <form [formGroup]="monthlyTrackerForm" novalidate>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-4"
+        [ngClass]="{ 'field-invalid': submitted && f.month.errors }"
+      >
+        <label for="inputCity">Month</label>
+        <p-dropdown
+          [options]="monthList"
+          ngDefaultControl
+          formControlName="month"
+        >
+        </p-dropdown>
+        <div *ngIf="submitted && f.month.errors" class="error-feedback">
+          <div *ngIf="f.month.errors.required">
+            Please select month.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-4"
+        [ngClass]="{ 'field-invalid': submitted && f.year.errors }"
+      >
+        <label for="inputCity">Year</label>
+        <p-dropdown
+          [options]="yearList"
+          ngDefaultControl
+          formControlName="year"
+        >
+        </p-dropdown>
+        <div *ngIf="submitted && f.year.errors" class="error-feedback">
+          <div *ngIf="f.year.errors.required">
+            Please select year.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-4"
+        [ngClass]="{ 'field-invalid': submitted && f.dueDateForFiling.errors }"
+      >
+        <label for="inputCity">Due date for filing</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            id="dueDateForFiling"
+            formControlName="dueDateForFiling"
+            ngbDatepicker
+            placement="auto"
+            #dueDateForFiling="ngbDatepicker"
+            [value]="
+              monthlyTrackerForm.getRawValue().dueDateForFiling
+                | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="dueDateForFiling.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.dueDateForFiling.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.dueDateForFiling.errors.required">
+            Please enter due date for filing.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-4"
+        [ngClass]="{
+          'field-invalid': submitted && f.dueDateForChallanPayment.errors
+        }"
+      >
+        <label for="inputCity"> Due date for Challan payment</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            id="dueDateForChallanPayment"
+            formControlName="dueDateForChallanPayment"
+            ngbDatepicker
+            placement="auto"
+            #dueDateForChallanPayment="ngbDatepicker"
+            [value]="
+              monthlyTrackerForm.getRawValue().dueDateForChallanPayment
+                | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="dueDateForChallanPayment.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.dueDateForChallanPayment.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.dueDateForChallanPayment.errors.required">
+            Please enter due date for challan payment.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-4"
+        [ngClass]="{
+          'field-invalid': submitted && f.monthClosureForProcessing.errors
+        }"
+      >
+        <label for="inputCity">Month closure for processing</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            id="monthClosureForProcessing"
+            formControlName="monthClosureForProcessing"
+            ngbDatepicker
+            placement="auto"
+            #monthClosureForProcessing="ngbDatepicker"
+            [value]="
+              monthlyTrackerForm.getRawValue().monthClosureForProcessing
+                | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="monthClosureForProcessing.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.monthClosureForProcessing.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.monthClosureForProcessing.errors.required">
+            Please enter month closure for processing.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-4"
+        [ngClass]="{ 'field-invalid': submitted && f.applicableFrom.errors }"
+      >
+        <label for="inputCity"> Applicable from</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            id="applicableFrom"
+            formControlName="applicableFrom"
+            ngbDatepicker
+            placement="auto"
+            #applicableFrom="ngbDatepicker"
+            [value]="
+              monthlyTrackerForm.getRawValue().applicableFrom
+                | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="applicableFrom.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.applicableFrom.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.applicableFrom.errors.required">
+            Please enter applicable from.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-4"
+        [ngClass]="{
+          'field-invalid':
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+        }"
+      >
+        <label for="inputState">Applicable to (optional)</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            [minDate]="minDate"
+            (click)="d.toggle()"
+            formControlName="applicableTo"
+            ngbDatepicker
+            placement="auto"
+            #d="ngbDatepicker"
+            [value]="
+              monthlyTrackerForm.getRawValue().applicableTo | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="d.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+          "
+          class="error-feedback"
+        >
+          <p *ngIf="applicableToDateError">
+            Applicable to date must be more than that of Applicable from date.
+          </p>
+          <p *ngIf="f.applicableTo.errors.required">
+            Please enter applicable to.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row ml-3">
+      <div class="ui-inputgroup">
+        <button
+          (click)="goBack()"
+          id="1"
+          type="button"
+          class="ui-button btn-utility"
+        >
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <button
+          (click)="savemonthlyTracker('addNew')"
+          id="2"
+          type="button"
+          class="ui-button btn-secondary"
+          *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+        >
+          <i class="fas fa-save"></i> Save &amp; Add New
+        </button>
+        <button
+          (click)="savemonthlyTracker('back')"
+          id="3"
+          type="button"
+          class="ui-button btn-primary"
+          *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+        >
+          <i class="fas fa-save"></i> Save
+        </button>
+        <span *HasAnyAuthority="['NOP_UPDATE']">
+          <button
+            (click)="updatemonthlyTracker()"
+            type="button"
+            class="ui-button btn-primary"
+            *ngIf="actionState === 'EDIT'"
+          >
+            Update
+          </button>
+        </span>
+      </div>
+    </div>
+  </form>
+</div>

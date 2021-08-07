@@ -1,0 +1,330 @@
+<div class="ui-g">
+  <div class="ui-g-12">
+    <div class="ui-g-6 mx-0">
+      <h2 class="fs-22 mb-0">Users</h2>
+    </div>
+    <div class="ui-g-6 mx-0 text-right">
+      <span>
+        <button
+          type="button"
+          class="ui-button btn-primary"
+          (click)="openModal('Add')"
+        >
+          <i class="fa fa-plus mr-5"></i> Add New
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+<div class="ui-g">
+  <div class="ui-g-12 mb-100" *HasAnyAuthority="['DEDUCTOR_LIST']">
+    <div class="p-20 pt-10 border">
+      <p-table
+        #dt
+        [columns]="selectedColumns"
+        [paginator]="true"
+        [rows]="5"
+        [rowsPerPageOptions]="[5, 10, 20, 30]"
+        [totalRecords]="usersData?.length"
+        [value]="usersData"
+        [scrollable]="true"
+        [resizableColumns]="true"
+        scrollHeight="400px"
+      >
+        <ng-template pTemplate="caption">
+          <div class="ui-g mt-0">
+            <div class="ui-g-12 ui-md-4 mx-0">
+              <div style="text-align:left">
+                <p-multiSelect
+                  [options]="cols"
+                  optionLabel="header"
+                  name="selectedColumns"
+                  selectedItemsLabel="{0} columns selected"
+                  [style]="{ minWidth: '200px' }"
+                  [(ngModel)]="selectedColumns"
+                  defaultLabel="Choose Columns"
+                  ngDefaultControl
+                ></p-multiSelect>
+              </div>
+            </div>
+            <div class="ui-inputgroup ui-inputgroup-cust ui-g-8 mx-0">
+              <div class="relative">
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Search Data globally"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')"
+                  class="input-ctrl input-search-type"
+                />
+                <button
+                  type="submit"
+                  class="input-search pi pi-search"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns="columns">
+          <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width" />
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th
+              *ngFor="let col of columns; let i = index"
+              [pSortableColumn]="col.field"
+              [style.width]="col.width"
+            >
+              {{ col.header }}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td
+              *ngFor="let col of columns; let i = index"
+              [style.width]="col.width"
+            >
+              <span>
+                <a
+                  href="javascript:void()"
+                  *ngIf="col.type === 'initial'"
+                  (click)="openModal('View', rowData)"
+                >
+                  {{ rowData[col.field] }}
+                </a>
+              </span>
+              <span *ngIf="col.field === 'userEmail'">
+                {{ rowData[col.field] }}
+              </span>
+
+              <span>
+                <a
+                  href="javascript:void(0);"
+                  *ngIf="col.field === 'action'"
+                  class="text-right"
+                  (click)="openModal('Edit', rowData)"
+                >
+                  Edit
+                </a>
+              </span>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="columns.length">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="showModal"
+  [style]="{ width: '900px', height: '600px' }"
+  [modal]="true"
+  [minY]="70"
+  [scrollable]="true"
+  [positionTop]="50"
+  [baseZIndex]="10000"
+  [closable]="true"
+  [responsive]="true"
+>
+  <div class="scroll-wrapper">
+    <div class="text-center my-0">
+      <h3 *ngIf="formType == 'Add'" class="fs-16">Create User</h3>
+      <h3 *ngIf="formType == 'View'" class="fs-16">View User</h3>
+      <h3 *ngIf="formType == 'Edit'" class="fs-16">Edit User</h3>
+    </div>
+    <div class="text-center my-10">
+      <form>
+        <div class="ui-inputgroup mt-20">
+          <div class="form-group">
+            <label for="" class="text-left">User Name:</label>
+            <div
+              [ngClass]="{
+                'field-invalid': isUserNameEmpty
+              }"
+            >
+              <input
+                type="text"
+                placeholder="please enter username"
+                [(ngModel)]="userCreationObj.username"
+                class="input-ctrl"
+                [disabled]="formType == 'View' || formType == 'Edit'"
+                (change)="userNameErrorHandler()"
+                name="userName"
+              />
+              <div *ngIf="isUserNameEmpty" class="error-feedback">
+                <div>
+                  Please enter username.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="text-left">Email:</label>
+            <div
+              class="pos-relative"
+              [ngClass]="{
+                'field-invalid': isEmailEmpty
+              }"
+            >
+              <span class="mobile-code text-center">@{{ tenantId }}</span>
+              <input
+                type="email"
+                placeholder="please enter email"
+                [(ngModel)]="userCreationObj.email"
+                (change)="emailErrorHandler()"
+                [disabled]="formType == 'View' || formType == 'Edit'"
+                class="input-ctrl p-ctrl-r-49"
+                name="email"
+              />
+              <div *ngIf="isEmailEmpty" class="error-feedback">
+                <div>
+                  Please enter email.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="userAccessHandler" *ngIf="userAccessHandler">
+            <div *ngFor="let pan of entities; let i = index">
+              <div class="check-Control">
+                <div class="form-group text-left">
+                  <input
+                    value="{{ pan }}"
+                    name="{{ pan }}"
+                    id="{{ pan }}"
+                    type="checkbox"
+                    class="input-ctrl"
+                    [checked]="checkPanExistancy(pan)"
+                    (change)="
+                      onPanSelection($event.target.checked, $event.target.value)
+                    "
+                    [disabled]="
+                      (entityData[pan].roles.length <= 0 &&
+                        entityData[pan].rolesTcs.length <= 0) ||
+                      entityData[pan].tans.length <= 0
+                    "
+                  />
+                  <label for="{{ pan }}">{{ pan }}</label>
+                </div>
+              </div>
+              <div
+                class="pl-30 row"
+                *ngIf="
+                  (entityData[pan].roles.length > 0 ||
+                    entityData[pan].rolesTcs.length > 0) &&
+                  entityData[pan].tans.length > 0
+                "
+              >
+                <div class="col-sm-6">
+                  <div
+                    class="check-Control my-10"
+                    *ngFor="let tan of entityData[pan].tans; let j = index"
+                  >
+                    <div class="form-group text-left">
+                      <input
+                        name="{{ tan }}"
+                        id="{{ tan }}"
+                        type="checkbox"
+                        (change)="onTanSelection(pan, tan, $event)"
+                        (click)="onTanSelection(pan, tan, $event)"
+                        class="input-ctrl"
+                        [checked]="checkTanExistancy(tan)"
+                      />
+                      <label for="{{ tan }}"> {{ tan }}</label>
+                    </div>
+                    <div class="row">
+                      <div
+                        class="col-md-6"
+                        *ngIf="
+                          entityData[pan].roles &&
+                          entityData[pan].roles.length > 0
+                        "
+                      >
+                        <label>TDS roles:</label>
+                        <select
+                          name="roles-{{ pan }}"
+                          id="roles-{{ tan }}"
+                          [ngModel]="checkTDSRoleExistancy(pan, tan)"
+                          (change)="
+                            onTDSRoleSelection(pan, tan, $event.target.value)
+                          "
+                        >
+                          <option value="" selected>Select role</option>
+                          <option
+                            [value]="role.roleId"
+                            *ngFor="let role of entityData[pan].roles"
+                            >{{ role.roleName }}
+                          </option>
+                        </select>
+                      </div>
+                      <div
+                        class="col-md-6"
+                        *ngIf="
+                          entityData[pan].rolesTcs &&
+                          entityData[pan].rolesTcs.length > 0
+                        "
+                      >
+                        <label>TCS roles:</label>
+                        <select
+                          name="rolesTcs-{{ pan }}"
+                          id="rolesTcs-{{ tan }}"
+                          [ngModel]="checkTCSRoleExistancy(pan, tan)"
+                          (change)="
+                            onTCSRoleSelection(pan, tan, $event.target.value)
+                          "
+                        >
+                          <option value="" selected>Select role</option>
+                          <option
+                            [value]="role.roleId"
+                            *ngFor="let role of entityData[pan].rolesTcs"
+                          >
+                            {{ role.roleName }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pl-30 text-left"
+                *ngIf="
+                  (entityData[pan].roles.length <= 0 &&
+                    entityData[pan].rolesTcs.length <= 0) ||
+                  entityData[pan].tans.length <= 0
+                "
+              >
+                Tan or Roles not found
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="mt-20 ui-button btn-primary px-47"
+          type="submit"
+          *ngIf="formType === 'Edit'"
+          (click)="createUser()"
+        >
+          Update User
+        </button>
+        <button
+          class="mt-20 ui-button btn-primary px-47"
+          type="submit"
+          *ngIf="formType === 'Add'"
+          (click)="createUser()"
+        >
+          Create User
+        </button>
+      </form>
+    </div>
+  </div>
+</p-dialog>

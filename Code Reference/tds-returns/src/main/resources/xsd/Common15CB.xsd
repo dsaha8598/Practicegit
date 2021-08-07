@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DIT Forms Schema definition -->
+<!-- (c) 2011, Income Tax department. Property of Income Tax department, 
+	Govt. of India -->
+<!-- Created on: 27-Dec-2011 -->
+<!-- Updated on: 24-Sep-2013 -->
+<!-- Version 1.0 -->
+<xs:schema xmlns="http://incometaxindiaefiling.gov.in/common"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://incometaxindiaefiling.gov.in/common"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	xml:lang="EN-US">
+	<xs:element name="CreationInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SWVersionNo">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1" />
+							<xs:maxLength value="10" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="SWCreatedBy">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="25" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="XMLCreatedBy">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="25" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="XMLCreationDate" type="xs:date" />
+				<xs:element name="IntermediaryCity">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="25" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Form_Details">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="FormName">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1" />
+							<xs:maxLength value="10" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Description">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0" />
+							<xs:maxLength value="1000" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="AssessmentYear">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="2017"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="SchemaVer">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Ver1.1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="FormVer">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1" />
+							<xs:maxLength value="6" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:simpleType name="countryType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4" />
+		<xs:enumeration  value="93"/>
+		    <xs:enumeration  value="1001"/>
+			<xs:enumeration  value="355"/>
+			<xs:enumeration  value="213"/>
+			<xs:enumeration  value="684"/>
+			<xs:enumeration  value="376"/>
+			<xs:enumeration  value="244"/>
+			<xs:enumeration  value="1264"/>
+			<xs:enumeration  value="1010"/>
+			<xs:enumeration  value="1268"/>
+			<xs:enumeration  value="54"/>
+			<xs:enumeration  value="374"/>
+			<xs:enumeration  value="297"/>
+			<xs:enumeration  value="61"/>
+			<xs:enumeration  value="43"/>
+			<xs:enumeration  value="994"/>
+			<xs:enumeration  value="1242"/>
+			<xs:enumeration  value="973"/>
+			<xs:enumeration  value="880"/>
+			<xs:enumeration  value="1246"/>
+			<xs:enumeration  value="375"/>
+			<xs:enumeration  value="32"/>
+			<xs:enumeration  value="501"/>
+			<xs:enumeration  value="229"/>
+			<xs:enumeration  value="1441"/>
+			<xs:enumeration  value="975"/>
+			<xs:enumeration  value="591"/>
+			<xs:enumeration  value="1002"/>
+			<xs:enumeration  value="387"/>
+			<xs:enumeration  value="267"/>
+			<xs:enumeration  value="1003"/>
+			<xs:enumeration  value="55"/>
+			<xs:enumeration  value="1014"/>
+			<xs:enumeration  value="673"/>
+			<xs:enumeration  value="359"/>
+			<xs:enumeration  value="226"/>
+			<xs:enumeration  value="257"/>
+			<xs:enumeration  value="238"/>
+			<xs:enumeration  value="855"/>
+			<xs:enumeration  value="237"/>
+			<xs:enumeration  value="1"/>
+			<xs:enumeration  value="1345"/>
+			<xs:enumeration  value="236"/>
+			<xs:enumeration  value="235"/>
+			<xs:enumeration  value="56"/>
+			<xs:enumeration  value="86"/>
+			<xs:enumeration  value="9"/>
+			<xs:enumeration  value="672"/>
+			<xs:enumeration  value="57"/>
+			<xs:enumeration  value="270"/>
+			<xs:enumeration  value="242"/>
+			<xs:enumeration  value="243"/>
+			<xs:enumeration  value="682"/>
+			<xs:enumeration  value="506"/>
+			<xs:enumeration  value="225"/>
+			<xs:enumeration  value="385"/>
+			<xs:enumeration  value="53"/>
+			<xs:enumeration  value="1015"/>
+			<xs:enumeration  value="357"/>
+			<xs:enumeration  value="420"/>
+			<xs:enumeration  value="45"/>
+			<xs:enumeration  value="253"/>
+			<xs:enumeration  value="1767"/>
+			<xs:enumeration  value="1809"/>
+			<xs:enumeration  value="593"/>
+			<xs:enumeration  value="20"/>
+			<xs:enumeration  value="503"/>
+			<xs:enumeration  value="240"/>
+			<xs:enumeration  value="291"/>
+			<xs:enumeration  value="372"/>
+			<xs:enumeration  value="251"/>
+			<xs:enumeration  value="500"/>
+			<xs:enumeration  value="298"/>
+			<xs:enumeration  value="679"/>
+			<xs:enumeration  value="358"/>
+			<xs:enumeration  value="33"/>
+			<xs:enumeration  value="594"/>
+			<xs:enumeration  value="689"/>
+			<xs:enumeration  value="1004"/>
+			<xs:enumeration  value="241"/>
+			<xs:enumeration  value="220"/>
+			<xs:enumeration  value="995"/>
+			<xs:enumeration  value="49"/>
+			<xs:enumeration  value="233"/>
+			<xs:enumeration  value="350"/>
+			<xs:enumeration  value="30"/>
+			<xs:enumeration  value="299"/>
+			<xs:enumeration  value="1473"/>
+			<xs:enumeration  value="590"/>
+			<xs:enumeration  value="1671"/>
+			<xs:enumeration  value="502"/>
+			<xs:enumeration  value="1481"/>
+			<xs:enumeration  value="224"/>
+			<xs:enumeration  value="245"/>
+			<xs:enumeration  value="592"/>
+			<xs:enumeration  value="509"/>
+			<xs:enumeration  value="1005"/>
+			<xs:enumeration  value="6"/>
+			<xs:enumeration  value="504"/>
+			<xs:enumeration  value="852"/>
+			<xs:enumeration  value="36"/>
+			<xs:enumeration  value="354"/>
+			<xs:enumeration  value="91"/>
+			<xs:enumeration  value="62"/>
+			<xs:enumeration  value="98"/>
+			<xs:enumeration  value="964"/>
+			<xs:enumeration  value="353"/>
+			<xs:enumeration  value="1624"/>
+			<xs:enumeration  value="972"/>
+			<xs:enumeration  value="5"/>
+			<xs:enumeration  value="1876"/>
+			<xs:enumeration  value="81"/>
+			<xs:enumeration  value="1534"/>
+			<xs:enumeration  value="962"/>
+			<xs:enumeration  value="7"/>
+			<xs:enumeration  value="254"/>
+			<xs:enumeration  value="686"/>
+			<xs:enumeration  value="850"/>
+			<xs:enumeration  value="82"/>
+			<xs:enumeration  value="965"/>
+			<xs:enumeration  value="996"/>
+			<xs:enumeration  value="856"/>
+			<xs:enumeration  value="371"/>
+			<xs:enumeration  value="961"/>
+			<xs:enumeration  value="266"/>
+			<xs:enumeration  value="231"/>
+			<xs:enumeration  value="218"/>
+			<xs:enumeration  value="423"/>
+			<xs:enumeration  value="370"/>
+			<xs:enumeration  value="352"/>
+			<xs:enumeration  value="853"/>
+			<xs:enumeration  value="389"/>
+			<xs:enumeration  value="261"/>
+			<xs:enumeration  value="265"/>
+			<xs:enumeration  value="60"/>
+			<xs:enumeration  value="960"/>
+			<xs:enumeration  value="223"/>
+			<xs:enumeration  value="356"/>
+			<xs:enumeration  value="692"/>
+			<xs:enumeration  value="596"/>
+			<xs:enumeration  value="222"/>
+			<xs:enumeration  value="230"/>
+			<xs:enumeration  value="269"/>
+			<xs:enumeration  value="52"/>
+			<xs:enumeration  value="691"/>
+			<xs:enumeration  value="373"/>
+			<xs:enumeration  value="377"/>
+			<xs:enumeration  value="976"/>
+			<xs:enumeration  value="382"/>
+			<xs:enumeration  value="1664"/>
+			<xs:enumeration  value="212"/>
+			<xs:enumeration  value="258"/>
+			<xs:enumeration  value="95"/>
+			<xs:enumeration  value="264"/>
+			<xs:enumeration  value="674"/>
+			<xs:enumeration  value="977"/>
+			<xs:enumeration  value="31"/>
+			<xs:enumeration  value="687"/>
+			<xs:enumeration  value="64"/>
+			<xs:enumeration  value="505"/>
+			<xs:enumeration  value="227"/>
+			<xs:enumeration  value="234"/>
+			<xs:enumeration  value="683"/>
+			<xs:enumeration  value="15"/>
+			<xs:enumeration  value="1670"/>
+			<xs:enumeration  value="47"/>
+			<xs:enumeration  value="968"/>
+			<xs:enumeration  value="92"/>
+			<xs:enumeration  value="680"/>
+			<xs:enumeration  value="970"/>
+			<xs:enumeration  value="507"/>
+			<xs:enumeration  value="675"/>
+			<xs:enumeration  value="595"/>
+			<xs:enumeration  value="51"/>
+			<xs:enumeration  value="63"/>
+			<xs:enumeration  value="1011"/>
+			<xs:enumeration  value="48"/>
+			<xs:enumeration  value="14"/>
+			<xs:enumeration  value="1787"/>
+			<xs:enumeration  value="974"/>
+			<xs:enumeration  value="262"/>
+			<xs:enumeration  value="40"/>
+			<xs:enumeration  value="8"/>
+			<xs:enumeration  value="250"/>
+			<xs:enumeration  value="1006"/>
+			<xs:enumeration  value="290"/>
+			<xs:enumeration  value="1869"/>
+			<xs:enumeration  value="1758"/>
+			<xs:enumeration  value="1007"/>
+			<xs:enumeration  value="508"/>
+			<xs:enumeration  value="1784"/>
+			<xs:enumeration  value="685"/>
+			<xs:enumeration  value="378"/>
+			<xs:enumeration  value="239"/>
+			<xs:enumeration  value="966"/>
+			<xs:enumeration  value="221"/>
+			<xs:enumeration  value="381"/>
+			<xs:enumeration  value="248"/>
+			<xs:enumeration  value="232"/>
+			<xs:enumeration  value="65"/>
+			<xs:enumeration  value="1721"/>
+			<xs:enumeration  value="421"/>
+			<xs:enumeration  value="386"/>
+			<xs:enumeration  value="677"/>
+			<xs:enumeration  value="252"/>
+			<xs:enumeration  value="28"/>
+			<xs:enumeration  value="1008"/>
+			<xs:enumeration  value="211"/>
+			<xs:enumeration  value="35"/>
+			<xs:enumeration  value="94"/>
+			<xs:enumeration  value="249"/>
+			<xs:enumeration  value="597"/>
+			<xs:enumeration  value="1012"/>
+			<xs:enumeration  value="268"/>
+			<xs:enumeration  value="46"/>
+			<xs:enumeration  value="41"/>
+			<xs:enumeration  value="963"/>
+			<xs:enumeration  value="886"/>
+			<xs:enumeration  value="992"/>
+			<xs:enumeration  value="255"/>
+			<xs:enumeration  value="66"/>
+			<xs:enumeration  value="670"/>
+			<xs:enumeration  value="228"/>
+			<xs:enumeration  value="690"/>
+			<xs:enumeration  value="676"/>
+			<xs:enumeration  value="1868"/>
+			<xs:enumeration  value="216"/>
+			<xs:enumeration  value="90"/>
+			<xs:enumeration  value="993"/>
+			<xs:enumeration  value="1649"/>
+			<xs:enumeration  value="688"/>
+			<xs:enumeration  value="256"/>
+			<xs:enumeration  value="380"/>
+			<xs:enumeration  value="971"/>
+			<xs:enumeration  value="44"/>
+			<xs:enumeration  value="2"/>
+			<xs:enumeration  value="1009"/>
+			<xs:enumeration  value="598"/>
+			<xs:enumeration  value="998"/>
+			<xs:enumeration  value="678"/>
+			<xs:enumeration  value="58"/>
+			<xs:enumeration  value="84"/>
+			<xs:enumeration  value="1284"/>
+			<xs:enumeration  value="1340"/>
+			<xs:enumeration  value="681"/>
+			<xs:enumeration  value="1013"/>
+			<xs:enumeration  value="967"/>
+			<xs:enumeration  value="260"/>
+			<xs:enumeration  value="263"/>
+			<xs:enumeration  value="9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+		
+	<xs:element name="State">
+		<xs:simpleType>
+			<xs:restriction base="nonEmptyString">
+				<xs:maxLength value="125" />
+				<xs:minLength value="1" />
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	
+	<xs:simpleType name="nonEmptyString">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="|(\s*([\w\d_=!@#$%\^*\(\){}\[\]\|\\:;',\.\?/~`\-\+&lt;&gt;&amp;&quot;][\s\w\d_=!@#$%\^*\(\){}\[\]\|\\:;',\.\?/~`\-\+&lt;&gt;&amp;&quot;]*)\s*)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+	
+</xs:schema>

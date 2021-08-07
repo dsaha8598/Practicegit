@@ -1,0 +1,10 @@
+<select
+  [(ngModel)]="selectedValue"
+  class="form-control"
+  id="{{ id }}"
+  (change)="handleSelectChange()"
+>
+  <option *ngFor="let item of monthList" [value]="item.value">{{
+    item.label
+  }}</option>
+</select>

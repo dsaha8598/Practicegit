@@ -13,3 +13,20 @@
     height: 2%;
     border: 1px solid black;
 }
+bodyContent{
+    width: 80%;
+    position: absolute;
+    top: 50%;
+}
+.logoContainer{
+display: inline-block;
+background-color: blueviolet;
+height: 200px;
+width: 30%;
+}
+.nameContainer{
+    display: inline-block;
+    background-color: rgb(171, 226, 43);
+    height: 200px;
+    width: 30%;
+}

@@ -1,0 +1,72 @@
+{
+  "production": false,
+  "version": "env.npm_package_version + -dev",
+  "serverUrl": "/api",
+  "defaultLanguage": "en-US",
+  "supportedLanguages": ["en-US", "fr-FR"],
+  "config": {
+    "tenant": "bbc71867-6864-4f71-9cb3-bf21da49f4f5",
+    "redirectUri": "window.location.origin",
+    "clientId": "c0e915d5-90a1-409e-ab16-cc15f39d74ef",
+    "endpoints": {
+      "http://localhost:4200/": "c0e915d5-90a1-409e-ab16-cc15f39d74ef"
+    },
+    "postLogoutRedirectUri": "http://localhost:4200/",
+    "navigateToLoginRequestUrl": false,
+    "cacheLocation": "<cookies>",
+    "oauth2AllowImplicitFlow": true
+  },
+  "LOGIN_RESOURCE_URL": "https://login.microsoftonline.com",
+  "api": {
+    "admin": "/api/admin/",
+    "fvu": "/api/fvu-proxy/generate",
+    "authorization": "/api/authorization/",
+    "challans": "/api/challans/",
+    "dashboards": "/api/dashboards/",
+    "masters": "/api/masters/",
+    "ingestion": "/api/ingestion/",
+    "onboarding": "/api/onboarding/",
+    "rateengine": "/api/rateengine/",
+    "returns": "/api/returns/",
+    "validation": "/api/validation/",
+    "reports": "/api/reports/",
+    "auth": "/api/auth/",
+    "zuulgatway": "/api/zuulgatway/",
+    "panwebsocket": "ws://192.168.0.115:5000/",
+    "ldcwebsocket": "wss://tfo-dev.eyasp.in/ws-ldc",
+    "singlepanwebsocket": "wss://tfo-dev.eyasp.in/ws-singlepan",
+    "singleldcwebsocket": "wss://tfo-dev.eyasp.in/ws-singleldc",
+    "filingwebsocket": "wss://localhost:5005/",
+    "logger": "/api/ui-logger/log",
+    "csiwebsocket": "ws://localhost:5600",
+    "consolefilewebsocket": "wss://localhost:5005/",
+    "consoledownload": "ws://localhost:5006/",
+    "consolesubmission": "ws://localhost:5005/",
+    "form16download": "ws://localhost:5002/",
+    "form16submission": "ws://localhost:5001/",
+    "justificationdownload": "ws://localhost:5004/",
+    "justificationsubmission": "ws://localhost:5003/",
+    "sectionDetermination": "/api/flask/invoice/section",
+    "afterSectionDetermination": "/api/flask/invoice/tracking"
+  },
+  "tenantConfigTypes": {
+    "databaseConfig": "cosmos-config.",
+    "sftpConfig": "sftp-config.",
+    "blobConfig": "blob-storage.",
+    "powerbiConfig": "power-bi."
+  },
+  "logger": {
+    "debug": {
+      "enabled": true
+    },
+    "info": {
+      "enabled": true
+    },
+    "warn": {
+      "enabled": true
+    },
+    "error": {
+      "enabled": true
+    }
+  }
+}

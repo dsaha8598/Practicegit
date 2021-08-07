@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tds-returns
+#  namespace: tfo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tds-returns
+  template:
+    metadata:
+      labels:
+        app: tds-returns
+    spec:
+      containers:
+        - name: tds-returns
+          image: citfodvcr.azurecr.io/tds-returns-sql
+          resources:
+            limits:
+              memory: "20Gi"
+            # cpu: "300m"
+            requests:
+              memory: "16Gi"
+          #cpu: "200m"
+          envFrom:
+            - configMapRef:
+                name: tds-sql-config
+            - secretRef:
+                name: tds-sql-secrets
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: tfo-dev-deployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tds-returns
+  # namespace: tfo
+spec:
+  #type: NodePort
+  ports:
+    - port: 80
+  selector:
+    app: tds-returns

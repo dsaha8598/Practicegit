@@ -1,0 +1,13 @@
+<form
+  ngNoForm
+  #myFormPost
+  name="myFormPost"
+  action="{{ downloadURL }}"
+  method="POST"
+  target="_blank"
+>
+  <input type="hidden" [name]="'token'" [value]="token" />
+</form>
+<button type="button" class="ui-button btn-secondary" (click)="submitForm()">
+  <i class="fas fa-download"></i> Nature of payments
+</button>

@@ -1,0 +1,1 @@
+Alter table tds.tds_master add is_sub_nature_payment_master bigint;
