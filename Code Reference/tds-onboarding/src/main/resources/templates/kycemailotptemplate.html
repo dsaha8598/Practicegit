@@ -1,0 +1,145 @@
+<!DOCTYPE >
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Responsive meta tag -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>Email Template</title>
+  </head>
+
+  <body style="background: #f4f7fb; padding: 0; margin: 0;">
+    <style type="text/css">
+      @import url("https://fonts.googleapis.com/css?family=Noto+Sans:400,700&display=swap");
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Noto Sans", Arial, Helvetica, sans-serif;
+        font-weight: 400;
+      }
+
+      a {
+        text-decoration: none;
+        outline: none;
+        display: inline-block;
+        border: none;
+      }
+
+      body,
+      table,
+      td,
+      a {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+
+      img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+
+      table {
+        border-collapse: collapse !important;
+      }
+    </style>
+    <table
+      bgcolor="#f4f7fb"
+      align="center"
+      width="100%"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      style="border-collapse: collapse;"
+    >
+      <tr>
+        <td
+          width="100%"
+          valign="top"
+          align="center"
+          style="padding: 60px 0 30px;"
+        >
+          <table
+            class="full-width"
+            bgcolor="#fff"
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            style="border-collapse: collapse; margin: 0 auto;"
+          >
+            <tr>
+              <td>
+                <table
+                  width="100%"
+                  bgcolor="#000"
+                  cellpadding="0"
+                  cellspacing="0"
+                  border="0"
+                  style="border-collapse: collapse; margin: 0 auto; border: 1px solid #edeff4;"
+                ></table>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">
+                <table width="100%">
+                  <tr>
+                    <td style="padding: 50px 40px;">
+                      <table width="100%">
+                        <tr>
+                          <td
+                            style="font-size: 18px; line-height: 24px; color: #000; padding-bottom: 25px;"
+                          >
+                            Dear <span th:text="${name}"></span>,
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="font-weight: bold; font-size: 18px; line-height: 24px; color: #000; padding-bottom: 25px;"
+                          >
+                            <span
+                              >Your confirmation code for accessing the survey
+                              form is <span th:text="${otp}"></span>. The code
+                              is valid for 5 minutes.</span
+                            >
+                            <br />
+                            <span
+                              >If your code gets expired, you can request it
+                              again by clicking on ‘Resend OTP’ option available
+                              on the survey form.</span
+                            >
+                            <br />
+                            <br />
+                            <span
+                              >NOTE: This is a system generated e-mail. Please
+                              do not reply.</span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style="font-size: 18px; line-height: 24px; color: #000; padding-bottom: 25px;"
+                          >
+                            Regards,<br />
+                            <span>On behalf of </span
+                            ><span th:text="${clientName}"></span>.
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
