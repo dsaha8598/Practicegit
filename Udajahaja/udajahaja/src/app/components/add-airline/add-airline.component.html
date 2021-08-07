@@ -1,0 +1,95 @@
+<div class="header">
+    <app-admin-header></app-admin-header> 
+</div>
+
+<div class="bodyContent">
+   <div class="airlineFormPage">
+        <form [formGroup]="airlineForm" >
+                <br>
+            <div class="airLineName" >
+                <label>Airline Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </label>
+                <input style="height: 40px;font-size: 25px;" type="text" placeholder="Enter Airline Name" formControlName="airlineName"/>
+                </div>
+                <br>
+            <div class="airLineName" >
+                    <label > Upload Logo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:   </label>
+                    <input style="height: 40px;font-size: 25px;" type="file" placeholder="Contact number" formControlName="airlineLogo"/>
+            </div>
+            <br>
+            <div class="airLineName" >
+                <label > Contact Number &nbsp;:   </label>
+                <input style="height: 40px;font-size: 25px;" type="text" placeholder="Contact Address" formControlName="contactNumber"/>
+            </div>
+            <br>
+            <div class="airLineName" >
+                <label > Contact Address &nbsp;:   </label>
+                <input style="height: 40px;font-size: 25px;" type="text" placeholder="Upload file" formControlName="contactAddress"/>
+            </div>
+            
+
+                    <br><br>
+             <div class="aeroplaneFormContainer" >
+                   
+                    
+                    <div class="airplaneContainer" formArrayName="aeroplanes">
+                       
+                        <ul *ngFor="let aeroplane of aeroplaneForms.controls;let i=index" [formGroupName]="i" style="border: 1px solid black;">
+                          <!--  <li><input type="text" formControlName="aeroplaneNumber"/></li>
+                            <li><input type="text" formControlName="departure"/></li>
+                            <li><input type="text" formControlName="arrival"/></li>-->
+                            <li>
+                                <ul >
+                                    <li style="display: inline-block;color: #98813B;"><label>Enter Flight Number &nbsp;&nbsp;:&nbsp;</label></li>
+                                    <li style="display: inline-block;"><input  type="text" formControlName="aeroplaneNumber"/></li>
+                                    
+                                </ul>
+                            </li>
+                            
+                            <li>
+                                <ul>
+                                    <li style="display: inline-block;color: #98813B;"><label>No of Business  Seat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</label></li>
+                                    <li style="display: inline-block;color: #98813B;"><input  type="number" formControlName="businessClassCount"/></li>
+                                    <li style="display: inline-block;color: #98813B;"><label>No of Economy  Seat &nbsp;&nbsp;&nbsp;:&nbsp;</label></li>
+                                    <li style="display: inline-block;color: #98813B;"><input  type="number" formControlName="economyClassCount"/></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    <li style="display: inline-block;color: #98813B;"><label>Start Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</label></li>
+                                    <li style="display: inline-block;color: #98813B;"><input  type="date" formControlName="startDate"/></li>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    
+                                    <li style="display: inline-block;color: #98813B;"><label>End Date &nbsp;&nbsp;&nbsp;:&nbsp;</label></li>
+                                    <li style="display: inline-block;color: #98813B;"><input  type="date" formControlName="endDate"/></li>
+                                </ul>
+                            </li>
+                            <br>
+                            <li style="text-align: center;"><button (click)="deleteAeroplaneForm(i)">delete</button></li>
+                        </ul>
+                    </div>
+                    <div class="addnewAirline" >  
+                        <button style="height: 33px;font-size: 23px;color: white;background-color: rgb(95, 106, 172);" (click)="addNewAeroplaneForm()">Add AeroPlane</button>
+                    </div>
+                    <br><br>
+                    <div class="submitContainer" >  
+                       <!-- <input class="submit" type="submit" value="submit" >-->
+                       <button class="submit" (click)="saveAirlineForm()">Save</button>
+                    </div>
+                    
+            </div>
+            
+            
+            
+        </form>
+    </div>
+
+</div>
+
+
+<div class="footer" >
+    <app-footer></app-footer>
+</div>

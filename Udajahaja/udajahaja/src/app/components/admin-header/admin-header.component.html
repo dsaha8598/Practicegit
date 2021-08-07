@@ -1,0 +1,22 @@
+<body class="body">
+    
+    <a [routerLink]="['']">
+    <div class="name" >UDAJAHAJA</div>
+    </a>
+    <div class="logo"></div>
+    <div class="flag"></div>
+    <div class="button">
+        <button class="logoutButton" id="adminLogOutButton" (click)="logOut()">Admin Log Out</button>
+    </div>
+    <div class="menuContainer">
+        <ul>
+            <li class="menu"><a style="color:white;" [routerLink]="['/adminHome']">Manage Airlines</a></li>
+            <li class="menu"><a style="color:white;"[routerLink]="['/scheduling']">Manage Schedules</a></li>
+            <li class="menu"><a style="color:white;" [routerLink]="['/discount']">Manage Discounts</a></li>
+            <li class="menu">Reports</li>
+        </ul>
+    </div>
+    
+
+
+</body>

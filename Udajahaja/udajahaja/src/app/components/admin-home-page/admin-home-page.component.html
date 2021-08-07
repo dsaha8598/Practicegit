@@ -1,27 +1,56 @@
 <div class="header">
-    <div class="button">
-        <button class="logoutButton" id="adminLogOutButton" (click)="logOut()">Admin Log Out</button>
-    </div>
- <app-header></app-header>   
+    
+ <app-admin-header></app-admin-header>   
 </div>
 
 <div class="bodyContent">
     <h1 class="bodyContentHeader">Available AirLines</h1>
+    <button class="newAirline" (click)="addNewAirline()">Add New Airline</button>
     <br>
-    <ul style="background-color: rgb(212, 225, 250);" >
-        <li class="airlinesHeaderContainer">
-            <div class="serialNo" >serial No</div>
-            <div class="logo" >Logo</div>
-            <div class="airlineName" >Airline Name</div>
-            <div class="status" >Status</div>
-            <div class="airlineView" >View</div>
-        </li>
-    </ul>   
+   
+      <!--  <li class="airlinesDataContainer" *ngFor="let airline of airlines;let i=index">
+            <div  >{{i+1}}</div>
+            <div  >Logo</div>
+            <div >{{airline.airlineName}}</div>
+            <div >{{airline.airLineName}}</div>s
+            <div  >View</div>
+        </li>-->
+  <!--  <div class="airlineHeaderContainer">
+       <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%; background-color: white;font-size: 25px;">Logo</div>
+       <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%;background-color: rgb(175, 86, 86);font-size: 25px;">Airline Name</div>
+       <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%;background-color: rgb(94, 204, 21);font-size: 25px;">Contact No</div>
+       <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%;background-color: rgb(108, 26, 175);font-size: 25px;">Contact Addresss</div>
+       <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%;background-color: rgb(212, 209, 34);font-size: 25px;">Action</div>
+   </div>  -->
+   <br>
+   <div class="airlineDataContainer" *ngFor="let airline of airlines;let i=index">
+        <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%; font-size: 25px;height: 50px;width: 190px;max-width: 190px;max-height: 50px;color: black;">
+            Logo
+        </div>
+        <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%;font-size: 25px;height: 50px;width: 200px;max-width: 190px;max-height: 50px;color: black;">
+            {{airline.airlineName}}
+        </div>
+        <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%;font-size: 25px;height: 50px;width: 200px;max-width: 190px;max-height: 50px;color: black;">
+            {{airline.contactNumber}}
+        </div>
+        <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%;font-size: 25px; height: 50px;width: 200px;max-width: 190px;max-height: 50px;color: black;">
+            {{airline.contactAddress}}
+        </div>
+        <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%;font-size: 25px; height: 50px;width: 200px;max-width: 190px;max-height: 50px;color: black;">
+            Active
+        </div>
+        <div style="display: inline-block;margin: 5px;padding: 5px;width: 15%;font-size: 25px;height: 50px;width: 200px;max-width: 190px;max-height: 50px;color: black;">
+            <button style="height: 40px;color: rgb(103, 171, 248);background-color: white;" (click)="viewAirline(airline.id)"> View Details</button>
+        </div>
+    
+    
+   </div>
+   <br>
  
 
 
 </div>
 
-<div class="footer">
+<div class="footer" >
     <app-footer></app-footer>
 </div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Airline } from 'src/app/models/Airline';
+import { AirlineService } from 'src/app/services/airlinr.service';
 
 @Component({
   selector: 'app-admin-home-page',
@@ -8,13 +10,28 @@ import { Router } from '@angular/router';
 })
 export class AdminHomePageComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  airlines:Airline[]=[];
+  constructor(private router:Router,private airlineService:AirlineService) { }
 
   ngOnInit(): void {
+    console.log("onit")
+    this.airlineService.getAllAirlines()
+    .subscribe((res:any)=>{
+      console.log(res);
+      this.airlines=res;
+      console.log('printing airline object'+this.airlines)
+  })
   }
 
-  logOut(){
-   this.router.navigate(['/admin'])
+  
+  addNewAirline(){
+    this.router.navigate(['/newAirline'])
   }
+
+  viewAirline(id:number){
+    console.log("view airline")
+     console.log(id)
+  }
+
 
 }
