@@ -25,5 +25,10 @@ export class EditAirlinesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  editAirline(){
+    
+    this.router.navigate(['/newAirline']);
+  }
+
   
 }

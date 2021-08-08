@@ -27,7 +27,10 @@
 .logoContainer{
 position: relative;
 display: inline-block;
-background-color: blueviolet;
+background-image: url("../../images/flyingplane.gif");
+background-color: rgb(198, 232, 255) ;
+background-repeat: no-repeat;
+background-position: center;
 height: 100%;
 width: 50%;
 left: 0%;
@@ -35,7 +38,11 @@ left: 0%;
 .nameContainer{
     position: relative;
     display: inline-block;
-    background-color: rgb(171, 226, 43);
+    background-image: url("../../images/bueflyingplane.gif");
+    background-color: rgb(198, 232, 255) ;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
     height: 100%;
     width: 50%;
     right: 0%;

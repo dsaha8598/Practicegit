@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+//import { start } from 'repl';
 import { Airline } from 'src/app/models/Airline';
 import { AirlineService } from 'src/app/services/airlinr.service';
 import { EditAirlineService } from 'src/app/services/edit-airline.service';
@@ -33,6 +34,7 @@ export class AdminHomePageComponent implements OnInit {
   viewAirline(id:number){
     console.log("view airline")
      console.log(id)
+     //this.router.routerState=start;
      this.airlineService.getAllAirlinesById(id+'')
     .subscribe((res:any)=>{
       console.log(res);
