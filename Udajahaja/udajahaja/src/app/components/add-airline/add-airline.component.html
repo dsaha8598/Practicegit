@@ -9,7 +9,7 @@
             <div class="airLineNamediv" >
                 <label>Airline Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  </label>
                 <input style="height: 40px;font-size: 25px;" type="text" placeholder="Enter Airline Name" formControlName="airlineName"/>
-                
+               
             </div>
                 <br>
             <div class="airLineNamediv" >
@@ -20,6 +20,7 @@
             <div class="airLineNamediv" >
                 <label > Contact Number &nbsp;:   </label>
                 <input style="height: 40px;font-size: 25px;" type="text" placeholder="Contact Number" formControlName="contactNumber"/>
+                
             </div>
             <br>
             <div class="airLineNamediv" >
@@ -78,7 +79,7 @@
                     <br><br>
                     <div class="submitContainer" >  
                        <!-- <input class="submit" type="submit" value="submit" >-->
-                       <button class="submit" [disabled]="airlineForm.invalid" [ngStyle]="{'background-color': airlineForm.invalid==true? 'gray' : 'rgb(95, 106, 172)'}"  (click)="saveAirlineForm()"></button>
+                       <button class="submit" [disabled]="airlineForm.invalid" [ngStyle]="{'background-color': airlineForm.invalid==true? 'gray' : 'rgb(95, 106, 172)'}"  (click)="saveAirlineForm()">Save Airline</button>
                     </div>
                     
             </div>
@@ -87,6 +88,8 @@
             
         </form>
     </div>
+
+   
 
 </div>
 

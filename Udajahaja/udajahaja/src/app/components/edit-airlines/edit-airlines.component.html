@@ -24,7 +24,7 @@
                   Contact Number 
                 </div> 
                 <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
-                    <input type="text" value={{airline.contactNumber}} style="position: relative;width: 95%;height: 40%;font-size: 25px;"/> 
+                    <input type="number" value={{airline.contactNumber}} style="position: relative;width: 95%;height: 40%;font-size: 25px;"/> 
                 </div>    
             </div>
             <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
@@ -48,6 +48,10 @@
        <div style="display: inline-block;right: 0%;">
         <button style="width: 100px;height: 50px;background-color: cornflowerblue;color: white;">Edit Airline</button>
        </div>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <div style="display: inline-block;right: 0%;">
+        <button style="width: 100px;height: 50px;background-color: cornflowerblue;color: white;">Add Aeroplanes</button>
+       </div>
        
        
    </div>
@@ -62,7 +66,7 @@
                             Status&nbsp;&nbsp;:&nbsp;Active
                         </div>
                         <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            No of Business Class Seats &nbsp;&nbsp;:&nbsp;<input type="text" value={{aeroplane.businessClassCount}} style="width: 10%;"/>
+                            No of Business Class Seats &nbsp;&nbsp;:&nbsp;<input type="number" value={{aeroplane.businessClassCount}} style="width: 10%;"/>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -74,12 +78,12 @@
                 </div>
             <div style="background-color:rgb(218, 235, 255);position: relative;width: 100%;height: 50%;">
                         <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            No of Economy class Seats &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value={{aeroplane.economyClassCount}} style="width: 100px;"/>
+                            No of Economy class Seats &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" value={{aeroplane.economyClassCount}} style="width: 100px;"/>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Start date &nbsp;&nbsp;:&nbsp;<input type="text" value={{aeroplane.startDate}} style="width: 15%;"/>
+                            Start date &nbsp;&nbsp;:&nbsp;<input type="text" onfocus="(this.type='date')" value={{aeroplane.startDate}} style="width: 15%;"/>
                             </div>
                         <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            End date &nbsp;&nbsp;:&nbsp;<input type="text" valu= {{aeroplane.endDate|date:medium}}  style="width: 15%;"/>
+                            End date &nbsp;&nbsp;:&nbsp;<input type="text" onfocus="(this.type='date')" valu= {{aeroplane.endDate|date:medium}}  style="width: 15%;"/>
                         </div>
                 </div>
             

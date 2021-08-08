@@ -19,24 +19,27 @@ export class AddAirlineComponent implements OnInit {
     private formBuilder: FormBuilder,
     private airlineService:AirlineService,
     private router:Router
-    ) {  }
+    ) {  
+      this.airlineForm = this.formBuilder.group({
+        airlineName: [
+                  '',Validators.required
+                 // Validators.pattern("([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z]{2,4})")
+                   ],
+        airlineLogo: [
+          ''
+        ],
+        contactNumber: [
+          '',Validators.required
+        ],
+        contactAddress: [
+          '',Validators.required
+        ],
+        aeroplanes:this.formBuilder.array([])
+      })
+    }
 
   ngOnInit(): void {
-    this.airlineForm = this.formBuilder.group({
-      airlineName: [
-                '',Validators.required
-                 ],
-      airlineLogo: [
-        ''
-      ],
-      contactNumber: [
-        '',Validators.required
-      ],
-      contactAddress: [
-        '',Validators.required
-      ],
-      aeroplanes:this.formBuilder.array([])
-    })
+    
 
     
    
