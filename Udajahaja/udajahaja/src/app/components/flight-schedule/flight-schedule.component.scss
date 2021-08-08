@@ -13,20 +13,36 @@
     height: 2%;
     border: 1px solid black;
 }
-bodyContent{
-    width: 80%;
-    position: absolute;
-    top: 50%;
+.bodyContent{
+    //   overflow: auto;
+        position: absolute;
+        bottom: 0px;
+        width: 80%;
+        height: 80%;
+        left: 9%;
+        top :130px;
+        resize: vertical;
+       
+    }
+.airlineContainer{
+position: relative;
+height: 25%;
+width: 100%;
+left: 0%;
 }
-.logoContainer{
-display: inline-block;
-background-color: blueviolet;
-height: 200px;
-width: 30%;
+
+.middleDiv{
+    position: relative;
+    background-color:olive;
+    height: 30%;
+    width: 100%;
+ 
 }
-.nameContainer{
-    display: inline-block;
+.aeroplaneContainer{
+    position: relative;
     background-color: rgb(171, 226, 43);
-    height: 200px;
-    width: 30%;
+    height: 70%;
+    width: 100%;
+    right: 0%;
+    
 }

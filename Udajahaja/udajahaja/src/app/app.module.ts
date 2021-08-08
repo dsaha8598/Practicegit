@@ -16,6 +16,7 @@ import { AddAirlineComponent } from './components/add-airline/add-airline.compon
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
 import { FlightScheduleComponent } from './components/flight-schedule/flight-schedule.component';
 import { ManageDiscountComponent } from './components/manage-discount/manage-discount.component';
+import { EditAirlinesComponent } from './components/edit-airlines/edit-airlines.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ManageDiscountComponent } from './components/manage-discount/manage-dis
     AdminHeaderComponent,
     FlightScheduleComponent,
     ManageDiscountComponent,
+    EditAirlinesComponent,
     
   ],
   imports: [

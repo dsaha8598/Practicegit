@@ -21,22 +21,27 @@
         height: 80%;
         left: 9%;
         top :130px;
-        background-color: blanchedalmond;
+        resize: vertical;
        
     }
-.logoContainer{
+.airlineContainer{
 position: relative;
-display: inline-block;
-background-color: blueviolet;
-height: 100%;
-width: 50%;
+height: 25%;
+width: 100%;
 left: 0%;
 }
-.nameContainer{
+
+.middleDiv{
     position: relative;
-    display: inline-block;
-    background-color: rgb(171, 226, 43);
-    height: 100%;
-    width: 50%;
+    background-color:olive;
+    height: 30%;
+    width: 100%;
+ 
+}
+.aeroplaneContainer{
+    position: relative;
+    height: 70%;
+    width: 100%;
     right: 0%;
+    
 }

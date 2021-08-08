@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AirlineService } from 'src/app/services/airlinr.service';
 
 @Component({
@@ -12,17 +13,33 @@ export class AddAirlineComponent implements OnInit {
   airlines:number[]=[1];
   airlineForm:any;
   aeroplneForms:any;
+  
 
-  constructor(private formBuilder: FormBuilder,private airlineService:AirlineService) {  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private airlineService:AirlineService,
+    private router:Router
+    ) {  }
 
   ngOnInit(): void {
     this.airlineForm = this.formBuilder.group({
-      airlineName: [''],
-      airlineLogo: [File],
-      contactNumber: [''],
-      contactAddress: [''],
+      airlineName: [
+                '',Validators.required
+                 ],
+      airlineLogo: [
+        ''
+      ],
+      contactNumber: [
+        '',Validators.required
+      ],
+      contactAddress: [
+        '',Validators.required
+      ],
       aeroplanes:this.formBuilder.array([])
     })
+
+    
+   
 
   }
 
@@ -32,13 +49,14 @@ export class AddAirlineComponent implements OnInit {
 
   addNewAeroplaneForm(){
     const aeroplaneForm=this.formBuilder.group({
-      aeroplaneNumber:[],
-      businessClassCount:[],
-      economyClassCount:[],
-      startDate:[],
+      aeroplaneNumber:['',Validators.required],
+      businessClassCount:['',Validators.required],
+      economyClassCount:['',Validators.required],
+      startDate:['',Validators.required],
       endDate:[]
     })
     this.aeroplaneForms.push(aeroplaneForm);
+    this.aeroplneForms.invalid=true;
   }
 
   deleteAeroplaneForm(index:number){
@@ -46,13 +64,12 @@ export class AddAirlineComponent implements OnInit {
   }
 
   saveAirlineForm(){
+    console.log('save airline is clicked')
     console.log(this.airlineForm.value);
     this.airlineService.saveAirline(this.airlineForm.value)
     .subscribe(res=>{
       console.log(res);
-      // this.bookForm.reset();
-      // this.findAllBooks()
-      // this.showBookFormFlag = false;
+      this.router.navigate(['/adminHome'])
   })
   }
 

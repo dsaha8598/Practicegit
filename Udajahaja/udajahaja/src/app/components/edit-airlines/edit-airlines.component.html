@@ -7,32 +7,32 @@
       <div style="position: relative;height: 50%;">
          
              <div style=" text-align: center;display: inline-block;position: relative;width: 50%;height: 100%;">
-                   <div style="position: relative;left: 60%;right: 40%;width: 15%;height: 100%;">
+                   <div style="position: relative;left: 60%;right: 40%;width: 15%;height: 100%;border: 1px solid black;border-radius: 10px;background-color: rgb(199, 40, 19);">
                    Logo
                    </div>
             </div>
             <div style="text-align: left;display: inline-block;position: relative;width: 50%;height: 100%;">
                 <div style="position: relative;left: 0%;width: 100%;height: 100%;">
-                    <input type="text" value="samana" style="position: relative;width: 95%;height: 40%;top: 37%;"/> 
+                    <input type="text" value={{airline.airlineName}} style="position: relative;width: 95%;height: 40%;top: 37%;font-size: 25px;"/> 
                 </div> 
             </div>
         
       </div>
       <div style="position: relative;height: 50%;">    
             <div style="display: inline-block; position: relative;width: 50%;height: 100%;">
-                <div style="display: inline-block;position: relative;vertical-align:top;text-align: center;width: 50%;height: 100%;">
+                <div style="display: inline-block;position: relative;vertical-align:top;text-align: center;width: 50%;height: 100%;font-size: 25px;">
                   Contact Number 
                 </div> 
                 <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
-                    <input type="text" value="samana" style="position: relative;width: 95%;height: 40%;"/> 
+                    <input type="text" value={{airline.contactNumber}} style="position: relative;width: 95%;height: 40%;font-size: 25px;"/> 
                 </div>    
             </div>
             <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
-                <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
+                <div style="display: inline-block;position: relative;width: 50%;height: 100%;font-size: 25px;">
                   Contact Address 
                 </div> 
                 <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
-                    <input type="text" value="samana" style="position: relative;width: 95%;height: 40%;"/> 
+                    <input type="text" value={{airline.contactAddress}} style="position: relative;width: 95%;height: 40%;font-size: 25px;"/> 
                 </div>   
             </div>
       </div>
@@ -46,40 +46,40 @@
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        <div style="display: inline-block;right: 0%;">
-        <button style="width: 100px;height: 50px;">Edit Airline</button>
+        <button style="width: 100px;height: 50px;background-color: cornflowerblue;color: white;">Edit Airline</button>
        </div>
        
        
    </div>
 
    <div class="aeroplaneContainer" >
-       <div  *ngFor="let number of numbers" style="position: relative;width: 100%;height: 21%; " >
+       <div  *ngFor="let aeroplane of aeroplanes" style="position: relative;width: 100%;height: 21%; " >
             <div style="position: relative;width: 100%;height: 92%; "  >
                 <div style="background-color:rgb(218, 235, 255);position: relative;width: 100%;height: 50%;">
                         <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            flight Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value="Boing-876"/>
+                            flight Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value={{aeroplane.aeroplaneNumber}}/>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             Status&nbsp;&nbsp;:&nbsp;Active
                         </div>
                         <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            No of Business Class Seats &nbsp;&nbsp;:&nbsp;<input type="text" value="67" style="width: 10%;"/>
+                            No of Business Class Seats &nbsp;&nbsp;:&nbsp;<input type="text" value={{aeroplane.businessClassCount}} style="width: 10%;"/>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         
-                            <button style="width: 70px;height: 35px;">Edit</button>
+                            <button style="width: 70px;height: 35px;background-color: cornflowerblue;color: white;">Edit</button>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button style="width: 100px;height: 35px;">Deactivate</button>
+                            <button style="width: 100px;height: 35px;background-color: cornflowerblue;color: white;">Deactivate</button>
                         </div>
                 </div>
             <div style="background-color:rgb(218, 235, 255);position: relative;width: 100%;height: 50%;">
                         <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            No of Economy class Seats &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value="Boing-876" style="width: 100px;"/>
+                            No of Economy class Seats &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value={{aeroplane.economyClassCount}} style="width: 100px;"/>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Start date &nbsp;&nbsp;:&nbsp;<input type="text" value="67" style="width: 15%;"/>
+                            Start date &nbsp;&nbsp;:&nbsp;<input type="text" value={{aeroplane.startDate}} style="width: 15%;"/>
                             </div>
                         <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            End date &nbsp;&nbsp;:&nbsp;<input type="text" value="67" style="width: 15%;"/>
+                            End date &nbsp;&nbsp;:&nbsp;<input type="text" valu= {{aeroplane.endDate|date:medium}}  style="width: 15%;"/>
                         </div>
                 </div>
             
