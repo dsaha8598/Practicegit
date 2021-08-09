@@ -1,7 +1,9 @@
 package com.udajahaja.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +43,30 @@ public class AdminService {
 	}
 	public List<AirlineEntity> findAllAirlines() {
 		return repo.findAll();
+	}
+	public AirlineSaveDTO findAllAirlinesById(Long id) {
+		 AirlineEntity entity=repo.findByAirlineId(id);
+		 AirlineSaveDTO dto=new AirlineSaveDTO();
+		 dto.setAirlineLogo(null);
+		 dto.setAirlineName(entity.getAirlineName());
+		 dto.setContactAddress(entity.getContactAddress());
+		 dto.setContactNumber(entity.getContactNumber());
+		 dto.setId(entity.getId());
+		 //dto.set
+		 
+		 List<AeroplaneSaveDTO> list=new ArrayList<>();
+		 List<AeroplaneEntity> listAeroplaneEntity=aeroplaneRepository.getAeroplaneByAirlineId(id);
+		 for(AeroplaneEntity aeroplaneEntity:listAeroplaneEntity) {
+			 AeroplaneSaveDTO aeroplaneSaveDTO=new AeroplaneSaveDTO();
+			 aeroplaneSaveDTO.setAeroplaneNumber(aeroplaneEntity.getAeroplaneNumber());
+			 aeroplaneSaveDTO.setBusinessClassCount(aeroplaneEntity.getBusinessClassCount());
+			 aeroplaneSaveDTO.setEconomyClassCount(aeroplaneEntity.getEconomyClassCount());
+			 aeroplaneSaveDTO.setEndDate(aeroplaneEntity.getEndDate());
+			 aeroplaneSaveDTO.setStartDate(aeroplaneEntity.getStartDate());
+			 aeroplaneSaveDTO.setId(aeroplaneEntity.getId());
+			 list.add(aeroplaneSaveDTO);
+		 }
+		 dto.setAeroplanes(list);
+		 return dto;
 	}
 }

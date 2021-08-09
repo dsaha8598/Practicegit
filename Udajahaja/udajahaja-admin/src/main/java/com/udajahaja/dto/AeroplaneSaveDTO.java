@@ -4,6 +4,13 @@ import java.util.Date;
 
 public class AeroplaneSaveDTO {
 
+	private Integer id;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	private String aeroplaneNumber;
 	private int businessClassCount;
 	private int economyClassCount;
