@@ -1,0 +1,30 @@
+@import "../../../../theme/theme-variables";
+
+.ey-tile {
+  background-color: $white;
+  color: $black;
+  box-shadow: 0px -4px 24px 0px rgba(0, 0, 0, 0.09);
+  background-color: $white;
+  // text-transform: capitalize;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 20px;
+  width: 100%;
+  .total {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  span.label {
+    // font-family: "Interstate Regular Comp" !important;
+    font-size: 18px;
+    line-height: 32px;
+    height: 70px;
+    // text-transform: capitalize;
+    display: block;
+    margin-bottom: 20px;
+    span {
+      display: block;
+    }
+  }
+}

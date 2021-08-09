@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	<bean id="queries" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="filingStatus_by_assesmentyear_quarter_tan">
+					<value>
+                           <![CDATA[	SELECT * FROM Transactions.filing_status WHERE assesment_year=:assessmentYear AND quarter=:quarter AND
+                      deductor_tan=:tanNumber AND form_type=:formType;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="update_filingStatus">
+					<value>
+                           <![CDATA[UPDATE Transactions.filing_status SET assesment_year=?,quarter=?,deductor_id=?,deductor_pan=?,
+                           deductor_tan=?,duedate_for_filing=?,file_type=?,filing_type=?,pnr_or_token_number=?, 
+                           quarter_end_date=?,quarter_period=?,quarter_start_date=?,request_number=?,
+                           revision_exists=?,status=?,active=?,
+                           updated_by=?,updated_date=?   WHERE filing_status_id=?;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="filingStatus_by_id">
+					<value>
+                           <![CDATA[SELECT * FROM Transactions.filing_status WHERE filing_status_id=:id; ]]>
+					</value>
+				</entry>
+				<entry key="filingStatus_By_Year_And_Quarter_And_FileType">
+					<value>
+                           <![CDATA[SELECT * FROM Transactions.filing_status WHERE assesment_year=:assessmentYear
+        							AND quarter=:quarter AND file_type=:formType AND deductor_tan=:deductorTan;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="filingStatus_by_assesmentyear_quarter_id">
+					<value>
+                           <![CDATA[	SELECT * FROM Transactions.filing_status WHERE assesment_year=:assessmentYear AND quarter=:quarter AND
+                    filing_status_id=:id;  
+                            ]]>
+					</value>
+				</entry>
+				<entry key="tcs_filing_by_assesmentyear__tan">
+					<value>
+					<![CDATA[
+					SELECT * FROM Transactions.tcs_filing_files WHERE assesment_year=:year  AND collector_tan=:collectorTan  ;
+					]]>
+					</value>
+				</entry>
+					<entry key="filing_by_year_quarter_tan_filetype_formtype">
+					<value>
+                           <![CDATA[
+                            SELECT filing_files_id AS FilingFilesId,assesment_year AS AssesmentYear,quarter AS Quarter,active AS Active,
+                            created_by AS CreatedBy,created_date AS CreatedDate, deductor_id AS DeductorId,deductor_tan AS DeductorTan,
+                            file_status AS FileStatus,file_type AS FileType,file_url AS FileUrl,filing_type AS FilingType,generated_date AS GeneratedDate,
+                            is_requested AS IsRequested,request_number AS RequestNumber,updated_by AS UpdatedBy,updated_date AS UpdatedDate,form_type AS formType,
+                            consolidated_file_hash as consolidatedFileHash
+                            FROM Transactions.filing_files WHERE assesment_year=:assessmentYear AND quarter=:quarter AND  deductor_tan=:tanNumber 
+                            AND form_type=:formType AND filing_type=:fileType ;
+                            ]]>
+					</value>
+					</entry>
+					<entry key="get_form_15_filing_details_by_assessment_year_and_deductor_tan_fileType_fileFormat">
+					<value>
+					<![CDATA[
+					select * from Transactions.form_15_filing_details where assessment_year =:assessmentYear and deductor_tan =:deductorTan and 
+                    file_type =:fileType and file_format =:fileFormat
+					]]>
+					</value>
+				</entry>
+				<entry key="update_form_15_filing_details">
+					<value>
+					<![CDATA[
+					update Transactions.form_15_filing_details SET file_status =:stringFileStatus,file_url =:fileUrl , error =:error , updated_by =:updatedBy , updated_date =:updatedDate,
+	                generated_date =:generatedDate,filing_type =:stringFilingType,file_type =:stringFileType ,file_format =:stringFileFormat ,is_requested =:isRequested 
+	                WHERE filing_files_id =:id;
+					]]>
+					</value>
+				</entry>
+				<entry
+					key="get_invoice_shareholder_non_resident_by_pan_dateOfPosting_year">
+					<value>
+				<![CDATA[
+			      select * from Transactions.invoice_shareholder_non_resident isnr where deductor_master_pan =:deductorPan and is_parent =1 and assessment_year=:year and 
+				 date_of_posting =:dateOfPosting
+		          ]]>
+					</value>
+				</entry>
+				<entry
+					key="get_invoice_shareholder_resident_by_tan_year_document_posting_month">
+					<value>
+				<![CDATA[
+			      select * from Transactions.invoice_shareholder_resident  where deductor_master_tan =:deductorTan and is_parent =1 and assessment_year=:assessmentYear and 
+				 document_posting_month in(:month1,:month2,:month3) and form15gh_applicable=1;
+		          ]]>
+					</value>
+				</entry>
+				<entry key="get_non_resrident__invoice_shareholder_by_id_pan">
+					<value>
+				<![CDATA[
+			      select * from Transactions.invoice_shareholder_non_resident  where deductor_master_pan=:deductorPan  and is_parent =1 and invoice_id in
+		          ]]>
+					</value>
+				</entry>
+				
+				</map>
+		</constructor-arg>
+	</bean>
+</beans>

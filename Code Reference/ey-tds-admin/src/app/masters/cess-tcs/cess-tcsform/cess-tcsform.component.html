@@ -1,0 +1,497 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="ui-g-6 mx-0">
+        <h2 class="fs-22">{{ headingMsg }} CessMaster</h2>
+      </div>
+    </div>
+    <div class="col-sm-6 text-right">
+      <span *HasAnyAuthority="['TCS_CESS_UPDATE']">
+        <button
+          (click)="stateChanger('edit')"
+          type="button"
+          class="ui-button btn-primary"
+          *ngIf="actionState === 'VIEW'"
+        >
+          Edit
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+<div class="container mt-30">
+  <div class="row">
+    <div class="col-sm-12">
+      <form [formGroup]="cessForm">
+        <!--    <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group mb-30">
+              <div class="row">
+                <div class="col-sm-12">
+                  <label class="mb-10">
+                    Is Cessapplicable at flat rate for all collectee for all
+                    nature of incomes?
+                  </label>
+                </div>
+                <div class="col-sm-1">
+                  <input
+                    formControlName="isCessApplicable"
+                    type="radio"
+                    name="isCessApplicable"
+                    id="isCessApplicableYes"
+                    ngDefaultControl
+                    [value]="true"
+                    checked="checked"
+                    (change)="changeHandler()"
+                  />
+                  <label class="form-check-label" for="isCessApplicableYes">
+                    Yes
+                  </label>
+                </div>
+                <div class="col-sm-1">
+                  <input
+                    formControlName="isCessApplicable"
+                    type="radio"
+                    name="isCessApplicable"
+                    id="isCessApplicableNo"
+                    ngDefaultControl
+                    [value]="false"
+                    (change)="changeHandler()"
+                  />
+                  <label class="form-check-label" for="isCessApplicableNo">
+                    No
+                  </label>
+                </div>
+                <div class="col-sm-12">
+                  <div
+                    *ngIf="submitted && f.isCessApplicable.errors"
+                    class="error-feedback"
+                  >
+                    <p *ngIf="f.isCessApplicable.errors.required">
+                      Please select cess applicable.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!--  <div class="row" *ngIf="cessForm.getRawValue().isCessApplicable">
+          <div class="col-sm-6  mb-20">
+            <div
+              class="form-group"
+              [ngClass]="{
+                'field-invalid': submitted && f.cessTypeId.errors
+              }"
+            >
+              <label for="cessType">Cess type</label>
+              <p-dropdown
+                [options]="getCessTypeList"
+                [value]="cessForm.getRawValue().cessTypeId"
+                id="cessType"
+                name="cessType"
+                ngDefaultControl
+                formControlName="cessTypeId"
+              >
+              </p-dropdown>
+              <div
+                *ngIf="submitted && f.cessTypeId.errors"
+                class="error-feedback"
+              >
+                <p *ngIf="f.cessTypeId.errors.required">
+                  Please select cess type.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 mb-20 ui-inputgroup">
+            <div
+              class="form-group mb-5 cust-lable-bs-p-t-29 cust-label-34  pos-relative"
+              [ngClass]="{
+                'field-invalid': submitted && f.rate.errors
+              }"
+            >
+              <label for="cessRate" class="mb-7">Rate</label>
+              <input
+                type="number"
+                eyRatedecimalfloter
+                name="cessRate"
+                class="input-ctrl w-100"
+                id="cessRate"
+                formControlName="rate"
+              />
+              <span class="ui-inputgroup-addon">%</span>
+              <div *ngIf="submitted && f.rate.errors" class="error-feedback">
+                <p *ngIf="f.rate.errors.required">Please enter rate.</p>
+                <p *ngIf="f.rate.errors.maxlength">
+                  Rate must not exceed 2 characters.
+                </p>
+                <p *ngIf="f.rate.errors.pattern">Please enter only digits.</p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="row" *ngIf="showForm" formArrayName="basisOfCessDetails">
+          <div
+            class="col-sm-12 bg-light p-20 my-20"
+            *ngFor="let cess of getCessDetails(cessForm); let i = index"
+          >
+            <div class="row" [formGroupName]="i">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div
+                    class="col-sm-6  mb-20"
+                    [ngClass]="{
+                      'field-invalid':
+                        submitted && cess.get('collecteeStatusId').errors
+                    }"
+                  >
+                    <div class="form-group">
+                      <label for="collecteeStatusId">Collectee status</label>
+                      <p-dropdown
+                        [options]="getCollecteeStatusList"
+                        ngDefaultControl
+                        id="collecteeStatusId"
+                        name="collecteeStatusId"
+                        formControlName="collecteeStatusId"
+                      >
+                      </p-dropdown>
+                      <div
+                        *ngIf="
+                          submitted && cess.get('collecteeStatusId').errors
+                        "
+                        class="error-feedback"
+                      >
+                        Please select the collectee status from the drop down
+                        list.
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="col-sm-6 mb-20"
+                    [ngClass]="{
+                      'field-invalid':
+                        submitted &&
+                        cess.get('collecteeResidentialStatus').errors
+                    }"
+                  >
+                    <div class="form-group ui-inputgroup">
+                      <label for="collecteeResidentialStatus"
+                        >Collectee residential status</label
+                      >
+                      <!--   <p-dropdown
+                        [options]="getCollecteeResidentialStatusList"
+                        ngDefaultControl
+                        id="collecteeResidentialStatus"
+                        name="collecteeResidentialStatus"
+                        formControlName="collecteeResidentialStatus"
+                        (onChange)="onResChangeHandler($event,i)"
+                      >
+                      </p-dropdown>
+                     -->
+                      <input
+                        type="text"
+                        name="collecteeResidentialStatus"
+                        id="collecteeResidentialStatus"
+                        class="input-ctrl"
+                        ngDefaultControl
+                        disabled="true"
+                        formControlName="collecteeResidentialStatus"
+                      />
+
+                      <div
+                        *ngIf="
+                          submitted &&
+                          cess.get('collecteeResidentialStatus').errors
+                        "
+                        class="error-feedback"
+                      >
+                        Please select the collectee residential status from the
+                        drop down list.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6 mb-20">
+                    <div
+                      class="form-group ui-inputgroup "
+                      [ngClass]="{
+                        'field-invalid':
+                          submitted && cess.get('invoiceSlabFrom').errors
+                      }"
+                    >
+                      <label for="invoiceSlabFrom">Amount from</label>
+                      <input
+                        type="number"
+                        class="input-ctrl width-100"
+                        id="invoiceSlabFrom"
+                        name="invoiceSlabFrom"
+                        placeholder="0"
+                        formControlName="invoiceSlabFrom"
+                      />
+                      <div
+                        *ngIf="submitted && cess.get('invoiceSlabFrom').errors"
+                        class="error-feedback"
+                      >
+                        <p *ngIf="cess.get('invoiceSlabFrom').errors">
+                          Please enter amount.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 mb-20">
+                    <div class="form-group ui-inputgroup">
+                      <label for="invoiceSlabTo">Amount to (optional)</label>
+                      <input
+                        type="number"
+                        id="invoiceSlabTo"
+                        name="invoiceSlabTo"
+                        placeholder="0"
+                        class="input-ctrl width-100"
+                        formControlName="invoiceSlabTo"
+                      />
+                    </div>
+                  </div>
+                  <!--   <div
+                    class="col-sm-4  mb-20"
+                    [ngClass]="{
+                      'field-invalid':
+                        submitted && cess.get('natureOfIncomeMasterId').errors
+                    }"
+                  >
+                    <div class="form-group ">
+                      <label for="natureOfIncomeMasterId"
+                        >Nature of income</label
+                      >
+                      <p-dropdown
+                        [options]="getNatureofIncomeList"
+                        id="natureOfIncomeMasterId"
+                        name="natureOfIncomeMasterId"
+                        ngDefaultControl
+                        formControlName="natureOfIncomeMasterId"
+                      >
+                      </p-dropdown>
+                      <div
+                        *ngIf="
+                          submitted && cess.get('natureOfIncomeMasterId').errors
+                        "
+                        class="error-feedback"
+                      >
+                        Please select nature of income for which the cess needs
+                        to be applied.
+                      </div>
+                    </div>
+                  </div> -->
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div
+                      class="form-group mb-20"
+                      [ngClass]="{
+                        'field-invalid':
+                          submitted && cess.get('cessTypeId').errors
+                      }"
+                    >
+                      <label for="cessType">Cess type</label>
+                      <p-dropdown
+                        [options]="getCessTypeList"
+                        ngDefaultControl
+                        formControlName="cessTypeId"
+                      >
+                      </p-dropdown>
+                      <div
+                        *ngIf="submitted && cess.get('cessTypeId').errors"
+                        class="error-feedback"
+                      >
+                        Please select cess type.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 ui-inputgroup">
+                    <div
+                      class="form-group mb-20 cust-lable-bs-p cust-lable-bs-p-t-29 cust-label-34"
+                      [ngClass]="{
+                        'field-invalid': submitted && cess.get('rate').errors
+                      }"
+                    >
+                      <label for="rate" class="mb-7">Cess rate</label>
+                      <input
+                        type="number"
+                        eyRatedecimalfloter
+                        name="rate"
+                        class="input-ctrl w-100"
+                        id="rate"
+                        formControlName="rate"
+                      />
+                      <span class="ui-inputgroup-addon">%</span>
+                      <div
+                        *ngIf="submitted && cess.get('rate').errors"
+                        class="error-feedback"
+                      >
+                        Please enter rate.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 text-right mb-20">
+                    <button
+                      type="button"
+                      *ngIf="i !== 0"
+                      class="ui-button btn-primary mt-30"
+                      (click)="removeCessDetails(i)"
+                      [disabled]="
+                        actionState === 'EDIT' || actionState === 'VIEW'
+                      "
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-20" *ngIf="showForm">
+          <div class="col-sm-12">
+            <button
+              type="button"
+              class="ui-button btn-secondary"
+              [disabled]="actionState === 'EDIT' || actionState === 'VIEW'"
+              (click)="addCessDetails()"
+            >
+              <i class="fas fa-plus-circle"></i> Add New
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="ui-inputgroup col-sm-6"
+            [ngClass]="{
+              'field-invalid': submitted && f.applicableFrom.errors
+            }"
+          >
+            <label for="applicableFrom">Applicable from</label>
+            <div class="input-group ">
+              <input
+                class="form-control"
+                placeholder="dd-mm-yyy"
+                name="dp"
+                id="applicableFrom"
+                formControlName="applicableFrom"
+                ngbDatepicker
+                placement="auto"
+                #applicableFrom="ngbDatepicker"
+                [value]="
+                  cessForm.getRawValue().applicableFrom | date: 'dd-MM-yyyy'
+                "
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-secondary calendar fs-14"
+                  (click)="applicableFrom.toggle()"
+                  type="button"
+                >
+                  <i class="fas fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+            <div
+              *ngIf="submitted && f.applicableFrom.errors"
+              class="error-feedback"
+            >
+              <p *ngIf="f.applicableFrom.errors.required">
+                Please enter applicable from.
+              </p>
+            </div>
+          </div>
+          <div
+            class="ui-inputgroup col-sm-6"
+            [ngClass]="{
+              'field-invalid':
+                (submittedTo && f.applicableTo.errors) || applicableToDateError
+            }"
+          >
+            <label for="inputState">Applicable to (optional)</label>
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="dd-mm-yyyy"
+                [minDate]="minDate"
+                (click)="d.toggle()"
+                name="applicableTo"
+                formControlName="applicableTo"
+                ngbDatepicker
+                placement="auto"
+                #d="ngbDatepicker"
+                [value]="
+                  cessForm.getRawValue().applicableTo | date: 'dd-MM-yyyy'
+                "
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-secondary calendar fs-14"
+                  (click)="d.toggle()"
+                  type="button"
+                >
+                  <i class="fas fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+            <div
+              *ngIf="
+                (submittedTo && f.applicableTo.errors) || applicableToDateError
+              "
+              class="error-feedback"
+            >
+              <p *ngIf="applicableToDateError">
+                Applicable to date must be more than that of Applicable from
+                date.
+              </p>
+              <p *ngIf="f.applicableTo.errors.required">
+                Please enter applicable to.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <button
+              type="button"
+              class="ui-button btn-utility mr-20"
+              (click)="back()"
+            >
+              <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button
+              type="button"
+              class="ui-button btn-secondary  mr-20"
+              (click)="saveCess('addNew')"
+              *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+            >
+              <i class="fas fa-save"></i> Save &amp; Add New
+            </button>
+            <button
+              type="button"
+              class="ui-button btn-primary"
+              (click)="saveCess('back')"
+              *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+            >
+              <i class="fas fa-save"></i> Save
+            </button>
+            <span *HasAnyAuthority="['TCS_CESS_UPDATE']">
+              <button
+                (click)="updateCess()"
+                type="button"
+                class="ui-button btn-primary"
+                *ngIf="actionState === 'EDIT'"
+              >
+                Update
+              </button>
+            </span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

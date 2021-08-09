@@ -1,0 +1,2178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	<bean id="queries" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="role_insert">
+					<value>
+					<![CDATA[Insert into Onboarding.role(name,active,permissionnames,createdby,modifiedby,createddate,
+				modifieddate,deductor_pan)values(?,?,?,?,?,?,?,?); 
+				          ]]>
+					</value>
+				</entry>
+				<entry key="role_retriev_by_id">
+					<value>
+					<![CDATA[select role_id as roleId,name as name,permissionnames as permisson_Names, deductor_pan as deductorPan,
+				active as active, createdby as createdBy,createddate as createdDate, modifiedby as modifiedBy, module_type_id as moduleType,
+				modifiedDate as modifiedDate from Onboarding.role where role_id=? ;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="role_retriev_by_name_deductorPan">
+					<value>
+					<![CDATA[select role_id as roleId,name as name,permissionnames as permisson_Names, deductor_pan as deductorPan,
+				active as active, createdby as createdBy,createddate as createdDate, modifiedby as modifiedBy, module_type_id as moduleType,
+				modifiedDate as modifiedDate from Onboarding.role where name=? and deductor_pan=? and module_type_id=? and active=1 ;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="role_allData">
+					<value>
+					<![CDATA[select role_id as roleId,name as name,permissionnames as permisson_Names, deductor_pan as deductorPan,
+				active as active, createdby as createdBy,createddate as createdDate, modifiedby as modifiedBy,module_type_id as moduleType, 
+				modifiedDate as modifiedDate from Onboarding.role where  active=1 and module_type_id=?;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="role_by_deductorPan">
+					<value>
+					<![CDATA[select role_id as roleId,name as name,permissionnames as permisson_Names, deductor_pan as deductorPan,
+				active as active, createdby as createdBy,createddate as createdDate, modifiedby as modifiedBy, module_type_id as moduleType,
+				modifiedDate as modifiedDate from Onboarding.role where deductor_pan=? and active=1;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="roles_by_deductorPan">
+					<value>
+					<![CDATA[select role_id as roleId,name as name,permissionnames as permisson_Names, deductor_pan as deductorPan,
+				active as active, createdby as createdBy,createddate as createdDate, modifiedby as modifiedBy, module_type_id as moduleType,
+				modifiedDate as modifiedDate from Onboarding.role where deductor_pan=? and  module_type_id=? and active=1;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="insert_user">
+					<value>
+					<![CDATA[
+				insert into Onboarding.[user](activeflag,consent,consentdate,createddate,createduser,deductor_pans,
+				email,user_for_all_tans,modifieddate,modifieduser,sourcetype,username)values(?,?,?,?,?,?,?,?,?,?,?,?);
+				        ]]>
+					</value>
+				</entry>
+				<entry key="update_user">
+					<value>
+					<![CDATA[
+					        UPDATE  Onboarding.[user] SET activeflag=?,consent=?,consentdate=?,createddate=?,createduser=?,deductor_pans=?,
+					        email=?,user_for_all_tans=?,modifieddate=?,modifieduser=?,sourcetype=?,username=? WHERE user_id=?;
+                     ]]>
+					</value>
+				</entry>
+				<entry key="user_by_id">
+					<value>
+					<![CDATA[
+				select user_id as userId,activeflag as activeFlag,consent as Consonent,consentdate as Consentdate,createddate as CreatedDate,
+				createduser as CreateduCser,deductor_pans as DeductorPans,email as Email,user_for_all_tans as userForAllTans,
+				modifieddate as ModifiedDate,modifieduser as ModifiedUser,sourcetype as SourceType,username as UserName 
+				from Onboarding.[user] where user_id=?;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="user_by_email">
+					<value>
+					<![CDATA[
+				select user_id as userId,activeflag as activeFlag,consent as Consonent,consentdate as Consentdate,createddate as CreatedDate,
+				createduser as CreateduCser,deductor_pans as DeductorPans,email as Email,user_for_all_tans as userForAllTans,
+				modifieddate as ModifiedDate,modifieduser as ModifiedUser,sourcetype as SourceType,username as UserName 
+				from Onboarding.[user] where email=?;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="user_active_by_email">
+					<value>
+					<![CDATA[
+					        select user_id as userId,activeflag as activeFlag,consent as Consonent,consentdate as Consentdate,createddate as CreatedDate,
+					        createduser as CreateduCser,deductor_pans as DeductorPans,email as Email,user_for_all_tans as userForAllTans,
+					        modifieddate as ModifiedDate,modifieduser as ModifiedUser,sourcetype as SourceType,username as UserName 
+					        from Onboarding.[user] where email=? and activeflag=1;
+                     ]]>
+					</value>
+				</entry>
+				<entry key="user_all_active">
+					<value>
+					<![CDATA[
+				select user_id as userId,activeflag as activeFlag,consent as Consonent,consentdate as Consentdate,createddate as CreatedDate,
+				createduser as CreateduCser,deductor_pans as DeductorPans,email as Email,user_for_all_tans as userForAllTans,
+				modifieddate as ModifiedDate,modifieduser as ModifiedUser,sourcetype as SourceType,username as UserName 
+				from Onboarding.[user] where activeflag=1 ORDER BY user_id DESC ;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="userAccessDetails_by_id">
+					<value>
+					<![CDATA[
+				select user_access_details_id as user_access_details_id,user_id as user_id,user_name as user_name,user_pan as user_pan,
+				user_tan as user_tan,role_id as role_id,active as active,created_date as created_date,created_user as created_user
+				from Onboarding.user_access_details where user_id=?;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="userAccessDetails_by_emai_pan">
+					<value>
+					<![CDATA[
+				select user_access_details_id as user_access_details_id,user_id as user_id,user_name as user_name,user_pan as user_pan,
+				user_tan as user_tan,role_id as role_id,active as active,created_date as created_date,created_user as created_user
+				from Onboarding.user_access_details where user_name=? AND user_pan=? AND active=1;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="findUserAcess_By_ModuleType_Pan_And_UserEmail">
+					<value>
+					<![CDATA[
+				select * from  Onboarding.user_access_details uad inner join  Onboarding.role r on uad.role_id =r.role_id and 
+				uad.active=1 and uad.user_name=? and uad.user_pan=? inner join Onboarding.module_lookup ml on ml.id=r.module_type_id and ml.[name]=?;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="update_userAccessDetails">
+					<value>
+					<![CDATA[
+					UPDATE Onboarding.user_access_details SET user_id=:userId,user_name=:userName,user_pan=:pan,user_tan=:tan,role_id=:roleId,
+					active=:active,created_date=:createddate,created_user=:createduser WHERE user_access_details_id=:userAccessDetailsId;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="userAccessDetails_active_by_id">
+					<value>
+					<![CDATA[
+				select user_access_details_id as user_access_details_id,user_id as user_id,user_name as user_name,user_pan as user_pan,
+				user_tan as user_tan,role_id as role_id,active as active,created_date as created_date,created_user as created_user
+				from Onboarding.user_access_details where user_id=? and active=1;
+				        ]]>
+					</value>
+				</entry>
+				<entry key="deductor_master_update">
+					<value>
+				          <![CDATA[UPDATE Onboarding.deductor_master SET salutation=:deductorSalutation,applicable_from =:applicableFrom, applicable_to =:applicableTo, code =:code, modified_by =:modifiedBy,
+				modified_date =:modifiedDate , due_date_of_tax_payment =:dueDateOfTaxPayment, email =:email, have_more_than_one_branch =:haveMoreThanOneBranch, mode_of_payment =:modeOfPayment ,
+				type =:type, phone_number =:phoneNumber, residential_status =:residentialStatus, status =:status,name =:name,gstin=:gstin,alternate_email=:emailAlternate,
+				alternate_phone_number=:phoneNumberAlternate,module_type=:moduleType WHERE deductor_master_pan =:panField;]]>
+
+					</value>
+				</entry>
+				<entry key="get_all_deductor">
+					<value>
+				             <![CDATA[SELECT * FROM Onboarding.deductor_master where active = 1 ORDER BY deductor_master_id DESC;]]>
+					</value>
+				</entry>
+				<entry key="find_all_deductor_pan">
+					<value>
+				           <![CDATA[SELECT * FROM Onboarding.deductor_master WHERE deductor_master_pan IN(?);]]>
+					</value>
+				</entry>
+				<entry key="find_deductor_pan">
+					<value>
+				           <![CDATA[SELECT * FROM Onboarding.deductor_tan_address WHERE pan = ?;]]>
+					</value>
+				</entry>
+				<entry key="find_by_deductor_tan">
+					<value>
+				           <![CDATA[SELECT * FROM Onboarding.deductor_tan_address WHERE tan = ?;]]>
+					</value>
+				</entry>
+				<entry key="find_by_pan_and_tan">
+					<value>
+				          <![CDATA[SELECT * FROM Onboarding.deductor_tan_address WHERE pan =? and tan = ?;]]>
+					</value>
+				</entry>
+				<entry key="deductor_tan_address_update">
+					<value>
+				                            <![CDATA[UPDATE Onboarding.deductor_tan_address SET area_locality = ?, country_name = ?, flat_door_block_no = ?, name_building_village = ?,
+				                     person_address_change = ?, person_alternate_email = ?, person_alternate_telephone = ?, person_area = ? , person_building_name = ? , 
+				                     person_city = ?, person_designation = ?,  person_email = ?, person_flat_door_blockno = ?, person_mobile_number = ?, person_name = ?, 
+				person_pan = ?, person_pin_code = ?, person_state = ?, person_street_name = ?, person_telephone = ?, pin_code = ?, 
+				road_street_postoffice = ?, state_name = ?, town_city_district = ?,std_code=?,person_std_code=? WHERE pan = ? AND tan = ?;]]>
+					</value>
+				</entry>
+				<entry key="ldc_master_basedOn_tan_pan_section_certificateNo">
+					<value>
+				           <![CDATA[SELECT is_non_resident,ldc_section_details,acessing_officer_details,ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount,
+				      is_non_resident, ldc_section_details, acessing_officer_details FROM Client_Masters.ldc_master WHERE 
+				      certificate_number=? AND ldc_master_pan=? AND section=? AND deductor_master_tan=? AND active=1;
+				      
+				       
+				    ]]>
+					</value>
+				</entry>
+				<entry key="ldc_master_basedOn_pan_certificateNo">
+					<value>
+				           <![CDATA[SELECT is_non_resident,ldc_section_details,acessing_officer_details,ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount,
+				      is_non_resident, ldc_section_details, acessing_officer_details  FROM Client_Masters.ldc_master WHERE 
+				      certificate_number=? AND ldc_master_pan=? AND deductor_master_tan=? AND active=1 ;
+				      
+				       
+				    ]]>
+					</value>
+				</entry>
+				<entry key="ldc_master_by_id">
+					<value>
+				           <![CDATA[SELECT is_non_resident,ldc_section_details,acessing_officer_details,ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount,
+				      is_non_resident, ldc_section_details, acessing_officer_details FROM Client_Masters.ldc_master WHERE 
+				      ldc_master_id=?;
+				    ]]>
+					</value>
+				</entry>
+				<entry key="ldc_master_by_id_tan_year">
+					<value>
+				           <![CDATA[SELECT is_non_resident,ldc_section_details,acessing_officer_details,ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount,
+				      is_non_resident, ldc_section_details, acessing_officer_details  FROM Client_Masters.ldc_master WHERE 
+				      ldc_master_id=? AND deductor_master_tan=? ;
+				    ]]>
+					</value>
+				</entry>
+				<entry key="ldc_master_by_Id_Tan">
+					<value>
+				           <![CDATA[SELECT is_non_resident,ldc_section_details,acessing_officer_details,ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount,
+				      is_non_resident, ldc_section_details, acessing_officer_details  FROM Client_Masters.ldc_master WHERE 
+				      AND ldc_master_id=? AND deductor_master_tan=? ;
+				    ]]>
+					</value>
+				</entry>
+				<entry key="ldc_total_utilized_amount">
+					<value>
+				           <![CDATA[ SELECT ISNULL(SUM(utilized_amount),0) FROM Transactions.ldc_utilization WHERE ldc_master_id = :id
+				     					AND deductor_master_tan = :deductorTan AND active= 1; ]]>
+					</value>
+				</entry>
+				<entry key="ldc_findAll">
+					<value>
+				           <![CDATA[ SELECT is_non_resident,ldc_section_details,acessing_officer_details,ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount,
+				      is_non_resident, ldc_section_details, acessing_officer_details FROM Client_Masters.ldc_master ; ]]>
+					</value>
+				</entry>
+				<entry key="ldc_by_year_tan">
+					<value>
+				           <![CDATA[
+				    SELECT is_non_resident,ldc_section_details,acessing_officer_details,ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount,
+				      is_non_resident, ldc_section_details, acessing_officer_details FROM Client_Masters.ldc_master WHERE 
+				       assessment_year=? AND deductor_master_tan=? ;
+				     
+				    ]]>
+					</value>
+				</entry>
+				<entry key="ldc_count">
+					<value>
+				           <![CDATA[
+				           
+				           SELECT SUM(valid_count) AS valid_count,SUM(invalid_count) AS invalid_count,SUM(empty_count) AS empty_count
+							FROM
+							(SELECT COUNT(1) AS valid_count,0 AS invalid_count, 0 AS empty_count
+							FROM Client_Masters.ldc_master WHERE deductor_master_tan =:deductorTan AND convert(date,created_date) >= :startDate  
+						 AND convert(date,created_date) <= :endDate  AND status = 'valid' 
+						UNION ALL
+						SELECT 0 AS valid_count,COUNT(1) AS invalid_count, 0 AS empty_count
+						FROM Client_Masters.ldc_master WHERE deductor_master_tan =:deductorTan AND convert(date,created_date) >= :startDate  
+				 AND convert(date,created_date) <= :endDate  AND status = 'Invalid' 
+					UNION ALL
+					SELECT 0 AS valid_count,0 AS invalid_count, COUNT(1) AS empty_count
+					FROM Client_Masters.ldc_master 
+					WHERE deductor_master_tan = :deductorTan AND CONVERT(DATE,created_date) >= :startDate    AND 
+   				   CONVERT(DATE,created_date) <=:endDate AND (status = '' OR status IS NULL))A;
+				
+				                      ]]>
+					</value>
+				</entry>
+				<entry key="ldc_by_tan">
+					<value>
+				            <![CDATA[
+				   SELECT is_non_resident,ldc_section_details,acessing_officer_details,ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount  FROM Client_Masters.ldc_master WHERE  deductor_master_tan=?; 
+				    ]]>
+					</value>
+				</entry>
+				<entry key="ldc_master_tan_pan_id">
+					<value>
+				           <![CDATA[SELECT is_non_resident,ldc_section_details,acessing_officer_details,ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount,
+				      is_non_resident, ldc_section_details, acessing_officer_details  FROM Client_Masters.ldc_master WHERE 
+				       ldc_master_id=? ; ]]>
+					</value>
+				</entry>
+				<entry key="ldc_master_update">
+					<value>
+				           <![CDATA[UPDATE Client_Masters.ldc_master SET assessment_year=:assessmentYear ,ldc_master_pan=:pan,
+                                   deductor_master_tan=:tanNumber, active=:active, amount=:amount, applicable_from=:applicableFrom,
+									applicable_to=:applicableTo,certificate_number=:certificateNumber,db_applicable_from =:dbApplicableFrom,db_applicable_to=:dbApplicableTo,
+				                    db_rate=:dbRate,db_section=:dbSection,deductee_name=:deducteeName,modified_by=:modifiedBy,modified_date=:modifiedDate,nature_of_payment=:natureOfPayment,
+				                    rate=:rate,remaining_amount=:remainingAmount,section=:section,status =:ldcStatus,
+				     				 threshold_limit=:thresholdLimit,traces_utilized_amount=:tracesUtilizedAmount,utilized_amount=:utilizedAmount, validation_date=:validationDate,match_score=:matchScore,
+				      				 name_as_per_traces=:nameAsPerTraces, remarks_as_per_traces=:remarksAsPerTraces ,
+				      				 ldc_section_details = :ldcSection, acessing_officer_details = :assessingOfficerDetails WHERE ldc_master_id=:ldcMasterID  ;
+				    ]]>
+					</value>
+				</entry>
+				<entry key="ao_master_basedOn_tan_pan_section_certificateNo">
+					<value>
+				            <![CDATA[SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active,
+				            	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+				             	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+				              	rate, section, threshold_limit, validation_date, challan_month, created_by,
+				               	created_date, modified_by, modified_date, dividend_processing,
+				               	dividend_name_of_assignee_officer FROM Client_Masters.ao_master WHERE 
+								certificate_number= :certificateNumber AND pan= :pan AND section= :section 
+								AND deductor_master_tan= :deductorMasterTan; ]]>
+					</value>
+				</entry>
+				<entry key="ao_master_basedOn_pan_certificateNo">
+					<value>
+				           <![CDATA[SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active,
+				            	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+				             	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+				              	rate, section, threshold_limit, validation_date, challan_month, created_by,
+				               	created_date, modified_by, modified_date FROM Client_Masters.ao_master WHERE 
+								certificate_number= :certificateNumber AND pan= :pan ; ]]>
+					</value>
+				</entry>
+				<entry key="ao_master_by_id">
+					<value>
+				           <![CDATA[SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active,
+				            	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+				             	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+				              	rate, section, threshold_limit, validation_date, challan_month, created_by,
+				               	created_date, modified_by, modified_date, dividend_processing,
+				               	dividend_name_of_assignee_officer FROM Client_Masters.ao_master WHERE 
+								ao_master_id= :id; ]]>
+					</value>
+				</entry>
+				<entry key="ao_master_by_id_tan_year">
+					<value>
+				           <![CDATA[SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active,
+				            	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+				             	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+				              	rate, section, threshold_limit, validation_date, challan_month, created_by,
+				               	created_date, modified_by, modified_date, dividend_processing,
+				               	dividend_name_of_assignee_officer FROM Client_Masters.ao_master WHERE 
+								ao_master_id= :id AND assessment_year= :year AND deductor_master_tan= :deductorTan ; ]]>
+					</value>
+				</entry>
+				<entry key="ao_master_by_tan">
+					<value>
+				           <![CDATA[SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active,
+				            	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+				             	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+				              	rate, section, threshold_limit, validation_date, challan_month, created_by,
+				               	created_date, modified_by, modified_date, dividend_processing,
+				               	dividend_name_of_assignee_officer FROM Client_Masters.ao_master WHERE 
+								deductor_master_tan= :deductorTan ; ]]>
+					</value>
+				</entry>
+				<entry key="ao_master_by_Id_Tan">
+					<value>
+				           <![CDATA[SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active,
+				            	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+				             	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+				              	rate, section, threshold_limit, validation_date, challan_month, created_by,
+				               	created_date, modified_by, modified_date, dividend_processing,
+				               	dividend_name_of_assignee_officer FROM Client_Masters.ao_master WHERE 
+								ao_master_id= :id AND deductor_master_tan= :deductorTan ; ]]>
+					</value>
+				</entry>
+				<entry key="ao_findAll">
+					<value>
+				           <![CDATA[
+							SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active, 
+				            	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+				             	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+				              	rate, section, threshold_limit, validation_date, challan_month, created_by,
+				               	created_date, modified_by, modified_date, dividend_processing,
+				               	dividend_name_of_assignee_officer FROM Client_Masters.ao_master ]]>
+					</value>
+				</entry>
+				<entry key="ao_by_year_tan">
+					<value>
+						<![CDATA[ SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active,
+				            	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+				             	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+				              	rate, section, threshold_limit, validation_date, challan_month, created_by,
+				               	created_date, modified_by, modified_date, dividend_processing,
+				               	dividend_name_of_assignee_officer FROM Client_Masters.ao_master WHERE 
+				   				assessment_year= :year AND deductor_master_tan= :deductorTan ; ]]>
+					</value>
+				</entry>
+				<entry key="ao_master_tan_deductee_id">
+					<value>
+				           <![CDATA[
+								SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active, 
+				            	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+				             	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+				              	rate, section, threshold_limit, validation_date, challan_month, created_by,
+				               	created_date, modified_by, modified_date, dividend_processing,
+				               	dividend_name_of_assignee_officer FROM Client_Masters.ao_master WHERE 
+				   				deductor_master_tan= :deductorTan and deductee_name= :deducteeName and ao_master_id = :id; ]]>
+					</value>
+				</entry>
+				<entry key="get_ao_certificate_no_pan_section">
+					<value>
+				        <![CDATA[ SELECT * FROM Client_Masters.ao_master WHERE pan = :deducteePan AND section = :section AND certificate_number = :aoCertificateNumber; ]]>
+					</value>
+				</entry>
+				<entry key="ao_count">
+					<value>
+				           <![CDATA[ SELECT count(1) AS ldcStatusCount FROM Client_Masters.ao_master WHERE
+				           deductor_master_tan =? AND convert(date,created_date) >= ? AND convert(date,created_date) <= ?  AND status = ? ; ]]>
+					</value>
+				</entry>
+				<entry key="ao_by_tan">
+					<value>
+						<![CDATA[ SELECT ao_master_id AS ao_master_id,assessment_year AS Assessment_year,ao_master_pan AS ao_master_pan,
+				   			deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				   			applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				   			db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				   			db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				   			nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				   			threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				   			validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				   			remarks_as_per_traces AS Remarks_as_per_traces  FROM Client_Masters.ao_master WHERE  deductor_master_tan= :deductorMasterTan; ]]>
+					</value>
+				</entry>
+				<entry key="ao_master_tan_pan_id">
+					<value>
+				           <![CDATA[SELECT ao_master_id AS ao_master_id,assessment_year AS Assessment_year,ao_master_pan AS ao_master_pan,
+				deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				remarks_as_per_traces AS Remarks_as_per_traces  dividend_processing AS dividend_processing,
+				dividend_name_of_assignee_officer AS dividend_name_of_assignee_officer FROM Client_Masters.ao_master WHERE 
+				 ao_master_pan= :pan AND deductor_master_tan= :deductorTan AND ao_master_id= :id AND active=1;
+				]]>
+					</value>
+				</entry>
+				<entry key="ao_master_update">
+					<value>
+				           <![CDATA[UPDATE Client_Masters.ao_master
+ 								SET assessment_year= :assessmentYear, deductor_master_tan= :deductorMasterTan, deductee_name= :deducteeName, active= :active, amount= :amount, 
+ 								applicable_from= :applicableFrom, applicable_to= :applicableTo, certificate_number= :certificateNumber, db_amount= :dbAmount, 
+ 								db_applicable_from= :dbApplicableFrom, db_applicable_to= :dbApplicableTo, db_rate= :dbRate, db_section= :dbSection, limit_utilised= :limitUtilised,
+ 								 nature_of_payment= :natureOfPayment, pan= :pan, rate= :rate, section= :section, threshold_limit= :thresholdLimit, validation_date= :validationDate, 
+ 								 challan_month= :challanMonth, created_by= :createdBy, created_date= :createdDate, modified_by= :modifiedBy, modified_date= :modifiedDate
+								WHERE ao_master_id= :aoMasterId;
+				    ]]>
+					</value>
+				</entry>
+				<entry key="deductor_onboarding_info_update">
+					<value>
+				          <![CDATA[UPDATE Onboarding.deductor_onboarding_info SET active = ? WHERE pan = ? ;]]>
+					</value>
+				</entry>
+				<entry key="find_by_deductor_pan_onboarding_info">
+					<value>
+				            <![CDATA[SELECT * FROM Onboarding.deductor_onboarding_info WHERE pan = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="update_custom_jobs">
+					<value>
+				            <![CDATA[UPDATE Onboarding.deductor_onboarding_info SET custom_jobs = ? WHERE pan = ? AND deductor_onboarding_info_id = ? ;]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_deductor_pan_and_deductee_pan">
+					<value>
+				            <![CDATA[SELECT distinct deductee_master_name, email FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND deductee_master_pan = ? and active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_all_nr_by_deductor_pan_and_deductee_pan">
+					<value>
+				            <![CDATA[SELECT distinct deductee_master_name, email FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND deductee_master_pan = ? and active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_deductor_pan_and_name">
+					<value>
+				            <![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND modified_name = ? ;]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_deductee_pans_modifiedname">
+					<value>
+				            <![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND modified_name = ?
+				            AND deductee_master_pan = ? AND deductee_code = ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_res_deductee_by_deductee_key">
+					<value>
+				            <![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND deductee_key = ?
+				             AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_nr_deductee_by_deductee_key">
+					<value>
+				            <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND deductee_key = ?
+				             AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="get_all_residential_count">
+					<value>
+				            <![CDATA[SELECT COUNT(1) FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_by_id">
+					<value>
+				         <![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND deductee_master_id = ? ;]]>
+					</value>
+				</entry>
+				<entry key="update_applicable_to">
+					<value>
+				           <![CDATA[UPDATE Client_Masters.deductee_master_residential SET applicable_to = ?, active = 0 WHERE deductee_master_id = ? ;]]>
+					</value>
+				</entry>
+				<entry key="excel_update_applicable_to">
+					<value>
+				           <![CDATA[   UPDATE Client_Masters.deductee_master_residential SET deductor_master_pan = :deductorPan, active = :active,
+										additional_sections = :additionalSections, advance_transaction_count = :advanceTransactionCount,applicable_from = :applicableFrom,
+										applicable_to = :applicableTo, area_locality = :areaLocality, country = :country, created_by = :createdBy, created_date = :createdDate,
+										deductee_code = :deducteeCode, deductee_status = :deducteeStatus, deductor_code = :deductorCode, default_rate = :defaultRate,
+										email = :emailAddress,	flat_door_block_no = :flatDoorBlockNo, invoice_transaction_count = :invoiceTransactionCount, is_eligible_for_multiple_sections = :isDeducteeHasAdditionalSections,
+										modified_by = :modifiedBy,	modified_date = :modifiedDate, modified_name = :modifiedName, deductee_master_name = :deducteeName,
+										name_building_village = :nameBuildingVillage, name_of_the_company_code = :nameOfTheCompanyCode, deductee_master_pan = :deducteePAN, 
+										pan_verified_date = :panVerifiedDate, phone_number = :phoneNumber, pin_code = :pinCode, provision_transaction_count = :provisionTransactionCount,
+										rate = :rate, residential_status = :deducteeResidentialStatus, road_street_postoffice = :roadStreetPostoffice, section = :section, source_file_name = :sourceFileName,
+										source_identifier = :sourceIdentifier, state = :state, tin_unique_identification = :tinUniqueIdentification, town_city_district = :townCityDistrict, user_defined_field_1 = :userDefinedField1,
+										user_defined_field_2 = :userDefinedField2, user_defined_field_3 = :userDefinedField3, match_score = :matchScore, name_as_per_traces = :nameAsPerTraces, pan_as_per_traces = :panAsPerTraces,
+										remarks_as_per_traces = :remarksAsPerTraces, nature_of_payment = :natureOfPayment, deductee_aadhar_number = :deducteeAadharNumber, section_code = :sectionCode,
+										additional_section_code = :additionalSectionCode, is_threshold_limit_applicable = :isThresholdLimitApplicable, deductee_key = :deducteeKey, deductee_enrichment_key = :deducteeEnrichmentKey,
+										tds_excemption_reason = :tdsExcemptionReason, tds_excemption_flag =:tdsExcemptionFlag WHERE deductee_master_id = :deducteeMasterId
+				           ]]>
+					</value>
+				</entry>
+
+				<entry key="count_residential_pan_status_empty">
+					<value>
+				            <![CDATA[SELECT COUNT(1) FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND created_date >= ? AND created_date <= ? AND (pan_status is null or pan_status = '') ;]]>
+					</value>
+				</entry>
+				<entry key="count_residential_pan_status_valid">
+					<value>
+				            <![CDATA[SELECT COUNT(1) FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND created_date >= ? AND created_date <= ? AND pan_status = 'valid' ;]]>
+					</value>
+				</entry>
+				<entry key="count_residential_pan_status_invalide">
+					<value>
+				            <![CDATA[SELECT COUNT(1) FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND created_date >= ? AND created_date <= ? AND pan_status = 'invalid' ;]]>
+					</value>
+				</entry>
+				<entry key="update_residential">
+					<value>
+				                       <![CDATA[ UPDATE Client_Masters.deductee_master_residential SET applicable_to = ? ,area_locality = ?, country = ?, flat_door_block_no = ?, modified_by = ?,
+				modified_date = ?, name_building_village = ?, pin_code = ?, road_street_postoffice = ?, state = ?, town_city_district =? WHERE deductor_master_pan = ? AND deductee_master_id = ?;]]>
+					</value>
+				</entry>
+				<entry key="get_deductees">
+					<value>
+				            <![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND created_date >= ? AND created_date <= ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="fine_all_deductees_name_and_pan">
+					<value>
+				          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND modified_name = ? ;]]>
+					</value>
+				</entry>
+				<entry key="fine_by_id">
+					<value>
+				          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND deductee_master_id = ? ;]]>
+					</value>
+				</entry>
+				<entry key="get_deductee_by_pans">
+					<value>
+				          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND deductee_master_pan = ? ;]]>
+					</value>
+				</entry>
+				<entry key="get_deductee_by_name">
+					<value>
+				          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND  deductee_master_name = ? ;]]>
+					</value>
+				</entry>
+				<entry key="get_deductee_by_pan">
+					<value>
+				          <![CDATA[SELECT deductee_master_name FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan= ? AND deductee_master_active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="update_applicable_to_data">
+					<value>
+				          <![CDATA[UPDATE Client_Masters.deductee_master_non_residential SET applicable_to = ?, active = 0 WHERE deductee_master_id = ? ;]]>
+					</value>
+				</entry>
+				<entry key="excel_update_applicable_to_data">
+					<value>
+					<![CDATA[ UPDATE Client_Masters.deductee_master_non_residential SET deductee_master_10f_applicable_from = :tenFApplicableFrom, deductee_master_10f_applicable_to = :tenFApplicableTo, 
+							deductee_master_10f_file_address = :form10fFileAddress, active = :active, additional_sections = :additionalSections, advance_transaction_count = :advanceTransactionCount, applicable_from = :applicableFrom,
+							applicable_to = :applicableTo, area_locality = :areaLocality, country = :country, country_of_residence = :countryOfResidence, created_by = :createdBy, default_rate = :defaultRate, email = :emailAddress, 
+							fixed_based_india = :fixedBasedIndia, flat_door_block_no = :flatDoorBlockNo, invoice_transaction_count = :invoiceTransactionCount, is_10f_available = :isTenFAvailable, 
+							is_eligible_for_multiple_sections = :isDeducteeHasAdditionalSections, is_no_pe_doc_available = :noPEDocumentAvailable, is_pe_in_india = :whetherPEInIndia, is_poem_available = :isPOEMavailable, 
+							is_trc_available = :isTRCAvailable, isdeductee_transparent = :isDeducteeTransparent, isgrossingup = :isGrossingUp, istenf_future = :istenfFuture, istrc_future = :istrcFuture, modified_by = :modifiedBy,
+							modified_date = :modifiedDate, modified_name = :modifiedName, name_building_village = :nameBuildingVillage, no_pe_doc_address = :noPeDocAddress, nr_rate = :nrRate, pe_applicable_from = :noPEApplicableFrom,
+							pe_applicable_to = :noPEApplicableTo, pe_file_address = :peFileAddress, phone_number = :phoneNumber, pin_code = :pinCode, poem_applicable_from = :poemApplicableFrom, poem_applicable_to = :poemApplicableTo, 
+							provision_transaction_count = :provisionTransactionCount, rate = :rate, related_party = :relatedParty, road_street_postoffice = :roadStreetPostoffice, section = :section, source_file_name = :sourceFileName, 
+							source_identifier = :sourceIdentifier, state = :state, tenf_future_date = :tenfFutureDate, tin_unique_identification = :deducteeTin, town_city_district = :townCityDistrict, trc_applicable_from = :trcApplicableFrom, 
+							trc_applicable_to = :trcApplicableTo, trc_file_address = :trcFileAddress, trc_future_date = :trcFutureDate, user_defined_field_1 = :userDefinedField1, user_defined_field_2 = :userDefinedField2,
+							user_defined_field_3 = :userDefinedField3, fixedbase_availble_india_applicable_from = :fixedbaseAvailbleIndiaApplicableFrom, fixedbase_availble_india_applicable_to = :fixedbaseAvailbleIndiaApplicableTo,
+							is_amount_connected_fixed_base = :isAmountConnectedFixedBase, is_business_carried_in_india = :isBusinessCarriedInIndia, is_fixedbase_availble_india = :isFixedbaseAvailbleIndia,
+							is_peamount_document = :isPEdocument, is_peamount_received = :isPEamountReceived, ispeinvoilvedin_purchase_goods = :isPEinvoilvedInPurchaseGoods, principles_of_business_place = :principlesOfBusinessPlace, 
+							stay_period_financial_year = :stayPeriodFinancialYear, weather_pe_in_india_applicable_from = :whetherPEInIndiaApplicableFrom, weather_pe_in_india_applicable_to = :whetherPEInIndiaApplicableTo, 
+							nature_of_payment = :natureOfPayment, deductee_aadhar_number = :deducteeAadharNumber, is_poem_declaration = :isPoemDeclaration, poem_future_date = :poemFutureDate, country_to_remittance = :countryToRemittance,
+							beneficial_owner_of_income = :beneficialOwnerOfIncome, is_beneficial_ownership_of_declaration = :isBeneficialOwnershipOfDeclaration, mli_ppt_condition_satisifed = :mliPptConditionSatisifed,
+							mli_slob_condition_satisifed = :mliSlobConditionSatisifed, is_mli_ppt_slob = :isMliPptSlob, nature_of_remittance = :natureOfRemittance ,article_number_dtaa = :articleNumberDtaa,
+							section_of_incometax_act = :sectionOfIncometaxAct, aggreement_for_transaction = :aggreementForTransaction, section_code = :sectionCode, additional_section_code = :additionalSectionCode, 
+							deductee_key = :deducteeKey, deductee_enrichment_key = :deducteeEnrichmentKey, batch_upload_id = :batchUploadId, is_no_fixed_base_declaration_available = :isNoFixedBaseDeclarationAvailable, 
+							no_fixed_base_declaration_available_in_future = :noFixedBaseDeclarationAvailableInFuture , no_fixed_base_declaration_available_future_date = :noFixedBaseDeclarationAvailableFutureDate, 
+							no_fixed_base_declaration_from_date = :noFixedBaseDeclarationFromDate, no_fixed_base_declaration_to_date = :noFixedBaseDeclarationToDate, tds_exemption_flag = :tdsExemptionFlag, tds_exemption_reason = :tdsExemptionReason,
+							chartered_accountant_no = :charteredAccountantNo, gr_or_ir_indicator = :grOrIRIndicator, tds_applicability_under_section = :tdsApplicabilityUnderSection, previous_balance_month = :previousBalanceMonth, 
+							previous_balance_year = :previousBalanceYear, current_balance_month = :currentBalanceMonth, current_balance_year = :currentBalanceYear, deductee_master_balances_of_194q = :deducteeMasterBalancesOf194q
+							advance_balances_of_194q = :advanceBalancesOf194q, provision_balances_of_194q = :provisionBalancesOf194q, opening_balance_creditNote = :openingBalanceCreditNote, advances_as_of_march = :advancesAsOfMarch, 
+							provisions_as_of_march = :provisionsAsOfMarch, deductee_tan= :deducteeTan, tds_exemption_number = :tdsExemptionNumber, tds_section_description = :tdsSectionDescription,
+							no_pe_declaration_available_in_future = :noPEDeclarationAvailableInFuture, no_pe_declaration_available_future_date = :noPEDeclarationAvailableFutureDate, is_no_poem_declaration_available = :isNoPOEMDeclarationAvailable,
+							no_poem_declaration_applicable_from_date = :noPOEMDeclarationApplicableFromDate, no_poem_declaration_applicable_to_date = :noPOEMDeclarationApplicableToDate, deductee_gstin = :deducteeGSTIN
+							WHERE deductee_master_id = :deducteeMasterId ; 
+					 ]]>
+					</value>
+				</entry>
+				<entry key="find_based_on_deductor_pan">
+					<value>
+                          <![CDATA[SELECT * FROM Onboarding.deductor_master WHERE deductor_master_pan = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="find_by_pan_and_tan">
+					<value>
+                            <![CDATA[SELECT * FROM Onboarding.deductor_tan_address WHERE pan =? and tan = ?;]]>
+					</value>
+				</entry>
+				<entry key="ldc_by_tan">
+					<value>
+                            <![CDATA[
+                           SELECT ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+                              deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+                              applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+                              db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+                              db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+                              nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+                              threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+                              validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+                              remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount  FROM Client_Masters.ldc_master WHERE  deductor_master_tan=?; 
+                            ]]>
+					</value>
+				</entry>
+
+				<entry key="find_by_id">
+					<value>
+                            <![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND deductee_master_id = ? ;]]>
+					</value>
+				</entry>
+				<entry key="count_pan_status">
+					<value>
+                            <![CDATA[SELECT COUNT(1) FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ?  AND pan_status =? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_pan">
+					<value>
+                            <![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = :deductorPan AND active = 1]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_pan_name">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = :deductorPan
+          					AND deductee_master_name like :deducteeName AND active = 1]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_deductee_code">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = :deductorPan
+          					AND deductee_code like :deducteeCode AND active = 1]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_deductee_name_and_code">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = :deductorPan
+          					AND deductee_code like :deducteeCode AND deductee_master_name like :deducteeName AND active = 1]]>
+					</value>
+				</entry>
+				<entry key="find_all_res_deductees_by_deductorpan">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="find_all_res_deductee_name_pan">
+					<value>
+          				<![CDATA[SELECT deductee_master_name as deducteeName, deductee_master_pan as deducteePan FROM Client_Masters.deductee_master_residential
+          						WHERE  deductor_master_pan = :deductorPan and active = 1 and deductee_master_pan is not null and deductee_master_pan <> '' 
+								and applicable_from is not null and CAST(applicable_from AS DATE) <= CONVERT(DATE, GETDATE()) 
+								and (applicable_to is null or CAST(applicable_to AS DATE) >= CONVERT(DATE, GETDATE())) ]]>
+					</value>
+				</entry>
+				<entry key="get_deductees">
+					<value>
+                            <![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = ? AND created_date >= ? AND created_date <= ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_by_deductor_pan">
+					<value>
+                            <![CDATA[SELECT * FROM Onboarding.deductor_master WHERE deductor_master_pan = ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="getdeductor_name_by_pan">
+					<value>
+                            <![CDATA[SELECT distinct name FROM Onboarding.deductor_master WHERE deductor_master_pan = ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="get_list_deductee">
+					<value>
+                          <![CDATA[SELECT * from Client_Masters.deductee_master_residential WHERE deductor_master_pan= ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="get_list_deductee_no_pan">
+					<value>
+                          <![CDATA[SELECT * from Client_Masters.deductee_master_residential WHERE deductor_master_pan= ? AND active = 1 and deductee_master_pan is null or deductee_master_pan = '';]]>
+					</value>
+				</entry>
+				<entry key="get_deductee_deducteePan_deductorPan">
+					<value>
+                          <![CDATA[SELECT count(1) from Client_Masters.deductee_master_residential WHERE deductor_master_pan=:deductorPan AND deductee_master_pan=:deducteePan AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="fine_all_deductees_name_and_pan">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND modified_name = ? ;]]>
+					</value>
+				</entry>
+				<entry key="nr_fine_by_id">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND deductee_master_id = ? ;]]>
+					</value>
+				</entry>
+				<entry key="non_residential_count">
+					<value>
+                          <![CDATA[SELECT COUNT(1) FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_name_pan">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = :deductorPan
+                          AND deductee_master_name like :deducteeName AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_nr_deductee_code">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = :deductorPan
+                          AND deductee_code like :deducteeCode AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_nr_deductee_name_and_code">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = :deductorPan
+                          AND deductee_master_name like :deducteeName AND deductee_code like :deducteeCode AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="find_all_nr_deductee_stagging_data">
+					<value>
+                          <![CDATA[select * from Client_Masters.deductee_master_stagging where deductor_master_pan =:deductorPan and active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_deductor_pan">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = :deductorPan AND active = 1]]>
+					</value>
+				</entry>
+
+				<entry key="get_deductee_by_name">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND  deductee_master_name = ? ;]]>
+					</value>
+				</entry>
+				<entry key="get_deductee_by_pan">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan= ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="update_non_residential">
+					<value>
+				                      <![CDATA[UPDATE Client_Masters.deductee_master_non_residential SET applicable_to = ? ,area_locality = ?, country = ?, flat_door_block_no = ?, modified_by = ?, modified_date = ?,
+				name_building_village = ?, pin_code = ?, road_street_postoffice = ?, state = ?, town_city_district =? WHERE deductor_master_pan = ? AND deductee_master_id = ? ;]]>
+					</value>
+				</entry>
+				<entry key="find_all_by_deductee_pan_name">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ?
+									AND deductee_key = ? AND active = 1   
+									and applicable_from is not null and CAST(applicable_from AS DATE) <= CONVERT(DATE, GETDATE()) 
+									and (applicable_to is null or CAST(applicable_to AS DATE) >= CONVERT(DATE, GETDATE())) ]]>
+					</value>
+				</entry>
+				<entry key="find_all_nr_deductees_by_deductorpan">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="find_all_nr_deductee_name_pan">
+					<value>
+          				<![CDATA[SELECT deductee_master_name as deducteeNames, deductee_master_pan as deducteePan
+          						FROM Client_Masters.deductee_master_non_residential 
+          						WHERE  deductor_master_pan = :deductorPan and active = 1 and deductee_master_pan is not null and deductee_master_pan <> ''
+								and applicable_from is not null and CAST(applicable_from AS DATE) <= CONVERT(DATE, GETDATE()) 
+								and (applicable_to is null or CAST(applicable_to AS DATE) >= CONVERT(DATE, GETDATE())) ]]>
+					</value>
+				</entry>
+				<entry key="deductee_master_modified_name">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.deductee_master_non_residential WHERE deductor_master_pan = ? AND modified_name = ? AND deductee_master_pan = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="batch_upload_update">
+					<value>
+                          <![CDATA[UPDATE Transactions.batch_upload SET assessment_year = ?, deductor_master_tan = ?, upload_type = ?, active = ?, assessment_month = ?,created_by = ?,
+                          created_date=?, process_start_time = ?, success_count = ?, failed_count = ?, rows_count = ?, processed = ?, mismatch_count = ?, duplicate_count = ?, sha256sum = ?,
+                           status = ?, new_status = ?, process_end_time = ?, file_path = ?, error_file_path = ?, other_file_url = ?  WHERE batch_upload_id = ? ;]]>
+					</value>
+				</entry>
+				<entry key="ao_utilization_update">
+					<value>
+				           <![CDATA[UPDATE Transactions.ao_utilization
+    						SET assessment_year= :assessmentYear, assessment_month= :assessmentMonth, deductor_master_tan= :deductorMasterTan, 
+   							ao_master_ao_applicable_from= :aoMasterAoApplicableFrom, ao_master_ao_applicable_to= :aoMasterAoApplicableTo, 
+  							ao_master_id= :aoMasterId, ao_master_pan= :aoMasterPan, 
+							ao_master_total_amount= :aoMasterTotalAmount, ao_master_utilized_amount= :aoMasterUtilizedAmount, active= :active, 
+   							consumed_from= :consumedFrom, created_by= :createdBy, 
+   							created_date= :createdDate, modified_by= :modifiedBy, modified_date= :modifiedDate, remaining_amount= :remainingAmount, 
+   							utilized_amount= :utilizedAmount, challan_month= :challanMonth, 
+   							invoice_process_date= :invoiceProcessDate, line_item_id= :lineItemId
+						WHERE ao_utilization_id = :aoUtilizationId;
+				    ]]>
+					</value>
+				</entry>
+				<entry key="ao_utilization_by_ao_master">
+					<value>
+                            <![CDATA[SELECT * FROM Transactions.ao_utilization WHERE
+                            deductor_master_tan= :deductorTan and ao_master_id= :aoMasterId and active=1;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="ao_utilization_by_line_item_id">
+					<value>
+                            <![CDATA[SELECT * FROM Transactions.ao_utilization WHERE
+                            line_item_id= :lineItemId;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="ao_utilization_total_utilized_amount">
+					<value>
+                            <![CDATA[ SELECT ISNULL(SUM(utilized_amount),0) FROM Transactions.ao_utilization WHERE
+                            deductor_master_tan= :deductorTan and ao_master_id= :aoMasterId and active=1; ]]>
+					</value>
+				</entry>
+				<entry key="find_all_chartsOfaccounts">
+					<value>
+					<![CDATA[SELECT * FROM Client_Masters.chart_of_accounts WHERE pan=? AND active=1; ]]>
+					</value>
+				</entry>
+				<entry key="get_charts_of_accounts_details">
+					<value>
+					<![CDATA[ SELECT * FROM Client_Masters.chart_of_accounts WHERE pan = :deductorPan AND account_code = :accountCode
+							 AND account_type = :accountType AND account_description = :accountDescription AND classification = :classification AND  active = 1;  ]]>
+					</value>
+				</entry>
+
+
+				<entry key="valid_ldc_master_basedOn_tan_certificateNo">
+					<value>
+				           <![CDATA[SELECT ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount,
+				      is_non_resident, ldc_section_details, acessing_officer_details FROM Client_Masters.ldc_master WHERE 
+				      certificate_number=:certificateNo AND  deductor_master_tan=:tan AND status='valid';
+				      
+				       
+				    ]]>
+					</value>
+				</entry>
+				<entry key="extend_ldc_certificate">
+					<value>
+				           <![CDATA[update Client_Masters.ldc_master set is_extend = 1 , applicable_to=:applicableTo WHERE
+				      ldc_master_id=:ldcId and deductor_master_tan=:tan;
+				    ]]>
+					</value>
+				</entry>
+				<entry key="get_list_Ldc_Master_Based_On_CerificateNumber">
+					<value>
+				           <![CDATA[SELECT ldc_master_id AS Ldc_master_id,assessment_year AS Assessment_year,ldc_master_pan AS Ldc_master_pan,
+				      deductor_master_tan AS Deductor_master_tan,active AS Active,amount AS Amount,applicable_from AS Applicable_from,
+				      applicable_to AS Applicable_to,certificate_number AS Certificate_number,created_by AS Created_by,created_date AS Created_date,
+				      db_applicable_from AS Db_applicable_from,db_applicable_to AS Db_applicable_to,db_rate AS Db_rate,
+				      db_section AS Db_section,deductee_name AS Deductee_name,modified_by AS Modified_by,modified_date AS Modified_date,
+				      nature_of_payment AS Nature_of_payment,rate AS Rate,remaining_amount AS Remaining_amount,section AS Section,status AS Status,
+				      threshold_limit AS Threshold_limit,traces_utilized_amount AS Traces_utilized_amount,utilized_amount AS Utilized_amount,
+				      validation_date AS Validation_date,match_score AS Match_score,name_as_per_traces AS Name_as_per_traces,
+				      remarks_as_per_traces AS Remarks_as_per_traces, is_extend, dividend_processing, initial_utilized_amount, is_non_resident,
+				      ldc_section_details, acessing_officer_details FROM Client_Masters.ldc_master WHERE 
+	      			  certificate_number=:certificateNumber AND  deductor_master_tan = :tan AND ldc_master_pan = :deducteePan AND section = :section;
+				      
+				       
+				    ]]>
+					</value>
+				</entry>
+				<entry key="get_ao_pan_tan_section">
+					<value>
+				           <![CDATA[
+								SELECT ao_master_id, assessment_year, deductor_master_tan, deductee_name, active, 
+    	amount, applicable_from, applicable_to, certificate_number, db_amount, db_applicable_from,
+     	db_applicable_to, db_rate, db_section, limit_utilised, nature_of_payment, pan,
+      	rate, section, threshold_limit, validation_date, challan_month, created_by,
+       	created_date, modified_by, modified_date, dividend_processing, dividend_name_of_assignee_officer
+       	 FROM Client_Masters.ao_master WHERE deductor_master_tan= :deductorTan and pan= :deducteePan and nature_of_payment = :section;
+				 
+				]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_by_id">
+					<value>
+				           <![CDATA[ SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND id = :id AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_payment_by_intial_balance">
+					<value>
+				           <![CDATA[ select count(1) from Transactions.tcs_payment
+				           where document_number = :documentNumber and assessment_year = :year and challan_month = :month
+				           and collector_pan = :collectorPan and collector_tan = :collectorTan AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_all_collectee">
+					<value>
+				           <![CDATA[ SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_all_collectee_count">
+					<value>
+				           <![CDATA[ SELECT COUNT(1) FROM Client_Masters.collectee_master WHERE collector_pan = ? ]]>
+					</value>
+				</entry>
+				<entry key="update_collectee_master_dto">
+					<value>
+				           <![CDATA[ UPDATE Client_Masters.collectee_master SET name_of_the_collectee = :nameOfTheCollectee, non_resident_collectee_indicator = :nonResidentCollecteeIndicator,
+				           			collectee_pan = :collecteePan, collectee_aadhar_number = :collecteeAadharNumber, collectee_status = :collecteeStatus, distribution_channel = :distributionChannel, email_address = :emailAddress,
+									phone_number = :phoneNumber, flat_door_block_no = :flatDoorBlockNo, name_of_the_building_village = :nameOfTheBuildingVillage, road_street_postoffice = :roadStreetPostoffice,
+									area_locality = :areaLocality, town_city_district = :townCityDistrict, state = :state, country = :country, pin_code = :pinCode,
+									nature_of_income = :natureOfIncome, tcs_section = :tcsSection, tcs_rate = :tcsRate, tds_section = :tdsSection, tds_rate = :tdsRate,
+									applicable_from = :applicableFrom, applicable_to = :applicableTo, modified_by = :modifiedBy, modified_date = :modifiedDate,
+									collectee_type = :collecteeType, advance_balances_for_section206c = :advanceBalancesForSection206c, collections_balances_for_section206c = :collectionsBalancesForSection206c,
+									balances_for_section_206c = :balancesForSection206c, is_eligible_for_multiple_sections = :isEligibleForMultipleSections,
+									current_balance_year = :currentBalanceYear, current_balance_month = :currentBalanceMonth, previous_balance_year = :previousBalanceYear, previous_balance_month = :previousBalanceMonth,
+									additional_sections = :additionalSections,ncc_certificate_url=:nccCertificateUrl WHERE id = :id ; ]]>
+					</value>
+				</entry>
+				<entry key="update_collectee_master_excel_data">
+					<value>
+				           <![CDATA[ UPDATE Client_Masters.collectee_master SET  source_identifier = :sourceIdentifier, source_file_name = :sourceFileName, collector_code = :collectorCode,
+										name_of_the_collector = :nameOfTheCollector, collector_pan = :collectorPan, collector_tan = :collectorTan,
+										collectee_code = :collecteeCode, name_of_the_collectee = :nameOfTheCollectee, non_resident_collectee_indicator = :nonResidentCollecteeIndicator, 
+										collectee_pan = :collecteePan, collectee_aadhar_number = :collecteeAadharNumber, collectee_status = :collecteeStatus, distribution_channel = :distributionChannel, email_address = :emailAddress,
+										phone_number = :phoneNumber, flat_door_block_no = :flatDoorBlockNo, name_of_the_building_village = :nameOfTheBuildingVillage, road_street_postoffice = :roadStreetPostoffice,
+										area_locality = :areaLocality, town_city_district = :townCityDistrict, state = :state, country = :country, pin_code = :pinCode,
+										nature_of_income = :natureOfIncome, tcs_section = :tcsSection, tcs_rate = :tcsRate, tds_section = :tdsSection, tds_rate = :tdsRate,
+										applicable_from = :applicableFrom, applicable_to = :applicableTo, modified_by = :modifiedBy, modified_date = :modifiedDate,
+										no_collection_declaration_as_per_form_27c = :noCollectionDeclarationAsPerForm27c, balances_for_section_206c = :balancesForSection206c,
+										user_defined_field1 = :userDefinedField1, user_defined_field2 = :userDefinedField2, user_defined_field3 = :userDefinedField3,
+										user_defined_field4 = :userDefinedField4, user_defined_field5 = :userDefinedField5, collectee_type = :collecteeType,
+										advance_balances_for_section206c = :advanceBalancesForSection206c, collections_balances_for_section206c = :collectionsBalancesForSection206c,
+										is_eligible_for_multiple_sections = :isEligibleForMultipleSections, additional_sections = :additionalSections,
+										current_balance_year = :currentBalanceYear, current_balance_month = :currentBalanceMonth, previous_balance_year = :previousBalanceYear, previous_balance_month = :previousBalanceMonth,
+										tds_code = :tdsCode, tds_indicator = :tdsIndicator WHERE id = :id ; ]]>
+					</value>
+				</entry>
+				<entry key="collector_onboarding_info_update">
+					<value>
+				          <![CDATA[UPDATE Onboarding.collector_onboarding_info SET active = ? WHERE pan = ? ;]]>
+					</value>
+				</entry>
+				<entry key="find_by_collector_pan_onboarding_info">
+					<value>
+				            <![CDATA[SELECT * FROM Onboarding.collector_onboarding_info WHERE pan = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="find_all_tcs_chartsOfaccounts">
+					<value>
+						<![CDATA[SELECT * FROM Client_Masters.tcs_chart_of_accounts WHERE pan=? AND active=1 ORDER BY id DESC ;]]>
+					</value>
+				</entry>
+				<entry key="get_all_module_lookup">
+					<value>
+						<![CDATA[SELECT id as id, values_for_selection as selectionValue, module as module, is_multiple_selection as multiSelection FROM Onboarding.tcs_onboarding_lookup WHERE active=1;]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_all_by_pan">
+					<value>
+                            <![CDATA[SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND active=1 ]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_all_by_pan_name">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND name_of_the_collectee = :collecteeName ]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_all_by_pan_code">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND collectee_code = :collecteeCode ]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_all_by_pan_name_code">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND collectee_code = :collecteeCode
+          						AND name_of_the_collectee = :collecteeName ]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_all_collectee_count">
+					<value>
+				            <![CDATA[SELECT COUNT(1) FROM Client_Masters.collectee_master WHERE collector_pan = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_all_collectee_names_codes">
+					<value>
+                          <![CDATA[SELECT * from Client_Masters.collectee_master WHERE collector_pan = ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_all_collectee_no_pan">
+					<value>
+                          <![CDATA[SELECT * from Client_Masters.collectee_master WHERE collector_pan = ? AND active = 1 AND collectee_pan IS NULL OR collectee_pan = '';]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_all_collectees">
+					<value>
+                          <![CDATA[SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan
+									AND collectee_code = :collecteeCode AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="get_collector_master_id">
+					<value>
+				            <![CDATA[SELECT deductor_master_id FROM Onboarding.deductor_master WHERE deductor_master_pan = ? ;]]>
+					</value>
+				</entry>
+				<entry key="get_collectee_type_status">
+					<value>
+				            <![CDATA[SELECT status FROM tcs.collectee_type WHERE active=1 ;]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_all_collectee_pan">
+					<value>
+						<![CDATA[SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = ? AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_based_on_deductor_code">
+					<value>
+				        <![CDATA[SELECT * FROM Onboarding.deductor_master WHERE code = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="get_tan_roleId_moduleType">
+					<value>
+						<![CDATA[SELECT user_tan AS tan,UAD.role_id as roleID,ML.name as name ,UAD.user_pan as pan ,R.name as roleName
+							FROM Onboarding.user_access_details UAD
+							INNER JOIN Onboarding.role  R ON UAD.role_id = R.role_id
+							INNER JOIN Onboarding.module_lookup ML ON R.module_type_id = ML.id
+							WHERE UAD.user_id =?;]]>
+					</value>
+				</entry>
+				<entry key="get_moduleYtpe_by_roleID">
+					<value>
+						<![CDATA[
+						SELECT ML.name  FROM 
+						Onboarding.role  R 
+						INNER JOIN Onboarding.module_lookup ML ON R.module_type_id = ML.id
+						WHERE R.role_id =:id;]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_collectee_type">
+					<value>
+                          <![CDATA[SELECT collectee_type from Client_Masters.collectee_master WHERE collectee_code=:collecteeCode and collector_tan=:tan and collector_pan =:pan AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="update_collectee_noi_threshold_ledger">
+					<value>
+                          <![CDATA[ UPDATE Transactions.collectee_noi_threshold_ledger
+							SET last_updated_date= :lastUpdatedDate,modified_by= :modifiedBy, 
+							modified_date= :modifiedDate, amount_utilized = :amountUtilized, 
+							threshold_reached = :thresholdReached,active=:active ,collectee_code =:collecteeCode
+							,collectee_pan=:collecteePan WHERE id= :id;]]>
+					</value>
+				</entry>
+				<entry key="update_collectee_noi_threshold_ledger_by_pan">
+					<value>
+                          <![CDATA[ UPDATE Transactions.collectee_noi_threshold_ledger
+							SET previous_value = amount_utilized, modified_by= :modifiedBy, 
+							modified_date= :modifiedDate, amount_utilized = :amountUtilized, 
+							corrected_date = :correctedDate,corrected_by=:correctedBy,threshold_reached = :thresholdReached
+							WHERE collectee_pan=:collecteePan AND collector_pan = :collectorPan AND [year] = :year ]]>
+					</value>
+				</entry>
+				<entry key="update_collectee_noi_threshold_ledger_by_code">
+					<value>
+                          <![CDATA[ UPDATE Transactions.collectee_noi_threshold_ledger
+							SET previous_value= amount_utilized, modified_by= :modifiedBy, 
+							modified_date= :modifiedDate, amount_utilized = :amountUtilized, 
+							corrected_date = :correctedDate,corrected_by=:correctedBy, threshold_reached = :thresholdReached
+							WHERE collectee_code =:collecteeCode AND collector_pan = :collectorPan AND [year] = :year ]]>
+					</value>
+				</entry>
+				<entry key="update_deductee_noi_threshold_ledger">
+					<value>
+                          <![CDATA[ UPDATE Transactions.deductee_nop_group
+							SET last_updated_date= :lastUpdatedDate,modified_by= :modifiedBy, 
+							modified_date= :modifiedDate, amount_utilized = :amountUtilized, 
+							threshold_reached = :thresholdReached,active = :active ,deductee_key = :deducteeKey
+							,deductee_pan = :deducteePan WHERE id= :id;]]>
+					</value>
+				</entry>
+				<entry key="update_deductee_nop_group_by_pan">
+					<value>
+                          <![CDATA[ UPDATE Transactions.deductee_nop_group
+							SET previous_value = amount_utilized, modified_by= :modifiedBy, 
+							modified_date= :modifiedDate, amount_utilized = :amountUtilized, 
+							corrected_date = :correctedDate,corrected_by = :correctedBy, threshold_reached = :thresholdReached
+							WHERE deductee_pan = :deducteePan AND deductor_pan = :deductorPan AND group_nop_id = :groupNopId AND [year] = :year;]]>
+					</value>
+				</entry>
+				<entry key="update_deductee_nop_group_by_key">
+					<value>
+                          <![CDATA[ UPDATE Transactions.deductee_nop_group
+							SET previous_value = amount_utilized, modified_by= :modifiedBy, 
+							modified_date= :modifiedDate, amount_utilized = :amountUtilized, 
+							corrected_date = :correctedDate,corrected_by = :correctedBy, threshold_reached = :thresholdReached
+							WHERE deductee_key = :deducteeKey AND deductor_pan = :deductorPan AND group_nop_id = :groupNopId AND [year] = :year;]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_noi_by_pan">
+					<value>
+                          <![CDATA[SELECT * from Transactions.collectee_noi_threshold_ledger
+                          	WHERE collectee_pan = :collecteePan AND collector_pan = :collectorPan ;]]>
+					</value>
+				</entry>
+				<entry key="tcs_insert_select_noi">
+					<value>
+                          <![CDATA[INSERT INTO Transactions.collectee_noi_threshold_ledger
+							(collectee_code, collectee_section, year, nature_of_income, amount_utilized, 
+							threshold_reached, transaction_id, active, created_by, modified_by, advance_pending, collector_pan, noi_id, collectee_pan)
+							SELECT collectee_code, collectee_section, year+1, nature_of_income, 0, 
+							0, transaction_id, active, created_by, modified_by, advance_pending, collector_pan, noi_id, collectee_pan 
+					FROM Transactions.collectee_noi_threshold_ledger
+					WHERE year = :year AND collector_pan = :collectorPan;]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_noi_by_code">
+					<value>
+                          <![CDATA[SELECT * from Transactions.collectee_noi_threshold_ledger
+                          	WHERE collectee_code = :collecteeCode AND collector_pan = :collectorPan ;]]>
+					</value>
+				</entry>
+				<entry key="tcs_collectee_based_on_name_and_code">
+					<value>
+                          <![CDATA[ SELECT * FROM Client_Masters.collectee_master WHERE collector_pan =:collectorPan  AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_Invoice_Deductees">
+					<value>
+					<![CDATA[ SELECT DISTINCT deductee_name FROM Transactions.invoice_line_item WHERE assessment_year=:assessmentYear AND deductor_master_tan=:tan AND
+			             resident =:type AND challan_month=:month AND active = 1 AND key_duplicate=0 AND  (is_parent is null or is_parent =0) ]]>
+					</value>
+				</entry>
+				<entry key="get_Invoice_Deductees_without_month">
+					<value>
+					<![CDATA[ SELECT DISTINCT deductee_name FROM Transactions.invoice_line_item WHERE assessment_year=:assessmentYear AND deductor_master_tan=:tan AND
+			             resident =:type  AND active = 1 AND key_duplicate=0 AND  (is_parent is null or is_parent =0) ]]>
+					</value>
+				</entry>
+				<entry key="get_advance_deductees">
+					<value>
+						<![CDATA[ SELECT DISTINCT deductee_name FROM Transactions.advance WHERE deductor_master_tan= :tan and is_resident = :type
+                          and assessment_year = :year and challan_month = :month and (is_parent is null or is_parent =0) ]]>
+					</value>
+				</entry>
+				<entry key="get_provision_deductees">
+					<value>
+						<![CDATA[ SELECT DISTINCT deductee_name FROM Transactions.provision WHERE deductor_master_tan= :tan and is_resident = :type
+                          and assessment_year = :year and challan_month = :month and (is_parent is null or is_parent =0) ]]>
+					</value>
+				</entry>
+				<entry key="find_payment_by_collectee_code">
+					<value>
+					<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE assessment_year=:year
+							collectee_code = :collecteeCode; ]]>
+					</value>
+				</entry>
+
+				<entry key="get_email_confiuration_by_id">
+					<value>
+					<![CDATA[ SELECT * FROM Transactions.email_notification_config WHERE id=:id ;]]>
+					</value>
+				</entry>
+				<entry key="get_email_confiuration_by_type">
+					<value>
+					<![CDATA[SELECT * FROM Transactions.email_notification_config  WHERE type IN ( :type, UPPER(:type),
+								LOWER(:type)) AND active = 1 ]]>
+					</value>
+				</entry>
+
+				<entry key="update_email_confiuration_by_id">
+					<value>
+					<![CDATA[ UPDATE  Transactions.email_notification_config SET active=:active,modified_by=:modifiedBy,
+					modified_date=:modifiedDate,percentage=:percentage,type=:type 
+					 WHERE id=:id ;]]>
+					</value>
+				</entry>
+				<entry key="get_All_email_confiuration">
+					<value>
+					<![CDATA[ SELECT * FROM Transactions.email_notification_config ; ]]>
+					</value>
+				</entry>
+				<entry key="update_permissions">
+					<value>
+					<![CDATA[ UPDATE Onboarding.role SET modifieddate = :modifiedDate ,permissionnames =:permissionNames where role_id = :roleId; ]]>
+					</value>
+				</entry>
+
+				<entry key="get_lcc_by_pan_tan_section_cno">
+					<value>
+					<![CDATA[ SELECT * FROM Client_Masters.tcs_lcc_master WHERE certificate_number = :certificateNumber AND collector_master_tan = :deductorTan
+								AND lcc_master_pan = :lccMasterPan  AND section_as_per_traces = :section AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="get_lcc_by_pan_certificate_number">
+					<value>
+					<![CDATA[ SELECT * FROM Client_Masters.tcs_lcc_master WHERE certificate_number = :certificateNumber AND lcc_master_pan = :lccMasterPan AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_lcc_by_id_tan">
+					<value>
+					<![CDATA[ SELECT * FROM Client_Masters.tcs_lcc_master WHERE collector_master_tan = :deductorTan AND id = :id AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_total_utilization_amount">
+					<value>
+					<![CDATA[ SELECT ISNULL(SUM(utilized_amount),0) FROM Transactions.tcs_lcc_utilization WHERE id = ? AND collector_master_tan = ? AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="update_lcc_master">
+					<value>
+					<![CDATA[ UPDATE Client_Masters.tcs_lcc_master SET assessment_year = :assessmentYear, lcc_master_pan = :lccMasterPan,
+								collector_master_tan = :collectorMasterTan, active = :active,
+								amount = :amount, applicable_from = :applicableFrom, applicable_to = :applicableTo, certificate_number = :certificateNumber,
+								created_by = :createdBy, created_date = :createdDate, lcc_applicable_from = :lccApplicableFrom, lcc_applicable_to = :lccApplicableTo,
+								lcc_rate = :lccRate, lcc_section = :lccSection, collectee_name = :collecteeName, modified_by = :modifiedBy,
+								modified_date = :modifiedDate, nature_of_income = :natureOfIncome, rate_as_per_traces = :rateAsPerTraces,
+								remaining_amount = :remainingAmount, section_as_per_traces = :sectionAsPerTraces,
+								validation_status = :validationStatus, threshold_limit = :thresholdLimit, traces_utilized_amount = :tracesUtilizedAmount,
+								utilized_amount = :utilizedAmount, validation_date = :validationDate, name_as_per_traces = :nameAsPerTraces,
+								remarks_as_per_traces = :remarksAsPerTraces WHERE  id = :id ; ]]>
+					</value>
+				</entry>
+				<entry key="get_all_lcc">
+					<value>
+					<![CDATA[ SELECT * FROM Client_Masters.tcs_lcc_master WHERE active = 1 ORDER BY id DESC ]]>
+					</value>
+				</entry>
+				<entry key="get_lcc_by_year_tan">
+					<value>
+					<![CDATA[ SELECT * FROM Client_Masters.tcs_lcc_master WHERE assessment_year = ? AND collector_master_tan = ? AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_lcc_status_count">
+					<value>
+					<![CDATA[ SELECT ISNULL(SUM(valid_count),0) AS valid_count, ISNULL(SUM(invalid_count),0) AS invalid_count,
+								ISNULL(SUM(empty_count),0) AS empty_count FROM
+								(SELECT COUNT(1) AS valid_count,0 AS invalid_count, 0 AS empty_count
+								FROM Client_Masters.tcs_lcc_master WHERE collector_master_tan =:deductorTan AND convert(date,created_date) >= :startDate  
+								AND convert(date,created_date) <= :endDate  AND validation_status = 1 
+								UNION ALL
+								SELECT 0 AS valid_count,COUNT(1) AS invalid_count, 0 AS empty_count
+								FROM Client_Masters.tcs_lcc_master WHERE collector_master_tan =:deductorTan AND convert(date,created_date) >= :startDate  
+								AND convert(date,created_date) <= :endDate  AND validation_status = 0
+								UNION ALL
+								SELECT 0 AS valid_count,0 AS invalid_count, COUNT(1) AS empty_count
+								FROM Client_Masters.tcs_lcc_master 
+								WHERE collector_master_tan = :deductorTan AND CONVERT(DATE,created_date) >= :startDate AND 
+								CONVERT(DATE,created_date) <=:endDate AND (validation_status = '' OR validation_status IS NULL))A ;]]>
+					</value>
+				</entry>
+				<entry key="get_lcc_certificate_no_tan">
+					<value>
+					<![CDATA[ SELECT * FROM Client_Masters.tcs_lcc_master WHERE certificate_number = :certificateNo AND collector_master_tan = :deductorTan AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry
+					key="get_ao_master_basedOn_tan_pan_section_certificateNo">
+					<value>
+				           <![CDATA[SELECT * FROM Client_Masters.ao_master WHERE
+				      certificate_number=:certificateNo AND pan=:pan AND section=:section AND deductor_master_tan=:tan AND active=1;
+				    ]]>
+					</value>
+				</entry>
+				<entry key="get_deductee_deducteePan_deductorPan_nonResident">
+					<value>
+                          <![CDATA[SELECT count(1) from Client_Masters.deductee_master_non_residential WHERE deductor_master_pan=:deductorPan AND deductee_master_pan=:deducteePan AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="tcs_collectee_count">
+					<value>
+				            <![CDATA[SELECT COUNT(1) FROM Client_Masters.collectee_master WHERE collector_pan = ? AND collectee_pan = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="get_collection_reference_id">
+					<value>
+				            <![CDATA[SELECT collection_reference_id FROM Onboarding.collector_onboarding_info where pan = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="get_buyer_threshold_computation_id">
+					<value>
+				            <![CDATA[SELECT buyer_threshold_computation_id FROM Onboarding.collector_onboarding_info where pan = ? AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="get_tcs_charts_of_accounts_details">
+					<value>
+					<![CDATA[ SELECT * FROM Client_Masters.tcs_chart_of_accounts WHERE pan = :collectorPan AND account_code = :accountCode
+							 AND account_type = :accountType AND account_description = :accountDescription AND classification = :classification AND  active = 1;  ]]>
+					</value>
+				</entry>
+				<entry key="collectee_pan_status_valid_count">
+					<value>
+					<![CDATA[SELECT COUNT(1) FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND created_date >= :startDate AND
+							created_date <= :endDate AND pan_verify_status = 1 ; ]]>
+					</value>
+				</entry>
+				<entry key="collectee_pan_status_invalid_count">
+					<value>
+					<![CDATA[ SELECT COUNT(1) FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND created_date >= :startDate AND
+							created_date <= :endDate AND pan_verify_status = 0 ; ]]>
+					</value>
+				</entry>
+				<entry key="get_list_tcs_lcc_utilization_by_tan_id">
+					<value>
+						<![CDATA[ SELECT * FROM Transactions.tcs_lcc_utilization WHERE collector_master_tan = :deductorTan AND lcc_master_id = :lccMasterId AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="lcc_utiliaion_record_id">
+					<value>
+					<![CDATA[
+					SELECT LM.certificate_number, LM.lcc_applicable_from,LM.lcc_applicable_to,LM.lcc_rate,LM.lcc_section,
+       				IT.document_number,IT.document_date,IT.line_number,IT.applicable_total_taxable_amount,IT.final_tcs_amount,IT.final_tcs_rate,
+	   				IT.final_tcs_section,IT.challan_month,IT.assessment_year,LU.utilized_amount,LM.initial_utilized_amount,
+	   				LM.amount as lcc_master_total_amount,LU.lcc_master_utilized_amount AS total_utilized_amount,LU.remaining_amount
+					FROM Client_Masters.tcs_lcc_master LM 
+					INNER JOIN Transactions.tcs_lcc_utilization LU ON LM.id = LU.lcc_master_id
+					INNER JOIN Transactions.tcs_invoice_line_item IT  ON LU.invoice_line_item_id = IT.id
+					WHERE LM.id= :id and LU.active = 1
+					UNION ALL
+					SELECT LM.certificate_number, LM.lcc_applicable_from,LM.lcc_applicable_to,LM.lcc_rate,LM.lcc_section,
+	   				P.document_number,P.document_date,P.line_number,P.amount,P.final_tcs_amount,P.final_tcs_rate,
+       				P.final_tcs_section,P.challan_month,P.assessment_year,LU.utilized_amount,LM.initial_utilized_amount,
+       				LM.amount as lcc_master_total_amount,
+	   				LU.lcc_master_utilized_amount AS total_utilized_amount,LU.remaining_amount
+					FROM Client_Masters.tcs_lcc_master LM 
+					INNER JOIN Transactions.tcs_lcc_utilization LU ON LM.id = LU.lcc_master_id
+					INNER JOIN Transactions.tcs_payment P  ON LU.payment_id = P.id
+					WHERE LM.id= :id and LU.active = 1 ORDER BY document_date ]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_lcc_threshold_rate">
+					<value>
+				           <![CDATA[  SELECT * FROM Onboarding.tcs_email_notification WHERE  collectee_pan = :deductorMasterPan AND [type] = :noficationType AND
+									lcc_master_id = :lccMasterId  AND threshold_lcc = :rate AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="tcs_email_notification_update">
+					<value>
+				           <![CDATA[ UPDATE Onboarding.tcs_email_notification SET modified_by = :modifiedBy, modified_date = :modifiedDate, date_sent = :dateSent
+									WHERE email_notification_id = :emailNotificationId; ]]>
+					</value>
+				</entry>
+				<entry key="email_notification_update">
+					<value>
+				           <![CDATA[ UPDATE Onboarding.email_notification SET modified_by = :modifiedBy, modified_date = :modifiedDate, date_sent = :dateSent
+									WHERE email_notification_id = :emailNotificationId; ]]>
+					</value>
+				</entry>
+				<entry key="get_ldc_threshold_rate">
+					<value>
+				           <![CDATA[  SELECT * FROM Onboarding.email_notification WHERE  deductee_master_pan = :deductorMasterPan AND [type] = :noficationType AND
+									ldc_master_id = :ldcMasterId  AND threshold_ldc = :rate AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_noi_by_code_or_collectee_pan">
+					<value>
+                          <![CDATA[SELECT * from Transactions.collectee_noi_threshold_ledger
+                          	WHERE collectee_code = :collecteeCode OR collectee_pan =:collecteePan AND collector_pan = :collectorPan ]]>
+					</value>
+				</entry>
+				<entry key="find_noi_by_code_or_deductee_pan">
+					<value>
+                          <![CDATA[SELECT * from Transactions.deductee_nop_group
+                          	WHERE deductee_key = :deducteeKey OR deductee_pan =:deducteePan AND deductor_pan = :deductorPan AND 
+                          	year = :year AND  active =1 ]]>
+					</value>
+				</entry>
+				<entry
+					key="collectee_count_by_collecteeCode_collecteePan_and_collectorPan">
+					<value>
+					<![CDATA[ SELECT COUNT(1) FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND collectee_code =:collecteeCode
+                            AND collectee_pan=:collecteePan AND active =1; ]]>
+					</value>
+				</entry>
+				<entry key="update_new_ldc_approval_status">
+					<value>
+            			<![CDATA[ UPDATE Client_Masters.new_ldc_master_traces SET is_approved = 1, modified_by=:userName, modified_date=:modifiedDate WHERE new_ldc_master_id =:id;]]>
+					</value>
+				</entry>
+				<entry key="get_resident_shareHolder_by_deductorPan">
+					<value>
+            			<![CDATA[ SELECT * from Client_Masters.shareholder_master_residential where deductor_master_pan =:deductorPan]]>
+					</value>
+				</entry>
+				<entry key="get_count_of_resident_shareHolder_by_deductorPan">
+					<value>
+            			<![CDATA[ SELECT COUNT(1) from Client_Masters.shareholder_master_residential where deductor_master_pan =:deductorPan]]>
+					</value>
+				</entry>
+				<entry key="get_resident_shareHolder_by_deductorPan_and_id">
+					<value>
+            			<![CDATA[SELECT * from Client_Masters.shareholder_master_residential where deductor_master_pan =:deductorPan AND shareholder_master_id =:id
+            			]]>
+					</value>
+				</entry>
+				<entry key="get_resident_shareholders_by_pan">
+					<value>
+            			<![CDATA[ SELECT distinct name, email_id from Client_Masters.shareholder_master_residential
+            			where deductor_master_pan =:deductorPan and pan =:shareHolderPan ]]>
+					</value>
+				</entry>
+				<entry key="get_all_resident_shareholders_by_pan_and_active">
+					<value>
+            			<![CDATA[ SELECT * from Client_Masters.shareholder_master_residential where deductor_master_pan =:deductorPan and pan =:shareHolderPan and active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_non_resident_shareholders_by_pan">
+					<value>
+            			<![CDATA[ SELECT distinct name, email_id from Client_Masters.shareholder_master_non_residential
+            			where deductor_master_pan =:deductorPan and pan =:shareHolderPan ]]>
+					</value>
+				</entry>
+				<entry key="update_resident_shareHolder_by_id">
+					<value>
+            			<![CDATA[
+            			UPDATE Client_Masters.shareholder_master_residential set key_shareholder=:keyShareholder,email_id =:emailId,contact=:contact,share_transfer_agent_name =:shareTransferAgentName,
+              			demat_account_no =:dematAccountNo,total_of_shares_held=:totalSharesHeld,percetage_of_share_held =:percentageSharesHeld,flat_door_block_no =:flatDoorBlockNo,
+						name_building_village=:nameBuildingVillage,road_street_postoffice =:roadStreetPostoffice,area_locality=:areaLocality,town_city_district =:townCityDistrict,
+						state =:state,country =:country,pin_code =:pinCode,modified_by =:modifiedBy,modified_date=:modifiedDate,pan =:shareholderPan,form15gh_available =:form15ghAvailable,
+						form15gh_file_address =:form15ghFileAddress,form15gh_unique_identification_no =:form15ghUniqueIdentificationNo WHERE shareholder_master_id=:id
+            			]]>
+					</value>
+				</entry>
+				<entry key="update_resident_shareHolder_history_by_id">
+					<value>
+            			<![CDATA[
+ 						UPDATE Transactions.shareholder_residential_history set key_shareholder=:keyShareholder,email_id =:emailId,contact=:contact,share_transfer_agent_name =:shareTransferAgentName,
+						demat_account_no =:dematAccountNo,total_of_shares_held=:totalSharesHeld,percetage_of_share_held =:percentageSharesHeld,flat_door_block_no =:flatDoorBlockNo,
+						name_building_village=:nameBuildingVillage,road_street_postoffice =:roadStreetPostoffice,area_locality=:areaLocality,town_city_district =:townCityDistrict,
+						state =:state,country =:country,pin_code =:pinCode,modified_by =:modifiedBy,modified_date=:modifiedDate,pan =:shareholderPan,form15gh_available =:form15ghAvailable,
+						form15gh_file_address =:form15ghFileAddress,form15gh_unique_identification_no =:form15ghUniqueIdentificationNo WHERE shareholder_master_id=:id
+            			]]>
+					</value>
+				</entry>
+				<entry key="get_resident_folio_no_count">
+					<value>
+            			<![CDATA[SELECT count(1) from Client_Masters.shareholder_master_residential where deductor_master_pan =:deductorPan AND folio_no=:folioNo
+            			]]>
+					</value>
+				</entry>
+				<entry key="get_non_resident_folio_no_count">
+					<value>
+            			<![CDATA[SELECT count(1) from Client_Masters.shareholder_master_non_residential  where deductor_master_pan =:deductorPan AND folio_no=:folioNo
+            			]]>
+					</value>
+				</entry>
+				<entry key="get_non_resident_shareHolder_by_deductorPan">
+					<value>
+            			<![CDATA[ SELECT * from Client_Masters.shareholder_master_non_residential where deductor_master_pan =:deductorPan ]]>
+					</value>
+				</entry>
+				<entry
+					key="get_count_of_non_resident_shareHolder_by_deductorPan">
+					<value>
+            			<![CDATA[ SELECT count(1) from Client_Masters.shareholder_master_non_residential where deductor_master_pan =:deductorPan ]]>
+					</value>
+				</entry>
+				<entry key="get_nonresident_share_holder_by_id">
+					<value>
+            			<![CDATA[ SELECT * FROM Client_Masters.shareholder_master_non_residential WHERE shareholder_master_id =:id ]]>
+					</value>
+				</entry>
+				<entry key="update_non_resident_shareholder_master_by_id">
+					<value>
+            			<![CDATA[UPDATE Client_Masters.shareholder_master_non_residential set flat_door_block_no =:flatDoorBlockNo,name_building_village =:nameBuildingVillage,
+								road_street_postoffice =:roadStreetPostoffice,area_locality =:areaLocality,town_city_district =:townCityDistrict,state =:state,country =:country,
+								pin_code =:pinCode,no_pe_declaration_applicable_from =:noPeDeclarationApplicableFrom,no_pe_declaration_applicable_to =:noPeDeclarationApplicableTo,
+								no_poem_in_india_applicable_from =:noPoemDeclarationInIndiaApplicableFrom,no_poem_in_india_applicable_to =:noPoemDeclarationInIndiaApplicableTo,
+								modified_by =:modifiedBy,modified_date =:modifiedDate,is_trc_available =:isTrcAvailable,trc_file_address =:trcFileAddress,is_tenf_available =:isTenfAvailable,
+								tenf_file_address =:tenfFileAddress,is_pe_available_in_india =:isPeAvailableInIndia,is_no_pe_declaration_available =:isNoPeDeclarationAvailable,
+								no_pe_declaration_file_address =:noPeFileAddress,is_poem_of_shareholder_in_india =:isPoemOfShareholderInIndia,is_no_poem_declaration_available =:isNoPoemDeclarationAvailable,
+								no_poem_declaration_file_address =:noPoemFileAddress,is_mli_slob_satisfaction_declaration_available =:isMliSlobSatisfactionDeclarationAvailable,
+								mli_slob_declaration_file_address =:mliFileAddress,is_beneficial_owner_of_income =:isBeneficialOwnerOfIncome,is_beneficial_ownership_declaration_available =:isBeneficialOwnershipDeclarationAvailable,
+								beneficial_ownership_file_address =:beneficialOwnershipFileAddress,form15cacb_applicable =:form15CACBApplicable,version=:version where shareholder_master_id =:id; ]]>
+					</value>
+				</entry>
+				<entry key="update_non_resident_shareholder_history_by_id">
+					<value>
+            			<![CDATA[UPDATE Transactions.shareholder_non_residential_history set flat_door_block_no =:flatDoorBlockNo,name_building_village =:nameBuildingVillage,
+								road_street_postoffice =:roadStreetPostoffice,area_locality =:areaLocality,town_city_district =:townCityDistrict,state =:state,country =:country,
+								pin_code =:pinCode,no_pe_declaration_applicable_from =:noPeDeclarationApplicableFrom,no_pe_declaration_applicable_to =:noPeDeclarationApplicableTo,
+								no_poem_in_india_applicable_from =:noPoemDeclarationInIndiaApplicableFrom,no_poem_in_india_applicable_to =:noPoemDeclarationInIndiaApplicableTo,
+								modified_by =:modifiedBy,modified_date =:modifiedDate,is_trc_available =:isTrcAvailable,trc_file_address =:trcFileAddress,is_tenf_available =:isTenfAvailable,
+								tenf_file_address =:tenfFileAddress,is_pe_available_in_india =:isPeAvailableInIndia,is_no_pe_declaration_available =:isNoPeDeclarationAvailable,
+								no_pe_declaration_file_address =:noPeFileAddress,is_poem_of_shareholder_in_india =:isPoemOfShareholderInIndia,is_no_poem_declaration_available =:isNoPoemDeclarationAvailable,
+								no_poem_declaration_file_address =:noPoemFileAddress,is_mli_slob_satisfaction_declaration_available =:isMliSlobSatisfactionDeclarationAvailable,
+								mli_slob_declaration_file_address =:mliFileAddress,is_beneficial_owner_of_income =:isBeneficialOwnerOfIncome,is_beneficial_ownership_declaration_available =:isBeneficialOwnershipDeclarationAvailable,
+								beneficial_ownership_file_address =:beneficialOwnershipFileAddress,version=:version where shareholder_master_id =:id; ]]>
+					</value>
+				</entry>
+				<entry key="tcs_find_all_by_pan_tan">
+					<value>
+                            <![CDATA[SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND collector_tan  = :collectorTan AND active=1 ]]>
+					</value>
+				</entry>
+
+				<entry key="update_deductor_tan_address">
+					<value>
+				        <![CDATA[UPDATE Onboarding.deductor_tan_address SET accountant_salutation=:accountantSalutation,area_locality =:areaLocality, country_name =:countryName, flat_door_block_no =:flatDoorBlockNo, name_building_village =:nameBuildingVillage,
+								person_address_change =:personAddressChange, person_alternate_email =:personAlternateEmail, person_alternate_telephone =:personAlternateTelephone,
+								person_area =:personArea , person_building_name =:personBuildingName , person_city =:personCity, person_designation =:personDesignation,  person_email =:personEmail,
+								 person_flat_door_blockno =:personFlatDoorBlockNo, person_mobile_number =:personMobileNumber, person_name =:personName, person_pan =:personPan,
+ 								person_pin_code =:personPinCode, person_state =:personState, person_street_name =:personStreetName, person_telephone =:personTelephone, pin_code =:pinCode, 
+								road_street_postoffice =:roadStreetPostoffice, state_name =:stateName, town_city_district =:townCityDistrict,std_code=:stdCode,person_std_code=:personStdCode,accountant_name=:dvndAccountantName,
+								dvnd_area_locality=:dvndAreaLocality,branch_of_bank=:dvndBranchOfBank,bsr_code_of_bank_branch=:dvndBsrCodeOfBankBranch,dvnd_country=:dvndCountry,father_or_husband_name=:dvndFatherOrHusbandName,
+								dvnd_flat_door_block_no=:dvndFlatDoorBlockNo,membership_number=:dvndMembershipNumber,name_of_bank=:dvndNameOfBank,name_of_premises_building_village=:dvndNameOfPremisesBuildingVillage,name_of_proprietorship=:dvndNameOfProprietorship,
+								opted_for_15_ca_cb=:dvndOptedFor15CaCb,dvnd_pin_code=:dvndPinCode,principal_area_of_business=:dvndPrincipalAreaOfBusiness,registration_number=:dvndRegistrationNumber,dvnd_road_street_post_office=:dvndRoadStreetPostOffice,
+								dvnd_state=:dvndState,dvnd_town_city_district=:dvndTownCityDistrict WHERE pan =:pan AND tan =:tan;]]>
+					</value>
+				</entry>
+				<entry key="get_LdcMaster_Based_OnPan_For_Dividend">
+					<value>
+					<![CDATA[
+					       select * from Client_Masters.ldc_master where ldc_master_pan =:ldcPan and dividend_processing =1 and active=1 
+					       and deductor_master_tan =:deductorTan
+				          ]]>
+					</value>
+				</entry>
+				<entry key="get_All_Resident_Shareholder_By_Pan_TenantId">
+					<value>
+					<![CDATA[ select * from Client_Masters.shareholder_master_residential where deductor_master_pan=:deductorPan and active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_all_shareholder_no_pan">
+					<value>
+					<![CDATA[ select * from Client_Masters.shareholder_master_residential where deductor_master_pan=:deductorPan and active = 1 AND pan IS NULL OR pan = '']]>
+					</value>
+				</entry>
+				<entry key="get_All_Non_Resident_Shareholder_By_Pan_TenantId">
+					<value>
+					<![CDATA[
+					      select * from Client_Masters.shareholder_master_non_residential smnr where deductor_master_pan=:deductorPan
+				          ]]>
+					</value>
+				</entry>
+				<entry
+					key="get_Non_Resident_Shareholder_By_FolioNumber_PanTenantId">
+					<value>
+					<![CDATA[
+						select * from Client_Masters.shareholder_master_non_residential  where deductor_master_pan=:deductorPan and folio_no =:folioNo order by shareholder_master_id  desc
+				          ]]>
+					</value>
+				</entry>
+				<entry
+					key="get_Resident_Shareholder_By_FolioNumber_PanTenantId">
+					<value>
+					<![CDATA[
+                      select * from Client_Masters.shareholder_master_residential  where deductor_master_pan=:deductorPan and folio_no =:folioNo order by shareholder_master_id  desc
+				          ]]>
+					</value>
+				</entry>
+				<entry key="getdeductor_count_by_pan">
+					<value>
+                            <![CDATA[SELECT count(1) FROM Onboarding.deductor_master WHERE deductor_master_pan =:pan AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="get_all_hsn_code">
+					<value>
+					<![CDATA[ select * FROM Client_Masters.tds_hsn_code WHERE active = 1 AND deductor_pan = :deductorPan AND deductor_master_tan = :tan ]]>
+					</value>
+				</entry>
+				<entry key="get_all_hsn_rate_mapping">
+					<value>
+					<![CDATA[ select * FROM Client_Masters.tds_hsn_rate_mapping WHERE active = 1 AND deductor_pan = :deductorPan AND deductor_master_tan = :tan]]>
+					</value>
+				</entry>
+				<entry key="get_all_hsn_code_count">
+					<value>
+					<![CDATA[ select COUNT(1) FROM Client_Masters.tds_hsn_code WHERE active = 1 AND deductor_pan = :deductorPan AND deductor_master_tan = :tan ]]>
+					</value>
+				</entry>
+				<entry key="get_hsn_code">
+					<value>
+					<![CDATA[ select * FROM Client_Masters.tds_hsn_code WHERE hsn_code = :hsn AND active = 1 AND deductor_pan = :deductorPan AND deductor_master_tan = :tan]]>
+					</value>
+				</entry>
+				<entry key="get_all_hsn_by_section">
+					<value>
+					<![CDATA[ select * FROM Client_Masters.tds_hsn_code WHERE tds_section = :tdsSection AND active = 1 AND deductor_pan = :deductorPan AND deductor_master_tan = :tan]]>
+					</value>
+				</entry>
+				<entry key="get_all_hsn_tds_section">
+					<value>
+					<![CDATA[ select distinct tds_section FROM Client_Masters.tds_hsn_code WHERE active = 1 AND deductor_pan = :deductorPan AND deductor_master_tan = :tan]]>
+					</value>
+				</entry>
+				<entry key="fine_by_hsn_id">
+					<value>
+					<![CDATA[ select * FROM Client_Masters.tds_hsn_code WHERE id = :id AND active = 1 AND deductor_pan = :deductorPan AND deductor_master_tan = :tan]]>
+					</value>
+				</entry>
+				<entry key="update_hsn">
+					<value>
+					<![CDATA[ UPDATE Client_Masters.tds_hsn_code SET hsn_code = :hsnCode, description = :description, modified_by = :modifiedBy,
+					 			modified_date = :modifiedDate, tds_section = :tdsSection, nature_of_payment = :natureOfPayment WHERE id = :id;]]>
+					</value>
+				</entry>
+				<entry key="update_hsn_rate_mapping">
+					<value>
+					<![CDATA[ UPDATE Client_Masters.tds_hsn_rate_mapping SET tds_master_id = :tdsMasterId, modified_by = :modifiedBy,
+								modified_date = :modifiedDate WHERE id = :id; ]]>
+					</value>
+				</entry>
+				<entry key="get_deductee_nop_by_pans">
+					<value>
+                          <![CDATA[SELECT * FROM Transactions.deductee_nop_group WHERE deductee_pan = :deducteePan AND deductor_pan = :deductorPan ;]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_by_id">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan and deductor_master_tan = :tan
+                            			and  id = :id and active = 1 and [type] = :type]]>
+					</value>
+				</entry>
+				<entry key="get_all_kyc">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1 AND [type] = :type ORDER BY id DESC ]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_tds_vs_tcs_action_list">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1
+										AND is_kyc_submitted = 1 AND [year] = :year AND [type] = :type 
+										AND  (tcs_tds_applicability_user_action IS NULL OR  tcs_tds_applicability_user_action = 'Hold') ]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_tds_vs_tcs_action_final_respone_list">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1
+										AND is_kyc_submitted = 1 AND [year] = :year AND [type] = :type 
+										AND tcs_tds_applicability_user_action IN('Accept','Reject', 'Hold') ]]>
+					</value>
+				</entry>
+				<entry key="get_failed_response_report">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1 AND is_form_submitted = 0 AND year = :year
+                            			 AND [type] = :type AND basis_email_sent IS NOT NULL]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_by_year">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1 AND year = :year AND type = :type]]>
+					</value>
+				</entry>
+				<entry key="get_all_kyc_mail_not_triggered">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1 AND year = :year AND type = :type AND basis_email_sent IS NULL ]]>
+					</value>
+				</entry>
+				<entry key="get_all_kyc_mail_triggered">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1 AND year = :year AND type = :type AND basis_email_sent IS NOT NULL ]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_survy_report_list">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1 AND year = :year AND is_form_submitted = 1
+                            			AND [type] = :type ]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_by_name_code">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1
+                            			AND customer_code = :customerCode AND customer_name = :customerName AND type = :type]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_by_code">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1
+                            		  AND customer_code = :customerCode AND type = :type]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_list_basedon_codes">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd WHERE deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1
+                            			AND customer_code IN(:customerCodes) AND [type] = :type ]]>
+					</value>
+				</entry>
+				<entry key="batch_update_basic_email_sent">
+					<value>
+            			<![CDATA[ UPDATE Onboarding.kyc_details SET basis_email_sent = :basisEmailSent WHERE deductor_master_tan = :deductorTan AND deductor_pan = :deductorPan AND id IN(:kycIdList) AND type = :type ;]]>
+					</value>
+				</entry>
+				<entry key="kyc_update">
+					<value>
+                         <![CDATA[ UPDATE Onboarding.kyc_details set customer_name = :customerName, customer_pan = :customerPan, email_id = :emailId,
+									is_pan_exists = :isPanExists, is_kyc_submitted = :isKycSubmitted, accept_terms_and_conditions = :acceptTermsAndConditions, applicable_from = :applicableFrom,
+									applicable_to = :applicableTo, deductor_master_tan = :deductorMasterTan, deductor_pan = :deductorPan,
+									active = :active, created_by = :createdBy, created_date = :createdDate, modified_by = :modifiedBy, modified_date = :modifiedDate,
+									phone_number = :phoneNumber, customer_code = :customerCode, aggregate_tcs_or_tds_greater_than50k_for_year1 = :aggregateTcsOrTdsGreaterThan50kForYear1,
+									aggregate_tcs_or_tds_greater_than50k_for_year2 = :aggregateTcsOrTdsGreaterThan50kForYear2, aggregate_tcs_or_tds_greater_than50k_for_year3 = :aggregateTcsOrTdsGreaterThan50kForYear3,
+									is_higher_tcs_rate_applicable = :isHigherTcsRateApplicable, higher_tcs_rate_applicable_conclusion = :higherTcsRateApplicableConclusion,
+									itr_financial_year1 = :itrFinancialYear1, itr_financial_year2 = :itrFinancialYear2, itr_financial_year3 = :itrFinancialYear3,
+									acknowledgement_itr_year1 = :acknowledgementItrYear1, acknowledgement_itr_year2 = :acknowledgementItrYear2, acknowledgement_itr_year3 = :acknowledgementItrYear3,
+									is_pan_verify_status = :isPanVerifyStatus, match_score = :matchScore, is_form_submitted = :isFormSubmitted, is_authorized_person = :isAuthorizedPerson,
+									tds_tcs_client_final_response = :tdsTcsClientFinalResponse, turnover_exceed_10cr = :turnoverExceed10cr, itr_attachment_year1 = :itrAttachmentYear1,
+									itr_attachment_year2 = :itrAttachmentYear2, itr_attachment_year3 = :itrAttachmentYear3, tds_tcs_applicability_indicator = :tdsTcsApplicabilityIndicator,
+									tan_applicable = :tanApplicable, tan_number = :tanNumber, basis_email_sent = :basisEmailSent, kyc_pan = :kycPan,
+									signed_name = :signedName , signed_designation = :signedDesignation, signed_email_id = :signedEmailId,batch_upload_id = :batchUploadId,
+									[type] = :type, remarks = :remarks, signed_name_for_no = :signedNameforNo, signed_mobile_number = :signedMobileNumber, kyc_remarks = :kycRemarks,
+									pan_file_path = :panFilePath , fs_file_path = :fsFilePath, is_tan_files = :isTanFiles, indemnify_declare = :indemnifyDeclare, yes_signed_email_id = :yesSignedEmailId where id = :id  ]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_based_on_deductee_pan">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND customer_pan = :pan and active = 1 ]]>
+					</value>
+				</entry>
+
+				<entry key="get_kyc_control_output_tcs">
+					<value>
+                        <![CDATA[    SELECT
+     								 SUM(1) AS countProvided
+									,SUM(CASE WHEN email_id IS NULL THEN 1 ELSE 0 END) AS countWithoutEmail
+									,SUM(CASE WHEN email_id IS NOT NULL THEN 1 ELSE 0 END) AS countWithEmail
+									,SUM(CASE WHEN is_kyc_submitted = 1 THEN 1 ELSE 0 END) AS countKYCResponded
+									,SUM(CASE WHEN (is_authorized_person = 0 AND is_form_submitted = 1) THEN 1 ELSE 0 END) AS countKYCRespondedNotAuthorised
+									,SUM(CASE WHEN (is_form_submitted = 0 AND is_email_triggered = 1 AND basis_email_sent IS NOT NULL) THEN 1 ELSE 0 END) AS countKYCNotResponded
+									,SUM(CASE WHEN (basis_email_sent IS NOT NULL) THEN 1 ELSE 0 END) AS customersMailTriggered
+									,SUM(CASE WHEN (basis_email_sent IS NULL) THEN 1 ELSE 0 END) AS customersMailNotTriggered
+									,SUM(CASE WHEN (tcs_tds_applicability_user_action = 'Hold' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as remediationPendingHold
+									,SUM(CASE WHEN (tcs_tds_applicability_user_action IS NULL and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as remediationPendingNew
+									,SUM(CASE WHEN (tds_tcs_client_final_response = 'TCS' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as remediationDoneTCSApplicable
+									,SUM(CASE WHEN (tds_tcs_client_final_response = 'TDS' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as remediationDoneTDSApplicable
+									,SUM(CASE WHEN (tds_tcs_client_final_response = 'TDS' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countCustomerRespondedTDS
+									,SUM(CASE WHEN (tds_tcs_client_final_response = 'TCS' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countCustomerRespondedTCS
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TCS  - Normal rate' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countNormalRate
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TCS  - Higher rate - No PAN' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countNoPANHigherRate
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TCS  - Higher rate - No ITR' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countNoITRHigherRate
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TCS  - Higher rate - No PAN & ITR' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countNoPANITRHigherRate
+									,SUM(CASE WHEN (tds_tcs_client_final_response IN('TDS','TCS') AND final_rate_user_action IS NULL and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as finalRemediationPending
+									,SUM(CASE WHEN is_kyc_submitted = 1 THEN 1 ELSE 0 END) AS level1totalCount
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TCS  - Normal rate' AND
+													higher_tcs_rate_applicable_conclusion = 'TCS  - Higher rate - No PAN' AND
+													higher_tcs_rate_applicable_conclusion = 'TCS  - Higher rate - No ITR' AND
+													higher_tcs_rate_applicable_conclusion = 'TCS  - Higher rate - No PAN & ITR' AND is_kyc_submitted = 1) THEN 1 ELSE 0 END) as level2totalCount
+								FROM [Onboarding].[kyc_details] where deductor_pan = :pan and deductor_master_tan = :tan and  [year] = :year and type = :type
+                        ]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_control_output_tds">
+					<value>
+                        <![CDATA[    SELECT
+     								 SUM(1) AS countProvided
+									,SUM(CASE WHEN email_id IS NULL THEN 1 ELSE 0 END) AS countWithoutEmail
+									,SUM(CASE WHEN email_id IS NOT NULL THEN 1 ELSE 0 END) AS countWithEmail
+									,SUM(CASE WHEN is_kyc_submitted = 1 THEN 1 ELSE 0 END) AS countKYCResponded
+									,SUM(CASE WHEN (is_authorized_person = 0 AND is_form_submitted = 1) THEN 1 ELSE 0 END) AS countKYCRespondedNotAuthorised
+									,SUM(CASE WHEN (is_form_submitted = 0 AND is_email_triggered = 1 AND basis_email_sent IS NOT NULL) THEN 1 ELSE 0 END) AS countKYCNotResponded
+									,SUM(CASE WHEN (is_email_triggered = 1 AND basis_email_sent IS NOT NULL) THEN 1 ELSE 0 END) AS customersMailTriggered
+									,SUM(CASE WHEN is_email_triggered = 0 THEN 1 ELSE 0 END) AS customersMailNotTriggered
+									,SUM(CASE WHEN (tcs_tds_applicability_user_action = 'Hold' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as remediationPendingHold
+									,SUM(CASE WHEN (tcs_tds_applicability_user_action IS NULL and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as remediationPendingNew
+									,SUM(CASE WHEN (tds_tcs_client_final_response = 'TDS' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as remediationDoneTDSApplicable
+									,SUM(CASE WHEN (tds_tcs_client_final_response = 'TCS' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as remediationDoneTCSApplicable
+									,SUM(CASE WHEN (tds_tcs_client_final_response = 'TDS' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countCustomerRespondedTDS
+									,SUM(CASE WHEN (tds_tcs_client_final_response = 'TCS' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countCustomerRespondedTCS
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TDS  - Normal rate' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countNormalRate
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TDS  - Higher rate - No PAN' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countNoPANHigherRate
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TDS  - Higher rate - No ITR' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countNoITRHigherRate
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TDS  - Higher rate - No PAN & ITR' and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as countNoPANITRHigherRate
+									,SUM(CASE WHEN (tds_tcs_client_final_response  IN('TDS','TCS') AND final_rate_user_action IS NULL and is_kyc_submitted = 1) THEN 1 ELSE 0 END) as finalRemediationPending
+									,SUM(CASE WHEN is_kyc_submitted = 1 THEN 1 ELSE 0 END) AS level1totalCount
+									,SUM(CASE WHEN (higher_tcs_rate_applicable_conclusion = 'TDS  - Normal rate' AND
+													higher_tcs_rate_applicable_conclusion = 'TDS  - Higher rate - No PAN' AND
+													higher_tcs_rate_applicable_conclusion = 'TDS  - Higher rate - No ITR' AND
+													higher_tcs_rate_applicable_conclusion = 'TDS  - Higher rate - No PAN & ITR' AND is_kyc_submitted = 1) THEN 1 ELSE 0 END) as level2totalCount
+								FROM [Onboarding].[kyc_details] where deductor_pan = :pan and deductor_master_tan = :tan and  [year] = :year and type = :type
+                        ]]>
+					</value>
+				</entry>
+				<entry
+					key="get_resident_shareholder_shareholderPan_deductorPan">
+					<value>
+                          <![CDATA[SELECT count(1) from Client_Masters.shareholder_master_residential hare WHERE deductor_master_pan=:deductorPan AND pan =:shareholderPan  ;]]>
+					</value>
+				</entry>
+				<entry key="get_list_of_resident_foliono">
+					<value>
+                          <![CDATA[select folio_no from Client_Masters.shareholder_master_residential where deductor_master_pan =:pan;]]>
+					</value>
+				</entry>
+				<entry key="get_list_of_non_resident_foliono">
+					<value>
+                          <![CDATA[select folio_no from Client_Masters.shareholder_master_non_residential  where deductor_master_pan=:pan;]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_tcs_tds_list">
+					<value>
+						<![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1 AND is_kyc_submitted = 1 and [year] = :year AND tds_tcs_client_final_response = :flag AND type = :type]]>
+					</value>
+				</entry>
+				<entry key="get_kyc_type_wise_list">
+					<value>
+						<![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :tan AND active = 1 AND is_kyc_submitted = 1 and [year] = :year AND type = :type]]>
+					</value>
+				</entry>
+				<entry
+					key="get_non_resident_shareholder_shareholderPan_deductorPan">
+					<value>
+                          <![CDATA[SELECT count(1) from Client_Masters.shareholder_master_non_residential   WHERE deductor_master_pan=:deductorPan AND pan =:shareholderPan ;]]>
+					</value>
+				</entry>
+				<entry key="get_all_kyc_based_on_batch_id">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan AND deductor_master_tan = :deductorTan AND active = 1 AND [type] = :type AND batch_upload_id = :batchUploadId ]]>
+					</value>
+				</entry>
+				<entry key="update_redies_kyc_and_basic_sent_date">
+					<value>
+            			<![CDATA[ UPDATE Onboarding.kyc_details SET basis_email_sent = :basisEmailSent WHERE deductor_master_tan = :deductorTan AND deductor_pan = :deductorPan AND id = :id ]]>
+					</value>
+				</entry>
+				<entry key="get_pan_mismatch_count">
+					<value>
+                            <![CDATA[ SELECT COUNT(1) FROM Onboarding.kyc_details kd WHERE deductor_pan = :deductorPan AND deductor_master_tan = :deductorTan 
+										AND active = 1 AND [type] = :type AND isnull(customer_pan,'') != kyc_pan AND Kyc_pan IS NOT NULL AND remark_as_per_traces != 'KYC' ]]>
+					</value>
+				</entry>
+				<entry key="get_declaration_by_kycid">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.declaration_tan_files WHERE deductor_pan = :deductorPan AND deductor_tan = :tan AND active = 1 AND kyc_id = :kycId ]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_all_collectee_by_codes">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND collectee_code = :collecteeCode AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="tds_get_all_deductee_by_codes">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = :deductorPan
+          					AND deductee_code = :deducteeCode AND active = 1]]>
+					</value>
+				</entry>
+				<entry key="get_all_tds_declaration">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.deductee_declaration where deductor_tan = :deductorTan 
+                            	AND deductor_pan = :deductorPan  AND [year] = :year  and active = 1 ORDER BY id DESC]]>
+					</value>
+				</entry>
+				<entry key="get_all_tds_declaration_by_deducteeId">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.deductee_declaration 
+                            		where deductor_tan = :deductorTan AND deductor_pan = :deductorPan  AND [year] = :year 
+                            			AND deductee_id = :deducteeId 
+                            			AND applicable_from IS NOT NULL AND CAST(applicable_from AS DATE) <= :currentDate 
+										AND (applicable_to IS NULL or CAST(applicable_to AS DATE) >= :currentDate) and active = 1
+										order by id desc;]]>
+					</value>
+				</entry>
+				<entry key="get_all_tcs_declaration">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.collectee_declaration where deductor_tan = :deductorTan 
+                            AND deductor_pan = :deductorPan  AND [year] = :year and active = 1 ORDER BY id DESC]]>
+					</value>
+				</entry>
+				<entry key="get_all_tcs_declaration_by_colecteeId">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.collectee_declaration where deductor_tan = :deductorTan AND deductor_pan = :deductorPan  AND [year] = :year 
+										AND collectee_id = :collecteeId AND applicable_from IS NOT NULL AND CAST(applicable_from AS DATE) <= :currentDate 
+										AND (applicable_to IS NULL or CAST(applicable_to AS DATE) >= :currentDate) and active = 1
+										order by id desc;]]>
+					</value>
+				</entry>
+				<entry key="get_collectees_by_declaration">
+					<value>
+                            <![CDATA[ select cm.*, cgs.*, cd.rate_type, cd.tds_or_tcs, cd.specified_person,cd.applicable_from as declarationApplicableFrom
+										from Client_Masters.collectee_master cm
+										inner join Onboarding.collectee_declaration cd on cm.id = cd.collectee_id
+										LEFT JOIN Client_Masters.collectee_gstin_status cgs on  cd.collectee_id = cgs.collectee_id 
+										AND cgs.deductor_pan = :collectorPan AND cgs.active = 1 
+										AND cgs.year = :year AND cgs.month = :month
+										where cm.collector_pan = :collectorPan AND cd.deductor_pan = :collectorPan AND cm.active = 1 AND cd.active = 1 
+										AND (cd.rate_type is not null or cd.rate_type = '')
+										AND cd.applicable_from IS NOT NULL AND CAST(cd.applicable_from AS DATE) <= :currentDate 
+										AND (cd.applicable_to IS NULL or CAST(cd.applicable_to AS DATE) >= :currentDate ) ]]>
+					</value>
+				</entry>
+				<entry key="get_all_shareholder_declaration">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.shareholder_declaration where deductor_tan = :deductorTan 
+                            AND deductor_pan = :deductorPan  AND [year] = :year and active = 1 ORDER BY id DESC]]>
+					</value>
+				</entry>
+				<entry key="get_all_shareholder_declaration_shareholderId">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.shareholder_declaration where deductor_tan = :deductorTan AND deductor_pan = :deductorPan  AND [year] = :year AND shareholder_Id = :shareholderId 
+                               			AND applicable_from IS NOT NULL AND CAST(applicable_from AS DATE) <= :currentDate
+										AND (applicable_to IS NULL or CAST(applicable_to AS DATE) >= :currentDate) and active = 1]]>
+					</value>
+				</entry>
+				<entry key="get_kycemail_by_kycid">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_redis_details krd WHERE kyc_details_id = :kydId AND active = 1]]>
+					</value>
+				</entry>
+				<entry key="kyc_email_details_update">
+					<value>
+                         <![CDATA[ UPDATE Onboarding.kyc_redis_details SET active = 0 WHERE id = :id ]]>
+					</value>
+				</entry>
+				<entry key="update_kyc_declaration_email">
+					<value>
+                         <![CDATA[ UPDATE Onboarding.kyc_declaration_email_details SET modified_by = :modifiedBy, modified_date = :modifiedDate, active = 0 WHERE id = :id ]]>
+					</value>
+				</entry>
+				<entry key="get_all_kyc_declaration">
+					<value>
+                         <![CDATA[ SELECT * FROM Onboarding.kyc_declaration_email_details WHERE deductor_master_tan = :deductorTan AND active = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="get_all_kyc_zip">
+					<value>
+                            <![CDATA[ SELECT * FROM Onboarding.kyc_details kd where deductor_pan = :deductorPan 
+                            	AND deductor_master_tan = :tan AND active = 1 AND [type] = :type 
+                            	and (fs_file_path is not null or 
+								pan_file_path is not null or 
+								itr_attachment_year1  is not null or 
+								itr_attachment_year2 is not null or 
+								itr_attachment_year3 is not null or 
+								is_tan_files = 1) ORDER BY id DESC ]]>
+					</value>
+				</entry>
+				<entry key="update_kyc_approved">
+					<value>
+                         <![CDATA[ UPDATE Onboarding.kyc_declaration_email_details SET modified_by = :modifiedBy, modified_date = :modifiedDate, is_approved = 1, [type] = :type WHERE id = :id ]]>
+					</value>
+				</entry>
+				<entry key="kyc_approved_check">
+					<value>
+                         <![CDATA[ SELECT * FROM Onboarding.kyc_declaration_email_details WHERE deductor_master_tan = :deductorTan AND active = 1 AND [type] = :type ]]>
+					</value>
+				</entry>
+				<entry key="get_all_deductee_master_data">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.deductee_master_residential WHERE deductor_master_pan = :deductorPan AND deductee_master_pan = :deducteePan AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_all_collectee_by_pan">
+					<value>
+          				<![CDATA[SELECT * FROM Client_Masters.collectee_master WHERE collector_pan = :collectorPan AND collectee_pan = :collecteePan AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_non_resrident__shareholder_by_id_pan">
+					<value>
+				<![CDATA[
+			      select * from Client_Masters.shareholder_master_non_residential where deductor_master_pan =:deductorPan and shareholder_master_id in 
+		          ]]>
+					</value>
+				</entry>
+				<entry key="get_deductee_by_declaration">
+					<value>
+                            <![CDATA[ select dmr.*, dgs.*, dd.rate_type, dd.tds_or_tcs, dd.specified_person,dd.applicable_from as declarationApplicableFrom
+										from Client_Masters.deductee_master_residential dmr
+										inner join Onboarding.deductee_declaration dd on dmr.deductee_master_id = dd.deductee_id
+										left join Client_Masters.deductee_gstin_status dgs on dgs.deductee_id = dd.deductee_id
+										AND dgs.deductor_pan = :deductorPan AND dgs.active = 1 
+										AND dgs.year = :year AND dgs.month = :month
+										where dmr.deductor_master_pan = :deductorPan AND dd.deductor_pan = :deductorPan AND dmr.active = 1 AND dd.active = 1
+										AND (dd.rate_type is not null or dd.rate_type = '') 
+										AND dd.applicable_from IS NOT NULL AND CAST(dd.applicable_from AS DATE) <= :currentDate
+										AND (dd.applicable_to IS NULL or CAST(dd.applicable_to AS DATE) >= :currentDate) ]]>
+					</value>
+				</entry>
+				<entry key="get_shareholder_by_declaration">
+					<value>
+                            <![CDATA[ select smr.*, sd.rate_type, sd.tds_or_tcs, sd.specified_person, sd.applicable_from as declarationApplicableFrom
+                            from Client_Masters.shareholder_master_residential smr
+										inner join Onboarding.shareholder_declaration sd on smr.shareholder_master_id = sd.shareholder_id
+										where smr.deductor_master_pan = :deductorPan AND sd.deductor_pan = :deductorPan AND smr.active = 1 AND sd.active = 1 
+										AND (sd.rate_type is not null or sd.rate_type = '') 
+										AND sd.applicable_from IS NOT NULL AND CAST(sd.applicable_from AS DATE) <= :currentDate
+										AND (sd.applicable_to IS NULL or CAST(sd.applicable_to AS DATE) >= :currentDate) ]]>
+					</value>
+				</entry>
+				<entry key="get_all_deductee_gstin">
+					<value>
+				<![CDATA[ SELECT * FROM Client_Masters.deductee_master_residential dmr WHERE deductor_master_pan = :deductorPan
+							AND (gstin_number is not null or gstin_number = '') AND active = 1]]>
+					</value>
+				</entry>
+				<entry key="get_all_collectee_gstin">
+					<value>
+				<![CDATA[ SELECT * FROM Client_Masters.collectee_master dmr WHERE collector_pan = :collectorPan 
+							AND (gstin_number is not null or gstin_number = '') AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_all_deductee_gstin_report">
+					<value>
+                            <![CDATA[ SELECT dgs.*, dmr.deductee_master_name, dmr.deductee_code, dmr.deductee_master_pan, dmr.gstin_number,
+                            		dmr.deductor_code, dmr.deductor_name FROM Client_Masters.deductee_gstin_status dgs
+									INNER JOIN Client_Masters.deductee_master_residential dmr on dgs.deductee_id = dmr.deductee_master_id 
+									WHERE dgs.deductor_pan = :deductorPan AND dgs.deductor_master_tan = :tan 
+									AND dgs.[year] = :year AND dgs.active = 1 and dmr.deductor_master_pan = :deductorPan and dmr.active = 1 
+									and dgs.month = :month]]>
+					</value>
+				</entry>
+				<entry key="get_all_collectee_gstin_report">
+					<value>
+                            <![CDATA[ SELECT cgs.*, cm.name_of_the_collectee , cm.collectee_code , cm.collectee_pan , cm.gstin_number,
+										cm.name_of_the_collector, cm.collector_pan FROM Client_Masters.collectee_gstin_status cgs
+										INNER JOIN Client_Masters.collectee_master cm on cgs.collectee_id = cm.id
+										WHERE cgs.deductor_pan = :deductorPan AND cgs.deductor_master_tan = :tan 
+										AND cgs.[year] = :year AND cgs.active = 1 and cm.collector_pan = :deductorPan and cm.active = 1 
+										and cgs.month = :month]]>
+					</value>
+				</entry>
+				<entry key="get_all_shareholder_gstin_report">
+					<value>
+                            <![CDATA[ SELECT * FROM Client_Masters.shareholder_gstin_status WHERE deductor_pan = :deductorPan AND deductor_master_tan = :tan 
+                            			AND year = :year AND active = 1]]>
+					</value>
+				</entry>
+				<entry key="get_all_deductee_based_on_deducteeId">
+					<value>
+                            <![CDATA[ SELECT * FROM Client_Masters.deductee_gstin_status WHERE deductor_pan = :deductorPan AND deductor_master_tan = :deductorTan 
+                            			AND year = :year AND month = :month AND deductee_id = :deducteeId AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_all_collectee_based_on_collecteeId">
+					<value>
+                            <![CDATA[ SELECT * FROM Client_Masters.collectee_gstin_status WHERE deductor_pan = :deductorPan AND deductor_master_tan = :deductorTan 
+                            			AND year = :year AND month = :month AND collectee_id = :collecteeId AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_all_shareholder_based_on_shareholderId">
+					<value>
+                            <![CDATA[ SELECT * FROM Client_Masters.shareholder_gstin_status WHERE deductor_pan = :deductorPan AND deductor_master_tan = :deductorTan 
+                            			AND year = :year AND month = :month AND shareholder_id = :shareholderId AND active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="deductee_gstin_inactive">
+					<value>
+                            <![CDATA[ UPDATE Client_Masters.deductee_gstin_status set modified_by = :modifiedBy, modified_date = :modifiedDate, active = 0 where id = :id ]]>
+					</value>
+				</entry>
+				<entry key="collectee_gstin_inactive">
+					<value>
+                            <![CDATA[ UPDATE Client_Masters.collectee_gstin_status set modified_by = :modifiedBy, modified_date = :modifiedDate, active = 0 where id = :id ]]>
+					</value>
+				</entry>
+				<entry key="shareholder_gstin_inactive">
+					<value>
+                            <![CDATA[ UPDATE Client_Masters.shareholder_gstin_status set modified_by = :modifiedBy, modified_date = :modifiedDate, active = 0 where id = :id ]]>
+					</value>
+				</entry>
+
+			</map>
+		</constructor-arg>
+	</bean>
+</beans>

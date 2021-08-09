@@ -1,0 +1,39 @@
+<form
+  ngNoForm
+  #myFormPost
+  name="myFormPost"
+  action="{{ downloadURL }}"
+  method="POST"
+  target="_blank"
+>
+  <div *ngIf="checkType('BATCH') || checkType('BATCH-ERROR')">
+    <input type="hidden" [name]="'typeOfDownload'" [value]="type" />
+    <input
+      type="hidden"
+      [name]="'uploadType'"
+      [value]="batchData?.uploadType"
+    />
+    <input
+      type="hidden"
+      [name]="'assesmentYear'"
+      [value]="batchData?.assessmentYear"
+    />
+    <input type="hidden" [name]="'tenantId'" [value]="batchData?.tenantId" />
+    <input type="hidden" [name]="'batchId'" [value]="batchData?.batchId" />
+    <input type="hidden" [name]="'deductorTan'" [value]="batchData?.tan" />
+    <input type="hidden" [name]="'deductorPan'" [value]="batchData?.pan" />
+  </div>
+  <input type="hidden" [name]="'token'" [value]="token" />
+</form>
+<a
+  href="javascript:void(0);"
+  [ngClass]="{
+    'text-danger': +value === 0 && type.toUpperCase() === 'ERROR',
+    'text-link fs-14': checkType('FILING')
+  }"
+  [class.disabled]="
+    +value === 0 && type.toUpperCase() === 'ERROR' ? true : null
+  "
+  (click)="submitForm()"
+  ><i class="fas fa-download" *ngIf="isDownload"></i> {{ value }}</a
+>

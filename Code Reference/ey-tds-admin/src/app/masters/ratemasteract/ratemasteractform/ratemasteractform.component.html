@@ -1,0 +1,299 @@
+<div class="ui-g-6">
+  <h2 class="fs-22">{{ headingMsg }} Dividend rate - Act</h2>
+</div>
+<div class="ui-g-6 text-right">
+  <span *HasAnyAuthority="['DIVIDEND_RATEACT_UPDATE']">
+    <button
+      (click)="stateChanger('edit')"
+      type="button"
+      class="ui-button btn-primary"
+      *ngIf="actionState === 'VIEW'"
+    >
+      Edit
+    </button>
+  </span>
+</div>
+<div class="ui-g-12">
+  <form [formGroup]="DividendRateForm">
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.dividendDeductorTypeId.errors
+        }"
+      >
+        <label for="inputCity">Deductor type</label>
+        <p-dropdown
+          [options]="getDeductorlist"
+          [value]="DividendRateForm.getRawValue().dividendDeductorTypeId"
+          ngDefaultControl
+          formControlName="dividendDeductorTypeId"
+          (onChange)="onChange($event)"
+        >
+        </p-dropdown>
+        <div
+          *ngIf="submitted && f.dividendDeductorTypeId.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="submitted && f.dividendDeductorTypeId.errors?.required">
+            Please select Deductor Type.
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.shareholderCategoryId.errors
+        }"
+      >
+        <label for="inputCity">Category of shareholder</label>
+        <p-dropdown
+          [options]="getshareholderlist"
+          [value]="DividendRateForm.getRawValue().shareholderCategoryId"
+          ngDefaultControl
+          formControlName="shareholderCategoryId"
+          (onChange)="onChange($event)"
+        >
+        </p-dropdown>
+        <div
+          *ngIf="submitted && f.shareholderCategoryId.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="submitted && f.shareholderCategoryId.errors?.required">
+            Please select shareholder Type.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.residentialStatus.errors
+        }"
+      >
+        <label for="inputCity">Residential status</label>
+        <p-dropdown
+          [options]="ratemasterResidentialStatus"
+          [value]="DividendRateForm.getRawValue().residentialStatus"
+          ngDefaultControl
+          formControlName="residentialStatus"
+          (onChange)="onChange($event)"
+        >
+        </p-dropdown>
+        <div
+          *ngIf="submitted && f.residentialStatus.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="submitted && f.residentialStatus.errors?.required">
+            Please select Residential Status.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{ 'field-invalid': submitted && f.section.errors }"
+      >
+        <label for="inputCity">Section</label>
+        <input
+          type="text"
+          formControlName="section"
+          placeholder="Section auto populated"
+          (keydown.space)="$event.preventDefault()"
+          class="input-ctrl"
+          ngDefaultControl
+          readonly
+        />
+        <div *ngIf="sectionerror || f.section.errors" class="error-feedback">
+          <div *ngIf="sectionerror">
+            Section not found for this combination.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup mb-0 custm-at-lable custm-at-lable-90 cust-lable-ng-p ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.tdsRate.errors
+        }"
+      >
+        <label for="inputCity">TDS rate</label>
+        <input
+          type="number"
+          eyRatedecimalfloter
+          id="tdsRate"
+          formControlName="tdsRate"
+          placeholder="Enter TDS rate"
+          class="input-ctrl w-100"
+        />
+        <span class="ui-inputgroup-addon">%</span>
+        <div *ngIf="submitted && f.tdsRate.errors" class="error-feedback">
+          <p *ngIf="f.tdsRate.errors?.required">Please enter Tds rate.</p>
+          <p *ngIf="f.tdsRate.errors?.maxlength">
+            Rate must not exceed 2 characters.
+          </p>
+          <p *ngIf="f.tdsRate.errors.pattern">Please enter only digits.</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup  ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.exemptionThreshold.errors
+        }"
+      >
+        <label for="inputCity">Exemption threshhold (in Rs.)</label>
+        <input
+          type="text"
+          formControlName="exemptionThreshold"
+          placeholder="Enter ExemptionThreshhold"
+          numberlengthvalidator
+          maxLength="16"
+          class="input-ctrl"
+          pInputText
+        />
+        <div
+          *ngIf="submitted && f.exemptionThreshold.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.exemptionThreshold.errors?.required">
+            Please enter Exemption Threshhold.
+          </div>
+          <div *ngIf="f.exemptionThreshold.errors?.pattern">
+            Please enter only digits.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.applicableFrom.errors
+        }"
+      >
+        <label for="inputCity"> Applicable from</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            id="applicableFrom"
+            formControlName="applicableFrom"
+            ngbDatepicker
+            placement="auto"
+            #applicableFrom="ngbDatepicker"
+            [value]="
+              DividendRateForm.getRawValue().applicableFrom | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="applicableFrom.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.applicableFrom.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.applicableFrom.errors?.required">
+            Please enter applicable from.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid':
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+        }"
+      >
+        <label for="inputState">Applicable to (optional)</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            [minDate]="minDate"
+            (click)="d.toggle()"
+            name="dp"
+            formControlName="applicableTo"
+            ngbDatepicker
+            placement="auto"
+            #d="ngbDatepicker"
+            [value]="
+              DividendRateForm.getRawValue().applicableTo | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="d.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+          "
+          class="error-feedback"
+        >
+          <p *ngIf="applicableToDateError">
+            Applicable to date must be more than that of Applicable from date.
+          </p>
+          <p *ngIf="f.applicableTo.errors?.required">
+            Please enter applicable to.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-inputgroup">
+      <button
+        (click)="backFormClick()"
+        type="button"
+        class="ui-button btn-utility"
+      >
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+      <!-- <ey-commonformbuttons></ey-commonformbuttons> -->
+      <button
+        (click)="saveDividendRate('addNew')"
+        type="button"
+        class="ui-button btn-secondary"
+        *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+      >
+        <i class="fas fa-save"></i> Save &amp; Add new
+      </button>
+      <button
+        (click)="saveDividendRate('back')"
+        type="button"
+        class="ui-button btn-primary"
+        *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+      >
+        <i class="fas fa-save"></i> Save
+      </button>
+      <span *HasAnyAuthority="['DIVIDEND_RATEACT_UPDATE']">
+        <button
+          (click)="updateDividendRate()"
+          type="button"
+          class="ui-button btn-primary"
+          *ngIf="actionState === 'EDIT'"
+        >
+          Update
+        </button>
+      </span>
+    </div>
+  </form>
+</div>

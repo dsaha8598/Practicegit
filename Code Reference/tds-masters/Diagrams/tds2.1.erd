@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram version="1" name="tds2.1.erd" time="201905301558">
+	<entities>
+		<data-source id="microsoft-16b0836bb24-7195db7a5093b3ff">
+			<entity id="1" name="address" fq-name="tds.tds.address" order="0" x="10" y="325">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="2" name="ao_master" fq-name="tds.tds.ao_master" order="1" x="378" y="538">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="3" name="article_master" fq-name="tds.tds.article_master" order="2" x="1907" y="20">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="4" name="article_master_conditions" fq-name="tds.tds.article_master_conditions" order="3" x="1567" y="19">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="5" name="article_master_detailed_conditions" fq-name="tds.tds.article_master_detailed_conditions" order="4" x="1239" y="32">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="6" name="basis_of_cess_details" fq-name="tds.tds.basis_of_cess_details" order="5" x="1306" y="262">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="7" name="basis_of_surcharge_details" fq-name="tds.tds.basis_of_surcharge_details" order="6" x="1670" y="591">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="8" name="cess_master" fq-name="tds.tds.cess_master" order="7" x="1630" y="254">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="9" name="cess_type_master" fq-name="tds.tds.cess_type_master" order="8" x="1937" y="355">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="10" name="country" fq-name="tds.tds.country" order="9" x="240" y="696">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="11" name="deductor_master" fq-name="tds.tds.deductor_master" order="10" border-width="3" x="358" y="24">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="12" name="deductor_tan_details" fq-name="tds.tds.deductor_tan_details" order="11" x="148" y="22">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="13" name="deductor_type" fq-name="tds.tds.deductor_type" order="12" x="652" y="20">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="14" name="fine_rate_master" fq-name="tds.tds.fine_rate_master" order="13" x="1036" y="16">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="15" name="ldc_master" fq-name="tds.tds.ldc_master" order="14" x="646" y="536">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="16" name="mode_of_payment" fq-name="tds.tds.mode_of_payment" order="15" x="820" y="26">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="17" name="nature_of_payment_master" fq-name="tds.tds.nature_of_payment_master" order="16" x="1306" y="588">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="18" name="pan" fq-name="tds.tds.pan" order="17" x="916" y="134">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="19" name="provision" fq-name="tds.tds.provision" order="18" x="791" y="234">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="20" name="residential_status" fq-name="tds.tds.residential_status" order="19" x="815" y="343">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="21" name="state" fq-name="tds.tds.state" order="20" x="245" y="528">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="22" name="status" fq-name="tds.tds.status" order="21" x="660" y="388">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="23" name="sub_nature_payment_master" fq-name="tds.tds.sub_nature_payment_master" order="22" x="1021" y="654">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="24" name="surcharge_master" fq-name="tds.tds.surcharge_master" order="23" x="1962" y="583">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="25" name="tan" fq-name="tds.tds.tan" order="24" x="194" y="176">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+			<entity id="26" name="tds_master" fq-name="tds.tds.tds_master" order="25" x="1027" y="266">
+				<path name="tds"/>
+				<path name="tds"/>
+			</entity>
+		</data-source>
+	</entities>
+	<notes/>
+	<relations>
+		<relation name="deductor_master$fk_deductor_address" fq-name="tds.deductor_master.deductor_master$fk_deductor_address" type="fk" pk-ref="1" fk-ref="11"/>
+		<relation name="FK__tan__address_id__3B40CD36" fq-name="tds.tan.FK__tan__address_id__3B40CD36" type="fk" pk-ref="1" fk-ref="25"/>
+		<relation name="article_master_conditions$fk_condition_article_master" fq-name="tds.article_master_conditions.article_master_conditions$fk_condition_article_master" type="fk" pk-ref="3" fk-ref="4"/>
+		<relation name="article_master_detailed_conditions$fk_detailed_condition_condition" fq-name="tds.article_master_detailed_conditions.article_master_detailed_conditions$fk_detailed_condition_condition" type="fk" pk-ref="4" fk-ref="5"/>
+		<relation name="basis_of_cess_details$fk_boc_cess_id" fq-name="tds.basis_of_cess_details.basis_of_cess_details$fk_boc_cess_id" type="fk" pk-ref="8" fk-ref="6"/>
+		<relation name="cess_master$fk_cess_type" fq-name="tds.cess_master.cess_master$fk_cess_type" type="fk" pk-ref="9" fk-ref="8"/>
+		<relation name="state$fk_state_country" fq-name="tds.state.state$fk_state_country" type="fk" pk-ref="10" fk-ref="21"/>
+		<relation name="deductor_tan_details$fk_tan_deductor" fq-name="tds.deductor_tan_details.deductor_tan_details$fk_tan_deductor" type="fk" pk-ref="11" fk-ref="12"/>
+		<relation name="deductor_master$fk_deductor_type" fq-name="tds.deductor_master.deductor_master$fk_deductor_type" type="fk" pk-ref="13" fk-ref="11"/>
+		<relation name="deductor_master$fk_deductor_mode_of_payment" fq-name="tds.deductor_master.deductor_master$fk_deductor_mode_of_payment" type="fk" pk-ref="16" fk-ref="11"/>
+		<relation name="basis_of_cess_details$fk_boc_nature_of_payment" fq-name="tds.basis_of_cess_details.basis_of_cess_details$fk_boc_nature_of_payment" type="fk" pk-ref="17" fk-ref="6"/>
+		<relation name="fk_nature_of_payment_master" fq-name="tds.basis_of_surcharge_details.fk_nature_of_payment_master" type="fk" pk-ref="17" fk-ref="7"/>
+		<relation name="sub_nature_payment_master$fk_snp_parent" fq-name="tds.sub_nature_payment_master.sub_nature_payment_master$fk_snp_parent" type="fk" pk-ref="17" fk-ref="23"/>
+		<relation name="tds_master$fk_tds_nature_of_payment" fq-name="tds.tds_master.tds_master$fk_tds_nature_of_payment" type="fk" pk-ref="17" fk-ref="26"/>
+		<relation name="deductor_master$fk_deductor_pan" fq-name="tds.deductor_master.deductor_master$fk_deductor_pan" type="fk" pk-ref="18" fk-ref="11"/>
+		<relation name="deductor_master$fk_deductor_provision" fq-name="tds.deductor_master.deductor_master$fk_deductor_provision" type="fk" pk-ref="19" fk-ref="11"/>
+		<relation name="deductor_master$fk_deductor_residential_status" fq-name="tds.deductor_master.deductor_master$fk_deductor_residential_status" type="fk" pk-ref="20" fk-ref="11"/>
+		<relation name="address$fk_address_state" fq-name="tds.address.address$fk_address_state" type="fk" pk-ref="21" fk-ref="1"/>
+		<relation name="deductor_master$fk_deductor_status" fq-name="tds.deductor_master.deductor_master$fk_deductor_status" type="fk" pk-ref="22" fk-ref="11"/>
+		<relation name="tds_master$fk_tds_sub_nature_of_payment" fq-name="tds.tds_master.tds_master$fk_tds_sub_nature_of_payment" type="fk" pk-ref="23" fk-ref="26"/>
+		<relation name="fk_surcharge_master" fq-name="tds.basis_of_surcharge_details.fk_surcharge_master" type="fk" pk-ref="24" fk-ref="7"/>
+		<relation name="deductor_tan_details$fk_tan_details" fq-name="tds.deductor_tan_details.deductor_tan_details$fk_tan_details" type="fk" pk-ref="25" fk-ref="12"/>
+	</relations>
+</diagram>

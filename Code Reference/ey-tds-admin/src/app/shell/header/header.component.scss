@@ -1,0 +1,9 @@
+@import "../../../theme/theme-variables.scss";
+
+.navbar {
+  margin-bottom: $spacer;
+}
+
+.nav-link.dropdown-toggle {
+  cursor: pointer;
+}

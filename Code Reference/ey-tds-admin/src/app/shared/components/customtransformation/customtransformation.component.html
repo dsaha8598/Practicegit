@@ -1,0 +1,66 @@
+<div class="ui-g-12">
+  <form [formGroup]="custmTransferForm">
+    <div class="ui-g-12">
+      <div class="ui-inputgroup ui-g-6">
+        <label for="invoice">Invoice</label>
+        <input
+          type="number"
+          name="invoice"
+          id="invoice"
+          placeholder="Enter Invoice"
+          formControlName="invoice_excel"
+          class="input-ctrl cust-input-width"
+          ngDefaultControl
+        />
+      </div>
+
+      <div class="ui-inputgroup ui-g-6">
+        <label for="provisions">Provisions</label>
+        <input
+          type="number"
+          name="provisions"
+          id="provisions"
+          placeholder="Enter Provision"
+          formControlName="provisions"
+          class="input-ctrl cust-input-width"
+          ngDefaultControl
+        />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-inputgroup ui-g-6">
+        <label for="advances">Advances</label>
+        <input
+          type="number"
+          name="advances"
+          id="advances"
+          placeholder="Enter Advances"
+          formControlName="advances"
+          class="input-ctrl cust-input-width"
+          ngDefaultControl
+        />
+      </div>
+      <div class="ui-inputgroup ui-g-6">
+        <label for="gl">Gl</label>
+        <input
+          type="number"
+          name="gl"
+          id="gl"
+          placeholder="Enter Gl"
+          formControlName="gl"
+          class="input-ctrl cust-input-width"
+          ngDefaultControl
+        />
+      </div>
+    </div>
+    <div class="col-sm-12 ui-g-6 mt-20 text-center">
+      <button
+        type="button"
+        class="ui-button btn-primary"
+        (click)="submitCustTransformData()"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>

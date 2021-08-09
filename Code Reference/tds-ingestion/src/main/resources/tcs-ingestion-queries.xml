@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	<bean id="tcsQueries" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+
+				<entry key="payment_update">
+					<value>
+                            <![CDATA[UPDATE Transactions.tcs_payment
+						SET source_identifier=:sourceIdentifier, source_file_name=:sourceFileName, collector_code=:collectorCode, 
+						collector_pan=:collectorPan, collector_tan=:collectorTan, collectee_code=:collecteeCode, collectee_pan=:collecteePan,
+						document_type=:documentType, document_number=:documentNumber, document_date=:documentDate, 
+						clearing_document_number=:clearingDocumentNumber, clearing_date=:clearingDate, invoice_document_number=:invoiceDocumentNumber,
+						invoice_date=:invoiceDate, line_number=:lineNumber, payment_desc=:paymentDesc, gl_account_code=:glAccountCode, gl_desc=:glDesc,
+						amount=:amount, tcs_section=:tcsSection, tcs_rate=:tcsRate, tcs_amount=:tcsAmount, surcharge_rate=:surchargeRate, 
+						surcharge_amount=:surchargeAmount, itcess_rate=:itcessRate, itcess_amount=:itcessAmount, tds_section=:tdsSection,
+						tds_rate=:tdsRate, tds_amount=:tdsAmount, action=:action, challan_generated_date=:challanGeneratedDate,
+						is_challan_generated=:isChallanGenerated, assessment_year=:assessmentYear, challan_month=:challanMonth,
+						challan_paid=:challanPaid, confidence=:confidence, approved_for_challan=:approvedForChallan, actual_tcs_amount=:actualTcsAmount, 
+						actual_tcs_rate=:actualTcsRate, actual_tcs_section=:actualTcsSection, derived_tcs_amount=:derivedTcsAmount, derived_tcs_rate=:derivedTcsRate,
+						derived_tcs_section=:derivedTcsSection, final_tcs_amount=:finalTcsAmount, final_tcs_rate=:finalTcsRate,
+						final_tcs_section=:finalTcsSection, has_lcc=:hasLcc, has_mismatch=:hasMismatch, mismatch_category=:mismatchCategory, 
+						mismatch_interpretation=:mismatchInterpretation, mismatch_modified_date=:mismatchModifiedDate, is_parent=:isParent,
+						keywords=:keywords, user_defined_field1=:userDefinedField1, user_defined_field2=:userDefinedField2, 
+						user_defined_field3=:userDefinedField3, user_defined_field4=:userDefinedField4, user_defined_field5=:userDefinedField5,
+						user_defined_field6=:userDefinedField6, collectee_name=:collecteeName, active=:active, 
+						modified_by = :modifiedBy,final_reason=:finalReason, is_exempted =:isExempted 
+						WHERE id=:id;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_by_year_month_tan">
+					<value>
+                            <![CDATA[SELECT * FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear and challan_month= :challanMonth 
+                            and collector_tan= :tan and approved_for_challan = :approvedForChallan and challan_paid=0 
+                            and is_parent = 0 and active = 1;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_by_year_month_tan_count">
+					<value>
+                            <![CDATA[SELECT count(*) FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear and challan_month= :challanMonth 
+                            and collector_tan= :tan and approved_for_challan = :approvedForChallan and challan_paid=0 
+                            and is_parent = 0 and active = 1;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_by_serialNo_bsrCode_date">
+					<value>
+                            <![CDATA[SELECT distinct
+      tp.id,tp.source_identifier,tp.source_file_name,tp.collector_code,tp.collector_pan,
+	  tp.collector_tan,tp.collectee_code,tp.collectee_pan,document_type,document_number,document_date,
+	  clearing_document_number,clearing_date,invoice_document_number,invoice_date,line_number,payment_desc,
+	  gl_account_code,cm.collectee_status as gl_desc,amount,tp.tcs_section,tp.tcs_rate,tcs_amount,surcharge_rate,surcharge_amount,itcess_rate,
+	  itcess_amount,tp.tds_section,tp.tds_rate,tds_amount,action,challan_generated_date,is_challan_generated,assessment_year,
+	  challan_month,challan_paid,confidence,date_at_which_tds_is_deposited,approved_for_challan,actual_tcs_amount,
+	  actual_tcs_rate,actual_tcs_section,derived_tcs_amount,derived_tcs_rate,derived_tcs_section,
+	  (((ISNULL(tp.amount,0)-ISNULL(tp.consumed_amount,0)))*tp.final_tcs_rate*0.01) as final_tcs_amount,
+	  final_tcs_rate,final_tcs_section,has_lcc,has_mismatch,mismatch_category,mismatch_interpretation,mismatch_modified_date,
+	  is_parent,keywords,cm.name_of_the_collectee AS collectee_name,tp.active,is_exempted,tp.batch_upload_id,posting_date,tp.modified_by,under_threshold,final_reason,noi_id,
+	  tp.nature_of_income,tp.created_date,tp.modified_date,tp.created_by,derived_noi_id,final_noi_id,derived_nature_of_income,
+	  final_nature_of_income,(ISNULL(tp.amount,0) - ISNULL(tp.consumed_amount,0)) as applicable_total_taxable_amount,
+	  penalty,consumed_amount,interest,system_challan_serial_no,
+	  challan_paid_date,receipt_bsr_code,is_adjust,is_error,error_reason,remaining_amount,ancestor_id,has_ncc,exempted_reason,
+	  is_collection_split_record,is_lcc_split_record,challan_serial_no,is_challan_split,lcc_certificate_number,
+	   tp.user_defined_field1,tp.user_defined_field2,tp.user_defined_field3,tp.user_defined_field4,tp.user_defined_field5,
+	   tp.user_defined_field6 
+	  						FROM Transactions.tcs_payment tp 
+                            inner join Client_Masters.collectee_master cm on cm.collectee_code =tp.collectee_code 
+                            WHERE tp.assessment_year = :assessmentYear 
+                            AND cm.collector_tan = :collectorTan  
+                            and tp.collector_tan= :collectorTan and tp.receipt_bsr_code = :bsrCode and tp.challan_serial_no= :receiptSerailNo 
+                            and tp.challan_paid_date = :receiptDate and tp.active = 1 and tp.challan_paid = :challanPaid and is_parent=0 
+                            
+                            
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_by_serialNo_bsrCode_date_count_union">
+					<value>
+                            <![CDATA[
+                            union
+	SELECT distinct
+      tp.id,tp.source_identifier,tp.source_file_name,tp.collector_code,tp.collector_pan,
+	  tp.collector_tan,tp.collectee_code,tp.collectee_pan,document_type,document_number,document_date,
+	  clearing_document_number,clearing_date,invoice_document_number,invoice_date,line_number,payment_desc,
+	  gl_account_code,cm.collectee_status as gl_desc,amount,tp.tcs_section,tp.tcs_rate,tcs_amount,surcharge_rate,surcharge_amount,itcess_rate,
+	  itcess_amount,tp.tds_section,tp.tds_rate,tds_amount,action,challan_generated_date,is_challan_generated,assessment_year,
+	  challan_month,challan_paid,confidence,date_at_which_tds_is_deposited,approved_for_challan,actual_tcs_amount,
+	  actual_tcs_rate,actual_tcs_section,derived_tcs_amount,derived_tcs_rate,derived_tcs_section,final_tcs_amount,
+	  0.00 as final_tcs_rate,final_tcs_section,has_lcc,has_mismatch,mismatch_category,mismatch_interpretation,mismatch_modified_date,
+	  is_parent,keywords,cm.name_of_the_collectee AS collectee_name,tp.active,is_exempted,tp.batch_upload_id,posting_date,tp.modified_by,under_threshold,final_reason,noi_id,
+	  tp.nature_of_income,tp.created_date,tp.modified_date,tp.created_by,derived_noi_id,final_noi_id,derived_nature_of_income,
+	  final_nature_of_income,applicable_total_taxable_amount,penalty,consumed_amount,interest,system_challan_serial_no,
+	  challan_paid_date,receipt_bsr_code,is_adjust,is_error,error_reason,remaining_amount,ancestor_id,has_ncc,exempted_reason,
+	  is_collection_split_record,is_lcc_split_record,challan_serial_no,is_challan_split,lcc_certificate_number,
+	   tp.user_defined_field1,tp.user_defined_field2,tp.user_defined_field3,tp.user_defined_field4,tp.user_defined_field5,
+	   tp.user_defined_field6 
+	  						FROM Transactions.tcs_payment tp 
+                            inner join Client_Masters.collectee_master cm on cm.collectee_code =tp.collectee_code 
+                            WHERE 
+						 tp.assessment_year = :assessmentYear 
+                            AND cm.collector_tan = :collectorTan  
+                            and tp.collector_tan= :collectorTan 
+                            and (is_exempted= 1 or has_ncc = 1)
+						 	and tp.is_parent=0  and challan_month in (:months) 
+						 	and (itcess_amount is null or itcess_amount = 0) and (surcharge_amount is null or surcharge_amount = 0)
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_by_serialNo_bsrCode_date_count">
+					<value>
+                            <![CDATA[SELECT count(*) FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear 
+                            and collector_tan= :collectorTan and receipt_bsr_code = :bsrCode and challan_serial_no= :receiptSerailNo 
+                            and challan_paid_date = :receiptDate and active = 1 challan_paid = :challanPaid;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_total_by_serialNo">
+					<value>
+                            <![CDATA[SELECT sum(final_tcs_amount) FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear 
+                            and collector_tan= :tan and challan_month = :assessmentMonth 
+                            and active = 1 and is_parent = 0 and challan_paid=1 and 
+                            and system_challan_serial_no= :systemChallanSerailNo;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_totalTcsAmount">
+					<value>
+                            <![CDATA[SELECT sum(final_tcs_amount) FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear and challan_month = challanMonth
+                            and collector_tan= :tan and active = 1 and approved_for_challan = :approved_for_challan 
+                            and final_tcs_section = :section and challan_paid = :isChallanPaid and is_parent=0 
+                            :queryStr;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_totalInterstAmount">
+					<value>
+                            <![CDATA[SELECT sum(interest) FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear and challan_month = challanMonth
+                            and collector_tan= :tan and active = 1 and approved_for_challan = :approved_for_challan 
+                            and final_tcs_section = :section and challan_paid = 0 and is_parent=0 and is_challan_generated = 0;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_totalInterstAmount">
+					<value>
+                            <![CDATA[SELECT sum(penalty) FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear and challan_month = challanMonth
+                            and collector_tan= :tan and active = 1 and approved_for_challan = :approved_for_challan 
+                            and final_tcs_section = :section and challan_paid = 0 and is_parent=0 and is_challan_generated = 0;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_totalTcsAmount_Aggregated">
+					<value>
+                            <![CDATA[SELECT sum(final_tcs_amount) FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear and challan_month = challanMonth
+                            and collector_tan= :tan and active = 1 and approved_for_challan = :approved_for_challan 
+                            and challan_paid = 0 and is_parent=0;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_by_year_month_tan_section">
+					<value>
+                            <![CDATA[SELECT * FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear and challan_month = :challanMonth
+                            and collector_tan= :tan and active = 1 and final_tcs_section = :section 
+                            and approved_for_challan = :approved_for_challan 
+                            and challan_paid = :isChallanPaid;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_by_year_month_tan_withOutSection">
+					<value>
+                            <![CDATA[SELECT * FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear and challan_month = challanMonth
+                            and collector_tan= :tan and active = 1 and challan_paid = :isChallanPaid and is_parent=0 
+                            and approved_for_challan = :approved_for_challan;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_by_year_month_tan_aggregated">
+					<value>
+                            <![CDATA[SELECT * FROM Transactions.tcs_payment WHERE 
+                            assessment_year = :assessmentYear and challan_month = challanMonth
+                            and collector_tan= :tan and challan_paid = 0 
+                            and approved_for_challan = :approved_for_challan and is_parent=0 and is_challan_generated = :isChallanGenerated;
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_resident_nonresident">
+					<value>
+		                   <![CDATA[SELECT * FROM Transactions.tcs_payment WHERE assessment_year = :assessmentYear and challan_month = :assessmentMonth
+		                   			and collector_tan= :tan and is_parent = 0 and active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_resident_nonresident_count">
+					<value>
+		                   <![CDATA[SELECT count(*) FROM Transactions.tcs_payment WHERE assessment_year = :assessmentYear and challan_month = :assessmentMonth
+		                   			and collector_tan= :tan and is_parent = 0 and active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_resident_nonresident_name_count">
+					<value>
+		                   <![CDATA[SELECT count(*) FROM Transactions.tcs_payment WHERE assessment_year = :assessmentYear and challan_month = :assessmentMonth
+		                   			and collector_tan= :tan and is_parent = 0 and collectee_name = :collecteeName and active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_resident_nonresident_collectee">
+					<value>
+	                   <![CDATA[SELECT * FROM Transactions.tcs_payment WHERE  assessment_year = :assessmentYear and challan_month = :assessmentMonth
+	                   			and collector_tan= :tan and is_parent = 0 and collectee_name = :collecteeName and active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_collectees">
+					<value>
+						<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE collector_tan= :tan and assessment_year = :year and
+							challan_month = :month and is_parent = 0 and active = 0 and has_mismatch = 1 ]]>
+					</value>
+				</entry>
+
+				<entry key="get_payment_total_value_and_count_by_batchid">
+					<value>
+						<![CDATA[ select case when sum(amount) is null then 0 else sum(amount) end as total_sum,
+						case when sum(derived_tcs_amount) is null then 0 else sum(derived_tcs_amount) end as derived_tcs_sum,
+						case when sum(actual_tcs_amount) is null then 0 else sum(actual_tcs_amount) end as actual_tcs_sum,
+						count(1) as mismatch_count FROM Transactions.tcs_payment
+						where collector_tan = :tan and has_mismatch = 1 and active = 0 and mismatch_category = :type 
+						and is_adjust = 0 AND is_error = 0 
+						and (is_parent is null or is_parent = 0) ]]>
+					</value>
+				</entry>
+				<entry key="get_by_tan_batchId_mismatchCategory">
+					<value>
+			<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE 
+			       collector_tan = :collectorTan and mismatch_category = :mismatchCategory
+			       and has_mismatch= 1 and active = 0 and batch_upload_id = :batchUploadId and is_parent = 0 ]]>
+					</value>
+				</entry>
+				
+
+				<entry key="get_payment_by_tan_batchId_mismatchCategory">
+					<value>
+						<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE collector_tan = :collectorTan and mismatch_category = :mismatchCategory
+			       					and has_mismatch = 1 and active = 0 
+			       					and is_adjust = 0 AND is_error = 0 
+			       					and batch_upload_id = :batchUploadId and is_parent = 0 ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_by_tan_batchId_mismatchCategory_count">
+					<value>
+						<![CDATA[ SELECT count(*) FROM Transactions.tcs_payment WHERE collector_tan = :collectorTan 
+									and mismatch_category = :mismatchCategory 
+									and is_adjust = 0 AND is_error = 0 
+			       					and has_mismatch = 1 and active = 0 and batch_upload_id = :batchUploadId and is_parent = 0 ]]>
+					</value>
+				</entry>
+				<entry
+					key="find_payment_By_Year_Tan_Document_PostingDate_Id_Active">
+					<value> 
+					<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE assessment_year=:year AND collector_tan=:tan AND 
+								id = :id AND active = :activeFlag; ]]>
+					</value>
+				</entry>
+				<entry key="find_payment_by_year_tan_ids">
+					<value> 
+					<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE assessment_year=:year AND collector_tan=:tan AND 
+								id IN(:id) AND active = :activeFlag; ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_By_tan_mimatch">
+					<value>
+                            <![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE assessment_year = :assessmentYear and challan_month = :month
+                            		and collector_tan= :collectorTan and mismatch_category = :mismatchCategory 
+                            		and has_mismatch = 1 and active = 0 and is_parent = 0 ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_By_tan_mimatch_count">
+					<value>
+                            <![CDATA[ SELECT COUNT(*) FROM Transactions.tcs_payment WHERE assessment_year = :assessmentYear and challan_month = :month
+                            		and collector_tan= :collectorTan and mismatch_category = :mismatchCategory 
+                            		and has_mismatch = 1 and active = 0 and is_parent = 0 ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_mismatch_count">
+					<value>
+                            <![CDATA[SELECT count(*) FROM Transactions.tcs_payment WHERE assessment_year= :year AND challan_month= :month
+                             	AND collector_tan = :collectorTan AND has_mismatch= 1 AND active = 0 AND is_parent = 0 
+                            ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_ftm">
+					<value>
+                            <![CDATA[SELECT * FROM Transactions.tcs_payment WHERE assessment_year= :year AND challan_month= :month 
+                            	AND collector_tan = :collectorTan AND active = 1 AND is_parent = 0 ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_matrix">
+					<value>
+				           <![CDATA[ 				          
+		DECLARE @OpeingAmount DECIMAL(30,2),
+        @month INT = 4,
+        @assessment_year INT = :year,
+        @collector_tan VARCHAR(25) = :collectorTan
+        CREATE TABLE #TEMP
+        (Month varchar(25),
+        OpeingAmount DECIMAL(30,2),
+        FTM DECIMAL(30,2),
+        Adjusted DECIMAL(30,2),
+        ClosingAmount DECIMAL(30,2));
+        INSERT INTO #TEMP(Month,OpeingAmount,FTM,Adjusted,ClosingAmount)
+        SELECT @month AS Month,(SUM(TotalPaymentAmount)-SUM(TotalPaymentUtilizedAmount)) AS OpeningAmount,
+               SUM(TotalPaymentAmountByMonth) AS TotalPaymentAmountByMonth,
+               SUM(TotalPaymentUtilizedAmountByMonth) AS TotalPaymentUtilizedAmountByMonth,
+               ((SUM(TotalPaymentAmount)-SUM(TotalPaymentUtilizedAmount)) + SUM(TotalPaymentAmountByMonth))- SUM(TotalPaymentUtilizedAmountByMonth) AS ClosingAmount
+        FROM
+        (SELECT ISNULL(SUM(amount),0) AS TotalPaymentAmount,0.00 AS TotalPaymentUtilizedAmount ,0.00 AS TotalPaymentAmountByMonth,0.00 AS TotalPaymentUtilizedAmountByMonth
+        FROM Transactions.tcs_payment
+        WHERE assessment_year < @assessment_year  AND collector_tan = @collector_tan AND
+        active = 1 AND (is_parent IS NULL OR is_parent =0) AND document_type  = 'ADV'
+        UNION ALL
+        SELECT 0.00,ISNULL(SUM(utilized_amount),0) AS TotalPaymentUtilizedAmount,0.00,0.00
+        FROM Transactions.tcs_payment_utilization
+        WHERE assessment_year < @assessment_year AND collector_tan = @collector_tan AND active = 1 AND document_type  = 'ADV'
+        UNION ALL
+        SELECT 0.00,0.00,ISNULL(SUM(amount),0) AS TotalPaymentAmountByMonth,0.00
+        FROM Transactions.tcs_payment
+        WHERE assessment_year = @assessment_year AND collector_tan = @collector_tan AND challan_month = @month AND
+              active= 1 AND is_parent = 0 AND document_type  = 'ADV'
+        UNION ALL
+        SELECT 0.00,0.00,0.00,ISNULL(SUM(utilized_amount),0) AS TotalPaymentUtilizedAmountByMonth
+        FROM Transactions.tcs_payment_utilization
+        WHERE assessment_year = @assessment_year AND collector_tan = @collector_tan AND active = 1 AND document_type  = 'ADV'
+         AND challan_month= @month) A
+        SET @month = 5
+        WHILE @month < 13
+        BEGIN
+            SELECT @OpeingAmount = ISNULL(ClosingAmount,0)
+            FROM #TEMP
+            INSERT INTO #TEMP(Month,OpeingAmount,FTM,Adjusted,ClosingAmount)
+            SELECT @month AS Month,@OpeingAmount,
+                   SUM(TotalPaymentAmountByMonth) AS TotalPaymentAmountByMonth,
+                   SUM(TotalPaymentUtilizedAmountByMonth) AS TotalPaymentUtilizedAmountByMonth,
+                  (@OpeingAmount + SUM(TotalPaymentAmountByMonth))- SUM(TotalPaymentUtilizedAmountByMonth) AS ClosingAmount
+            FROM(
+                 SELECT ISNULL(SUM(amount),0) AS TotalPaymentAmountByMonth,0.00 AS TotalPaymentUtilizedAmountByMonth
+                 FROM Transactions.tcs_payment
+                 WHERE assessment_year = @assessment_year AND collector_tan = @collector_tan AND challan_month = @month AND
+                       active= 1 AND is_parent= 0 AND document_type  = 'ADV'
+                 UNION ALL
+                 SELECT 0.00,ISNULL(SUM(utilized_amount),0) AS TotalPaymentUtilizedAmountByMonth
+                 FROM Transactions.tcs_payment_utilization
+                 WHERE assessment_year = @assessment_year AND collector_tan = @collector_tan AND active = 1 AND document_type  = 'ADV'
+                        AND challan_month= @month)A
+               SET @month = @month + 1;
+        END
+        IF @month = 13
+        BEGIN
+           SET @month = 1
+           WHILE @month < 4
+           BEGIN
+              SELECT @OpeingAmount = ISNULL(ClosingAmount,0)
+            FROM #TEMP
+            INSERT INTO #TEMP(Month,OpeingAmount,FTM,Adjusted,ClosingAmount)
+            SELECT @month AS Month,@OpeingAmount,
+                   SUM(TotalPaymentAmountByMonth) AS TotalPaymentAmountByMonth,
+                   SUM(TotalPaymentUtilizedAmountByMonth) AS TotalPaymentUtilizedAmountByMonth,
+                  (@OpeingAmount + SUM(TotalPaymentAmountByMonth))- SUM(TotalPaymentUtilizedAmountByMonth) AS ClosingAmount
+            FROM(
+                 SELECT ISNULL(SUM(amount),0) AS TotalPaymentAmountByMonth,0.00 AS TotalPaymentUtilizedAmountByMonth
+                 FROM Transactions.tcs_payment
+                 WHERE assessment_year = @assessment_year AND collector_tan = @collector_tan AND challan_month = @month AND
+                       active= 1 AND is_parent= 0 AND document_type  = 'ADV'
+                 UNION ALL
+                 SELECT 0.00,ISNULL(SUM(utilized_amount),0) AS TotalPaymentUtilizedAmountByMonth
+                 FROM Transactions.tcs_payment_utilization
+                 WHERE assessment_year = @assessment_year AND collector_tan = @collector_tan AND active = 1
+                        AND document_type  = 'ADV' AND challan_month= @month)A
+               SET @month = @month + 1;
+           END
+        END
+        SELECT * FROM #TEMP     
+				           ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_closing_matrix_report">
+					<value>
+                            <![CDATA[ 
+                            DECLARE @month INT = :month,
+							@assessment_year INT = :year,
+							@collector_tan varchar(25) = :collectorTan
+									
+							CREATE TABLE #TEMP
+							(collectorTan VARCHAR(25),
+							openingAmount DECIMAL(30,4),
+	    					adjusted DECIMAL(30,4),
+							closingAmount DECIMAL(30,4),
+	    					collecteePan VARCHAR(25),
+							collecteeName VARCHAR(256),
+							postingDateOfDocument DATETIME,
+							tdsAmount DECIMAL(30,4));
+
+		    IF @month BETWEEN 4 AND 12
+			BEGIN
+			INSERT INTO #TEMP(collectorTan,openingAmount,adjusted,closingAmount,collecteePan,
+			                  collecteeName,postingDateOfDocument,tdsAmount)
+			SELECT collector_tan AS collectorTan,SUM(TotalPaymentAmount) AS openingAmount,
+			       SUM(TotalPaymentUtilizedAmount) AS adjusted,
+				   (SUM(TotalPaymentAmount)-SUM(TotalPaymentUtilizedAmount)) AS closingAmount,
+				   collectee_pan AS collecteePan,collectee_name AS collecteeName,
+				   document_date AS postingDateOfDocument,SUM(tdsAmount) AS tdsAmount
+			FROM
+			((SELECT collector_tan,ISNULL(SUM(amount),0) AS TotalPaymentAmount,0 AS TotalPaymentUtilizedAmount ,
+			         collectee_pan,collectee_name,document_date,
+					 ISNULL(SUM(final_tcs_amount),0) AS tdsAmount
+			FROM Transactions.tcs_payment 
+			WHERE assessment_year < @assessment_year AND collector_tan = @collector_tan AND 
+			      active = 1 AND is_parent = 0 AND document_type  = 'ADV'
+			GROUP BY collector_tan,collectee_pan,collectee_name,document_date)
+			UNION ALL
+			(SELECT collector_tan,ISNULL(SUM(amount),0) AS TotalPaymentAmount,0 AS TotalPaymentUtilizedAmount,
+			        collectee_pan,collectee_name,document_date,ISNULL(SUM(final_tcs_amount),0) AS tdsAmount
+			FROM Transactions.tcs_payment
+			WHERE assessment_year = @assessment_year AND collector_tan = @collector_tan AND 
+			      active = 1 AND is_parent = 0 AND challan_month <= @month  AND document_type  = 'ADV' AND challan_month BETWEEN 4 AND 12
+			GROUP BY collector_tan,collectee_pan,collectee_name,document_date)
+			UNION ALL
+			(SELECT A.collector_tan,0 AS TotalPaymentAmount,ISNULL(SUM(AU.utilized_amount),0) AS TotalPaymentUtilizedAmount ,
+			        A.collectee_pan,A.collectee_name,A.document_date,
+					0 AS tdsAmount
+			FROM Transactions.tcs_payment A
+			INNER JOIN Transactions.tcs_payment_utilization AU ON A.id = AU.payment_master_id
+			WHERE A.assessment_year < @assessment_year AND A.collector_tan = @collector_tan AND 
+			      A.active = 1 AND A.is_parent = 0 AND AU.assessment_year < @assessment_year AND 
+				  AU.collector_tan = @collector_tan AND AU.active = 1 AND A.document_type  = 'ADV' AND AU.document_type  = 'ADV'
+			GROUP BY A.collector_tan,A.collectee_pan,A.collectee_name,A.document_date)
+			UNION ALL
+			(SELECT A.collector_tan,0 AS TotalPaymentAmount,ISNULL(SUM(AU.utilized_amount),0) AS TotalPaymentUtilizedAmount,
+			        A.collectee_pan,A.collectee_name,A.document_date,0 AS tdsAmount
+			FROM Transactions.tcs_payment A
+			INNER JOIN Transactions.tcs_payment_utilization AU ON A.id = AU.payment_master_id 
+			WHERE A.assessment_year = @assessment_year AND A.collector_tan = @collector_tan AND 
+			      A.active = 1 AND A.is_parent = 0 AND A.challan_month <= @month AND A.challan_month BETWEEN 4 AND 12 AND
+			      AU.assessment_year = @assessment_year AND AU.collector_tan = @collector_tan AND AU.challan_month BETWEEN 4 AND 12 AND
+				  AU.active = 1 AND AU.challan_month <= @month AND A.document_type  = 'ADV' AND AU.document_type  = 'ADV'
+			GROUP BY A.collector_tan,A.collectee_pan,A.collectee_name,A.document_date)) A
+			GROUP BY collector_tan,collectee_pan,collectee_name,document_date
+			SELECT * FROM #TEMP
+			END
+			IF @month BETWEEN 1 AND 3
+			BEGIN
+			   INSERT INTO #TEMP(collectorTan,openingAmount,adjusted,closingAmount,collecteePan,
+			                     collecteeName,postingDateOfDocument,tdsAmount)
+			   SELECT collector_tan AS collectorTan,SUM(TotalPaymentAmount) AS openingAmount,
+			          SUM(TotalPaymentUtilizedAmount) AS adjusted,
+				     (SUM(TotalPaymentAmount)-SUM(TotalPaymentUtilizedAmount)) AS closingAmount,
+				      collectee_pan AS collecteePan,collectee_name AS collecteeName,
+				      document_date AS postingDateOfDocument,SUM(tdsAmount) AS tdsAmount
+			FROM
+			((SELECT collector_tan,ISNULL(SUM(amount),0) AS TotalPaymentAmount,0 AS TotalPaymentUtilizedAmount ,
+			         collectee_pan,collectee_name,document_date,
+					 ISNULL(SUM(final_tcs_amount),0) AS tdsAmount
+			FROM Transactions.tcs_payment 
+			WHERE assessment_year < @assessment_year AND collector_tan = @collector_tan AND 
+			      active = 1 AND is_parent = 0 AND document_type  = 'ADV'
+			GROUP BY collector_tan,collectee_pan,collectee_name,document_date)
+			UNION ALL
+			(SELECT collector_tan,ISNULL(SUM(amount),0) AS TotalPaymentAmount,0 AS TotalPaymentUtilizedAmount,
+			        collectee_pan,collectee_name,document_date,ISNULL(SUM(final_tcs_amount),0) AS tdsAmount
+			FROM Transactions.tcs_payment
+			WHERE assessment_year = @assessment_year AND collector_tan = @collector_tan AND 
+			      active = 1 AND is_parent = 0 AND challan_month BETWEEN 4 AND 12 AND document_type  = 'ADV'
+			GROUP BY collector_tan,collectee_pan,collectee_name,document_date)
+			UNION ALL
+			(SELECT collector_tan,ISNULL(SUM(amount),0) AS TotalPaymentAmount,0 AS TotalPaymentUtilizedAmount,
+			        collectee_pan,collectee_name,document_date,ISNULL(SUM(final_tcs_amount),0) AS tdsAmount
+			FROM Transactions.tcs_payment
+			WHERE assessment_year = @assessment_year AND collector_tan = @collector_tan AND 
+			      active = 1 AND is_parent = 0 AND challan_month <= @month AND document_type  = 'ADV'
+			GROUP BY collector_tan,collectee_pan,collectee_name,document_date)
+			UNION ALL
+			(SELECT A.collector_tan,0 AS TotalPaymentAmount,ISNULL(SUM(AU.utilized_amount),0) AS TotalPaymentUtilizedAmount ,
+			        A.collectee_pan,A.collectee_name,A.document_date,0 AS tdsAmount
+			FROM Transactions.tcs_payment A
+			INNER JOIN Transactions.tcs_payment_utilization AU ON A.id = AU.payment_master_id
+			WHERE A.assessment_year < @assessment_year AND A.collector_tan = @collector_tan AND 
+			      A.active = 1 AND A.is_parent = 0 AND AU.assessment_year < @assessment_year AND 
+				  AU.collector_tan = @collector_tan AND AU.active = 1 AND A.document_type  = 'ADV' AND AU.document_type  = 'ADV'
+			GROUP BY A.collector_tan,A.collectee_pan,A.collectee_name,A.document_date)
+			UNION ALL
+		   (SELECT A.collector_tan,0 AS TotalPaymentAmount,ISNULL(SUM(AU.utilized_amount),0) AS TotalPaymentUtilizedAmount,
+			       A.collectee_pan,A.collectee_name,A.document_date,0 AS tdsAmount
+			FROM Transactions.tcs_payment A
+			INNER JOIN Transactions.tcs_payment_utilization AU ON A.id = AU.payment_master_id 
+			WHERE A.assessment_year = @assessment_year AND A.collector_tan = @collector_tan AND 
+			      A.active = 1 AND A.is_parent = 0 AND A.challan_month BETWEEN 4 AND 12 AND
+			      AU.assessment_year = @assessment_year AND AU.collector_tan = @collector_tan AND 
+				  AU.active = 1 AND AU.challan_month BETWEEN 4 AND 12 AND A.document_type  = 'ADV' AND AU.document_type  = 'ADV'
+			GROUP BY A.collector_tan,A.collectee_pan,A.collectee_name,A.document_date)
+			UNION ALL
+			(SELECT A.collector_tan,0 AS TotalPaymentAmount,ISNULL(SUM(AU.utilized_amount),0) AS TotalPaymentUtilizedAmount,
+			        A.collectee_pan,A.collectee_name,A.document_date,0 AS tdsAmount
+			FROM Transactions.tcs_payment A
+			INNER JOIN Transactions.tcs_payment_utilization AU ON A.id = AU.payment_master_id 
+			WHERE A.assessment_year = @assessment_year AND A.collector_tan = @collector_tan AND 
+			      A.active = 1 AND A.is_parent = 0 AND A.challan_month <= @month AND
+			      AU.assessment_year = @assessment_year AND AU.collector_tan = @collector_tan AND 
+				  AU.active = 1 AND AU.challan_month <= @month AND A.document_type  = 'ADV' AND AU.document_type  = 'ADV'
+			GROUP BY A.collector_tan,A.collectee_pan,A.collectee_name,A.document_date)) A
+			GROUP BY collector_tan,collectee_pan,collectee_name,document_date
+			SELECT * FROM #TEMP
+			END ]]>
+					</value>
+				</entry>
+
+				<entry key="get_payment_by_paymentId">
+					<value>
+                            <![CDATA[SELECT * FROM Transactions.tcs_payment WHERE payment_id= :id; ]]>
+					</value>
+				</entry>
+				<entry key="find_payment_By_Year_Tan_Document_PostingDate_Id">
+					<value>
+						<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE assessment_year=:year AND collector_tan=:tan AND payment_id=:iD ; ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_adjusted">
+					<value>
+                            <![CDATA[SELECT * FROM Transactions.tcs_payment_utilization WHERE assessment_year= :year
+									AND challan_month= :month AND collector_tan = :collectorTan AND active = 1; ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_By_year_tan_mimatch">
+					<value>
+                            <![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE assessment_year = :year and challan_month = :month
+                            and collector_tan= :collectorTan and active = 1 and (is_parent is null or is_parent =0) ]]>
+					</value>
+				</entry>
+				<entry key="get_payment_mismatches_By_year_tan">
+					<value>
+                            <![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE assessment_year = :year and challan_month = :month
+                            and collector_tan= :collectorTan and active = 0 and has_mismatch=1 and (is_parent is null or is_parent =0) ]]>
+					</value>
+				</entry>
+					<entry key="get_Collectee_ResidentialStatus">
+					<value>
+                            <![CDATA[SELECT non_resident_collectee_indicator from  Client_Masters.collectee_master WHERE collectee_code=:collecteeCode AND 
+								collector_tan=:tan AND active=1;]]>
+					</value>
+				</entry>
+					<entry key="get_collectee_non_residential_status">
+					<value>
+                            <![CDATA[SELECT collectee_code from  Client_Masters.collectee_master WHERE collector_tan = :tan AND 
+                            		non_resident_collectee_indicator = 1 AND active = 1;]]>
+					</value>
+				</entry>
+				<entry key="tcs_get_payment_cr_error_records">
+					<value>
+							<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE assessment_year = :year AND collector_tan = :tan  
+								and batch_upload_id =:batchUploadId  and is_error= 1]]>
+					</value>
+				</entry>
+				<entry key="find_tcs_payment_by_year_tan_id">
+					<value> 
+					<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE assessment_year=:year AND collector_tan=:tan AND 
+								id = :id AND active = 1 ; ]]>
+					</value>
+				</entry>
+				<entry key="find_lcc_by_tan_pan_section_docuemntDate">
+					<value>
+						<![CDATA[ SELECT * FROM Client_Masters.tcs_lcc_master WHERE lcc_master_pan = :collecteePan AND collector_master_tan = :collectorTan AND 
+								lcc_section = :finalTdsSection AND CONVERT(DATE,applicable_from) <= :documentDate AND  CONVERT(DATE,
+								applicable_to) >= :documentDate AND validation_status = 1 ;]]>
+					</value>
+				</entry>
+				<entry key="find_lcc_remainingBalance">
+					<value>
+						<![CDATA[ SELECT ISNULL(SUM(amount),0) - ISNULL(SUM(LM.utilized_amount),0) - ISNULL(SUM(LU.utilized_amount),0) AS remainingBalance
+									FROM Client_Masters.tcs_lcc_master LM
+									left JOIN Transactions.tcs_lcc_utilization LU ON LU.lcc_master_id = LM.id
+									WHERE LM.lcc_master_pan = :collecteePan AND LM.collector_master_tan = :collectorTan AND LM.lcc_section = :finalTdsSection AND
+									CONVERT(DATE,LM.applicable_from) <= :documentDate AND  CONVERT(DATE,LM.applicable_to) >= :documentDate AND LM.validation_status = 1;
+						 ]]>
+					</value>
+				</entry>
+				<entry key="get_collectee_noi_threshold">
+					<value>
+						<![CDATA[ SELECT * FROM Transactions.collectee_noi_threshold_ledger WHERE year = :year AND collector_pan = :collectorPan ]]>
+					</value>
+				</entry>
+				<entry key="get_tcs_invoice_basedon_ids">
+					<value>
+						<![CDATA[ SELECT * FROM Transactions.tcs_invoice_line_item WHERE collector_tan = :tan AND collector_pan = :collectorPan AND
+		     					 id in (:invoiceIds) ]]>
+					</value>
+				</entry>
+				<entry key="get_tcs_payment_basedon_ids">
+					<value>
+						<![CDATA[ SELECT * FROM Transactions.tcs_payment WHERE collector_tan = :tan AND collector_pan = :collectorPan AND
+		     					 id in (:paymentIds) ; ]]>
+					</value>
+				</entry>
+				<entry key="get_tcs_pr_data">
+					<value>
+						<![CDATA[ SELECT * FROM Transactions.tcs_gst_purchase_register tgpr where collector_tan = :collectorTan
+									and collector_pan = :collectorPan  and assessment_year = :assesmentYear and pr_is_matched = :isMatched and active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_tcs_rl_data">
+					<value>
+						<![CDATA[ SELECT * FROM Transactions.tcs_reciver_ledger where collector_tan = :collectorTan
+									and collector_pan = :collectorPan  and assessment_year = :assesmentYear and rl_is_matched = :isMatched and active = 1 ]]>
+					</value>
+				</entry>
+				<entry key="get_tcs_pr_rl_matched_records">
+					<value>
+						<![CDATA[ SELECT GPR.*, RL.amount_in_local_currency AS rl_amount_in_local_currency, RL.purchase_voucher_number AS rl_purchase_voucher_number,
+								 RL.document_date AS rl_document_date FROM Transactions.tcs_reciver_ledger RL
+									INNER JOIN Transactions.tcs_gst_purchase_register GPR ON RL.document_number = GPR.purchase_voucher_number
+									WHERE rl_is_matched = 1 AND pr_is_matched = 1 AND RL.active = 1 AND GPR.active = 1 AND RL.assessment_year = :year AND
+      								GPR.assessment_year = :year  AND RL.collector_pan = :collectorPan AND GPR.collector_pan = :collectorPan AND 
+      								RL.collector_tan = :collectorTan AND GPR.collector_tan = :collectorTan ]]>
+					</value>
+				</entry>
+				
+			</map>
+		</constructor-arg>
+	</bean>
+</beans>

@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-sm-2">
+    <input
+      type="file"
+      class="inputfile"
+      id="{{ id }}"
+      (change)="onFileEventChange($event)"
+      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+    />
+    <label for="{{ id }}" class="ui-button btn-primary">Upload RPU file</label>
+  </div>
+  <div class="">
+    <span class="fs-14 pt-15">{{ fileName }}</span>
+  </div>
+</div>

@@ -1,0 +1,573 @@
+<div class="ui-g-6 mx-0">
+  <h2 class="fs-22">{{ headingMsg }} TDS Master</h2>
+</div>
+<div class="ui-g-6 text-right">
+  <span *HasAnyAuthority="['TDS_RATE_UPDATE']">
+    <button
+      (click)="stateChanger('edit')"
+      type="button"
+      class="ui-button btn-primary"
+      *ngIf="actionState === 'VIEW'"
+    >
+      Edit
+    </button>
+  </span>
+</div>
+<div class="ui-g-12">
+  <form [formGroup]="TDSForm">
+    <div class="form-row">
+      <div
+        class="ui-inputgroup mb-0 ui-g-12"
+        [ngClass]="{
+          'field-invalid': submitted && f.isSubNaturePaymentMaster.errors
+        }"
+      >
+        <label>Is sub nature of payment applicable?</label>
+        <div class="form-check">
+          <div class="ui-g-2">
+            <input
+              class="form-check-input"
+              formControlName="isSubNaturePaymentMaster"
+              type="radio"
+              name="isSubNaturePaymentMaster"
+              id="isSubNatureOfPayment1"
+              [value]="true"
+              aria-selected="true"
+              checked="checked"
+              (change)="handleNatureChange()"
+            />
+            <label class="form-check-label" for="isSubNatureOfPayment1">
+              Yes
+            </label>
+          </div>
+          <div class="ui-g-2">
+            <input
+              class="form-check-input"
+              formControlName="isSubNaturePaymentMaster"
+              type="radio"
+              name="isSubNaturePaymentMaster"
+              id="isSubNatureOfPayment2"
+              [ngClass]="{
+                'is-invalid': submitted && f.isSubNaturePaymentMaster.errors
+              }"
+              [value]="false"
+              (change)="handleNatureChange()"
+            />
+            <label class="form-check-label" for="isSubNatureOfPayment2">
+              No
+            </label>
+          </div>
+          <div class="ui-g-12">
+            <div
+              *ngIf="submitted && f.isSubNaturePaymentMaster.errors"
+              class="error-feedback"
+            >
+              <div *ngIf="f.isSubNaturePaymentMaster.errors?.required">
+                Please select sub nature of payment.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup mb-0 ui-g-6"
+        *ngIf="!TDSForm.getRawValue().isSubNaturePaymentMaster"
+        [ngClass]="{
+          'field-invalid': submitted && TDSForm.get('natureOfPaymentId').errors
+        }"
+      >
+        <label for="inputState">Nature of payment</label>
+        <p-dropdown
+          [options]="getnatureofpaymentlist"
+          [value]="TDSForm.getRawValue().natureOfPaymentId"
+          ngDefaultControl
+          formControlName="natureOfPaymentId"
+        ></p-dropdown>
+        <div
+          *ngIf="submitted && f.natureOfPaymentId.errors"
+          class="error-feedback"
+        >
+          please select nature of payment.
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup mb-0 ui-g-6"
+        *ngIf="TDSForm.getRawValue().isSubNaturePaymentMaster"
+        [ngClass]="{
+          'field-invalid': submitted && f.subNatureOfPaymentId.errors
+        }"
+      >
+        <label for="inputState">Sub nature of payment</label>
+        <p-dropdown
+          [options]="getsubnatureofpaymentlist"
+          [value]="TDSForm.getRawValue().subNatureOfPaymentId"
+          ngDefaultControl
+          formControlName="subNatureOfPaymentId"
+        ></p-dropdown>
+        <div
+          *ngIf="submitted && f.subNatureOfPaymentId.errors"
+          class="error-feedback"
+        >
+          please select subnature of payment.
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup mb-0 custm-at-lable custm-at-lable-90 cust-lable-ng-p ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.rate.errors
+        }"
+      >
+        <label for="inputCity">Rate</label>
+        <input
+          type="number"
+          eyRatedecimalfloter
+          id="rate"
+          formControlName="rate"
+          placeholder="Enter rate"
+          class="input-ctrl w-100"
+        />
+        <span class="ui-inputgroup-addon">%</span>
+        <div *ngIf="submitted && f.rate.errors" class="error-feedback">
+          <p *ngIf="f.rate.errors?.required">Please enter rate.</p>
+          <p *ngIf="f.rate.errors?.maxlength">
+            Rate must not exceed 2 characters.
+          </p>
+          <p *ngIf="f.rate.errors.pattern">Please enter only digits.</p>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup  ui-g-6"
+        *ngIf="!TDSForm.getRawValue().isSubNaturePaymentMaster"
+        [ngClass]="{ 'field-invalid': submitted && f.saccode.errors }"
+      >
+        <label for="inputCity">SAC code</label>
+        <input
+          type="text"
+          formControlName="saccode"
+          placeholder="Enter sac code"
+          numberlengthvalidator
+          maxLength="4"
+          class="input-ctrl"
+          pInputText
+        />
+        <div *ngIf="submitted && f.saccode.errors" class="error-feedback">
+          <div *ngIf="f.saccode.errors?.required">
+            Please enter equivalent SAC code for the nature of payment.
+          </div>
+          <div *ngIf="f.saccode.errors?.minlength">
+            SAC code must be 4 characters.
+          </div>
+          <div *ngIf="f.saccode.errors?.pattern">Please enter only digits.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.deducteeStatus.errors
+        }"
+      >
+        <label for="inputCity">Deductee status</label>
+        <ng-multiselect-dropdown
+          [placeholder]="'Please Select Deductee Status'"
+          [data]="getDeducteeStatusList"
+          [(ngModel)]="deducteeSingleStatus"
+          [settings]="dropdownSettings"
+          [disabled]="isDeducteeStatus"
+          formControlName="deducteeStatus"
+        >
+        </ng-multiselect-dropdown>
+        <div
+          *ngIf="submitted && f.deducteeStatus.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="submitted && f.deducteeStatus.errors?.required">
+            Please select deductee status.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.deducteeResidentialStatusId.errors
+        }"
+      >
+        <label for="inputState">Deductee resident status (optional)</label>
+        <p-dropdown
+          [options]="getDeducteeResidentialStatusList"
+          [value]="TDSForm.getRawValue().deducteeResidentialStatusId"
+          ngDefaultControl
+          formControlName="deducteeResidentialStatusId"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+    <!-- <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-12"
+        [ngClass]="{
+          'field-invalid':
+            submitted && f.isAnnualTransactionLimitApplicable.errors
+        }"
+      >
+        <label>Is annual transaction limit applicable?</label>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            formControlName="isAnnualTransactionLimitApplicable"
+            type="radio"
+            name="isAnnualTransactionLimitApplicable"
+            id="isAnnualTransactionLimitApplicableRadios1"
+            [value]="true"
+            (change)="changeHandler()"
+          />
+          <label
+            class="form-check-label"
+            for="isAnnualTransactionLimitApplicableRadios1"
+          >
+            Yes
+          </label>
+          <input
+            class="form-check-input"
+            formControlName="isAnnualTransactionLimitApplicable"
+            type="radio"
+            name="isAnnualTransactionLimitApplicable"
+            id="isAnnualTransactionLimitApplicableRadios2"
+            [value]="false"
+            (change)="changeHandler()"
+          />
+          <label
+            class="form-check-label"
+            for="isAnnualTransactionLimitApplicableRadios2"
+          >
+            No
+          </label>
+          <div
+            *ngIf="submitted && f.isAnnualTransactionLimitApplicable.errors"
+            class="error-feedback"
+          >
+            <div *ngIf="f.isAnnualTransactionLimitApplicable.errors?.required">
+              Please enter transaction limit.
+            </div>
+          </div>
+        </div>
+        <div class="form-check ">
+          <div
+            class="ui-inputgroup ui-g-6"
+            *ngIf="TDSForm.getRawValue().isAnnualTransactionLimitApplicable"
+            [ngClass]="{
+              'field-invalid': submitted && f.annualTransactionLimit.errors
+            }"
+          >
+            <label for="inputCity">Annual transaction limit</label>
+            <input
+              type="text"
+              maxlength="10"
+              numberlengthvalidator
+              formControlName="annualTransactionLimit"
+              placeholder="Enter annual transaction limit"
+              class="input-ctrl width-100"
+              pInputText
+            />
+            <div
+              *ngIf="submitted && f.annualTransactionLimit.errors"
+              class="error-feedback"
+            >
+              <div *ngIf="f.annualTransactionLimit.errors?.required">
+                Please enter transaction limit.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="form-row">
+      <div
+        class="ui-inputgroup mb-0 custm-at-lable custm-at-lable-90 cust-lable-ng-p ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.rateForNoPan.errors
+        }"
+      >
+        <label for="inputCity">Rate No Pan/Aadhar</label>
+        <input
+          type="number"
+          eyRatedecimalfloter
+          id="rateForNoPan"
+          formControlName="rateForNoPan"
+          placeholder="Enter rate No PAN/AADHAR"
+          class="input-ctrl w-100"
+        />
+        <span class="ui-inputgroup-addon">%</span>
+        <div *ngIf="submitted && f.rateForNoPan.errors" class="error-feedback">
+          <p *ngIf="f.rate.errors?.required">Please enter rate.</p>
+          <p *ngIf="f.rate.errors?.maxlength">
+            Rate must not exceed 2 characters.
+          </p>
+          <p *ngIf="f.rateForNoPan.errors.pattern">Please enter only digits.</p>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup mb-0 custm-at-lable custm-at-lable-90 cust-lable-ng-p ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.rateForNoPan.errors
+        }"
+      >
+        <label for="inputCity">No ITR Rate</label>
+        <input
+          type="number"
+          eyRatedecimalfloter
+          id="noItrRate"
+          formControlName="noItrRate"
+          placeholder="Enter No ITR Rate"
+          class="input-ctrl w-100"
+        />
+        <span class="ui-inputgroup-addon">%</span>
+        <div *ngIf="submitted && f.noItrRate.errors" class="error-feedback">
+          <p *ngIf="f.noItrRate.errors?.required">Please enter rate.</p>
+          <p *ngIf="f.noItrRate.errors?.maxlength">
+            Rate must not exceed 2 characters.
+          </p>
+          <p *ngIf="f.noItrRate.errors.pattern">Please enter only digits.</p>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup mb-0 custm-at-lable custm-at-lable-90 cust-lable-ng-p ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.rateForNoPan.errors
+        }"
+      >
+        <label for="inputCity">No Pan Rate and No ITR Rate</label>
+        <input
+          type="number"
+          eyRatedecimalfloter
+          id="noPanRateAndNoItrRate"
+          formControlName="noPanRateAndNoItrRate"
+          placeholder="Enter No Pan Rate and No ITR Rate"
+          class="input-ctrl w-100"
+        />
+        <span class="ui-inputgroup-addon">%</span>
+        <div
+          *ngIf="submitted && f.noPanRateAndNoItrRate.errors"
+          class="error-feedback"
+        >
+          <p *ngIf="f.noPanRateAndNoItrRate.errors?.required">
+            Please enter rate.
+          </p>
+          <p *ngIf="f.noPanRateAndNoItrRate.errors?.maxlength">
+            Rate must not exceed 2 characters.
+          </p>
+          <p *ngIf="f.noPanRateAndNoItrRate.errors.pattern">
+            Please enter only digits.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-12"
+        [ngClass]="{
+          'field-invalid': submitted && f.isPerTransactionLimitApplicable.errors
+        }"
+      >
+        <label>Is per transaction limit applicable?</label>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            formControlName="isPerTransactionLimitApplicable"
+            type="radio"
+            name="isPerTransactionLimitApplicable"
+            id="isPerTransactionLimitApplicableRadios1"
+            [value]="true"
+            (change)="changeHandler()"
+          />
+          <label
+            class="form-check-label"
+            for="isPerTransactionLimitApplicableRadios1"
+          >
+            Yes
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            formControlName="isPerTransactionLimitApplicable"
+            type="radio"
+            name="isPerTransactionLimitApplicable"
+            id="isPerTransactionLimitApplicableRadios2"
+            [ngClass]="{
+              'is-invalid':
+                submitted && f.isPerTransactionLimitApplicable.errors
+            }"
+            [value]="false"
+            (change)="changeHandler()"
+          />
+          <label
+            class="form-check-label"
+            for="isPerTransactionLimitApplicableRadios2"
+          >
+            No
+          </label>
+          <div
+            *ngIf="submitted && f.isPerTransactionLimitApplicable.errors"
+            class="error-feedback"
+          >
+            <div *ngIf="f.isPerTransactionLimitApplicable.errors?.required">
+              Please enter per transaction limit.
+            </div>
+          </div>
+          <div class="form-check">
+            <div
+              class="ui-inputgroup ui-g-6"
+              *ngIf="TDSForm.getRawValue().isPerTransactionLimitApplicable"
+              [ngClass]="{
+                'field-invalid': submitted && f.perTransactionLimit.errors
+              }"
+            >
+              <label for="inputCity">Per transaction limit</label>
+              <input
+                type="text"
+                maxlength="10"
+                numberlengthvalidator
+                formControlName="perTransactionLimit"
+                placeholder="Enter per transaction limit"
+                class="input-ctrl width-100"
+                pInputText
+              />
+              <div
+                *ngIf="submitted && f.perTransactionLimit.errors"
+                class="error-feedback"
+              >
+                <div *ngIf="f.perTransactionLimit.errors?.required">
+                  Please enter per transaction limit.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid': submitted && f.applicableFrom.errors
+        }"
+      >
+        <label for="inputCity"> Applicable from</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            id="applicableFrom"
+            formControlName="applicableFrom"
+            ngbDatepicker
+            placement="auto"
+            #applicableFrom="ngbDatepicker"
+            [value]="TDSForm.getRawValue().applicableFrom | date: 'dd-MM-yyyy'"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="applicableFrom.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.applicableFrom.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.applicableFrom.errors?.required">
+            Please enter applicable from.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid':
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+        }"
+      >
+        <label for="inputState">Applicable to (optional)</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            [minDate]="minDate"
+            (click)="d.toggle()"
+            name="dp"
+            formControlName="applicableTo"
+            ngbDatepicker
+            placement="auto"
+            #d="ngbDatepicker"
+            [value]="TDSForm.getRawValue().applicableTo | date: 'dd-MM-yyyy'"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="d.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+          "
+          class="error-feedback"
+        >
+          <p *ngIf="applicableToDateError">
+            Applicable to date must be more than that of Applicable from date.
+          </p>
+          <p *ngIf="f.applicableTo.errors?.required">
+            Please enter applicable to.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-inputgroup">
+      <button
+        (click)="backFormClick()"
+        type="button"
+        class="ui-button btn-utility"
+      >
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+      <button
+        (click)="saveTdsRate('addNew')"
+        type="button"
+        class="ui-button btn-secondary"
+        *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+      >
+        <i class="fas fa-save"></i> Save &amp; Add New
+      </button>
+      <button
+        (click)="saveTdsRate('back')"
+        type="button"
+        class="ui-button btn-primary"
+        *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+      >
+        <i class="fas fa-save"></i> Save
+      </button>
+      <span *HasAnyAuthority="['TDS_RATE_UPDATE']">
+        <button
+          (click)="updateTdsRate()"
+          type="button"
+          class="ui-button btn-primary"
+          *ngIf="actionState === 'EDIT'"
+        >
+          Update
+        </button>
+      </span>
+    </div>
+  </form>
+</div>

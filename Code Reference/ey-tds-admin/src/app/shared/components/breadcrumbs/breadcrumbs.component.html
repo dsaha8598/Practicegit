@@ -1,0 +1,26 @@
+<div class="breadcrumb-ey py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-7 lh-35">
+        <ul>
+          <li>
+            <a href="javascript:void(0);">
+              <i class="fa fa-home" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li *ngFor="let breadcrumb of breadcrumbs; let last = last">
+            <a *ngIf="!last" [routerLink]="hasParams(breadcrumb)">
+              {{ breadcrumb.label }}
+            </a>
+            <span *ngIf="last">{{ breadcrumb.label }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-sm-5">
+        <ey-tanhandler
+          *ngIf="showTanHandler && !isSuperAdmin()"
+        ></ey-tanhandler>
+      </div>
+    </div>
+  </div>
+</div>

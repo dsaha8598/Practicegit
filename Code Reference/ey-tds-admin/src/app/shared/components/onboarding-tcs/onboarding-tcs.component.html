@@ -1,0 +1,364 @@
+<div class="container">
+  <div class="ui-g-6">
+    <h2 class="fs-18 mb-10">
+      TCS configuration
+    </h2>
+  </div>
+  <div class="ui-g-12">
+    <ngb-tabset [destroyOnHide]="false">
+      <ngb-tab title="Scope & Invoice process">
+        <ng-template ngbTabContent>
+          <div class="cuSt-steps mt-30">
+            <p-steps
+              [model]="items"
+              [(activeIndex)]="activeIndex"
+              class="cust-steps two-cust-step"
+              [readonly]="false"
+            >
+            </p-steps>
+            <div class="row" *ngIf="activeIndex == 0">
+              <div class="col-sm-12">
+                <label for="surchargebasis" class="mb-20 sub-Heading-tab p-5"
+                  >Scope Process</label
+                >
+              </div>
+              <div class="col-sm-12" *ngFor="let scope of tenantConfigurations">
+                <p-checkbox
+                  label="{{ scope.selectedValue }}"
+                  binary="true"
+                  [(ngModel)]="selectedInvoiceScopes[scope.id]"
+                  *ngIf="scope.module == 'SCOPE_PROCESS'"
+                  (onChange)="
+                    onScopeConfigurationsSelection(
+                      $event,
+                      scope.id,
+                      scope.selectedValue
+                    )
+                  "
+                >
+                </p-checkbox>
+              </div>
+              <div class="col-sm-12 mt-10">
+                <label for="surchargebasis" class="mb-20 sub-Heading-tab"
+                  >Invoice Process</label
+                >
+                <label
+                  for="surchargebasis"
+                  class="mb-20 sub-Heading-tab ml-60 float-right pr-76"
+                  >Priority</label
+                >
+              </div>
+              <div class="col-sm-12">
+                <div
+                  class="row"
+                  *ngFor="let section of tenantConfigurations; let i = index"
+                >
+                  <div
+                    class="col-sm-10"
+                    *ngIf="section.module == 'SECTION_DETERMINATION'"
+                  >
+                    <p-checkbox
+                      label="{{ section.selectedValue }}"
+                      binary="true"
+                      [(ngModel)]="
+                        selectedInvoiceProcessKeys[section.selectedValue]
+                      "
+                      (onChange)="
+                        onSectionConfigCodeSelection(
+                          $event,
+                          section.id,
+                          section.selectedValue,
+                          index
+                        )
+                      "
+                    >
+                    </p-checkbox>
+                  </div>
+                  <div
+                    class="col-sm-2"
+                    *ngIf="section.module == 'SECTION_DETERMINATION'"
+                  >
+                    <select
+                      id="{{ section.selectedValue }}"
+                      name="{{ section.selectedValue }}"
+                      [(ngModel)]="
+                        selectedPriorityValues[section.selectedValue]
+                      "
+                      (change)="
+                        onSectionConfigPrioritySelection(
+                          $event,
+                          section.selectedValue
+                        )
+                      "
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="invalidStep1">
+                <p style="color: red;">
+                  Please select at least one option in scope process.
+                </p>
+              </div>
+              <div *ngIf="invalidStep2">
+                <p style="color: red;">
+                  Please select at least one option in Invoice process and
+                  Priority.
+                </p>
+              </div>
+              <div *ngIf="invalidStep3">
+                <p style="color: red;">
+                  Please select Priority for {{ invoiceProcessName }}.
+                </p>
+              </div>
+              <div class="mb-20 col-sm-12 text-center">
+                <button
+                  type="button"
+                  class="ui-button btn-primary"
+                  (click)="onNext()"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+            <div class="row" *ngIf="activeIndex == 1">
+              <div class="col-sm-12">
+                <label for="creditnoteProcessing" class="mb-20 sub-Heading-tab"
+                  >Credit note processing</label
+                >
+              </div>
+              <div
+                class="col-sm-12"
+                *ngFor="let creditnote of tenantConfigurations"
+              >
+                <p-radioButton
+                  ngDefaultControl
+                  label="{{ creditnote.selectedValue }}"
+                  *ngIf="creditnote.module == 'CREDIT_NOTES'"
+                  name="creditProcessing"
+                  [(ngModel)]="
+                    selectedConfigValues.onboardingConfigValues.creditNotes
+                  "
+                  value="{{ creditnote.id }}"
+                  binary="true"
+                >
+                </p-radioButton>
+              </div>
+              <div class="col-sm-12">
+                <label for="challanProcessing" class="mb-20 sub-Heading-tab"
+                  >Consolidated challan processing</label
+                >
+              </div>
+              <div
+                class="col-sm-12"
+                *ngFor="let challan of tenantConfigurations"
+              >
+                <p-radioButton
+                  ngDefaultControl
+                  label="{{ challan.selectedValue }}"
+                  *ngIf="challan.module == 'CHALLAN_GENERATION'"
+                  [(ngModel)]="
+                    selectedConfigValues.onboardingConfigValues
+                      .challanGeneration
+                  "
+                  name="challanProcessing"
+                  value="{{ challan.id }}"
+                  binary="true"
+                >
+                </p-radioButton>
+              </div>
+              <div class="col-sm-12">
+                <label for="tcsApplicability" class="mb-20 sub-Heading-tab"
+                  >TCS Applicability</label
+                >
+              </div>
+              <div>
+                <div
+                  class="col-sm-12"
+                  *ngFor="let tcsApplicability of tenantConfigurations"
+                >
+                  <p-radioButton
+                    ngDefaultControl
+                    label="{{ tcsApplicability.selectedValue }}"
+                    *ngIf="tcsApplicability.module == 'TCS_APPLICABILITY'"
+                    [(ngModel)]="
+                      selectedConfigValues.onboardingConfigValues
+                        .tcsApplicability
+                    "
+                    name="tcsApplicability"
+                    value="{{ tcsApplicability.id }}"
+                    binary="true"
+                    (click)="showCollectionsOptions(tcsApplicability.id)"
+                  >
+                  </p-radioButton>
+                  <div
+                    class="col-sm-12"
+                    *ngIf="
+                      showOptions &&
+                      tcsApplicability.module == 'TCS_APPLICABILITY' &&
+                      tcsApplicability.id == 24
+                    "
+                  >
+                    <div
+                      class="col-sm-12"
+                      *ngFor="let collections of tenantConfigurations"
+                    >
+                      <p-radioButton
+                        ngDefaultControl
+                        label="{{ collections.selectedValue }}"
+                        *ngIf="collections.module == 'COLLECTIONS'"
+                        [(ngModel)]="
+                          selectedConfigValues.onboardingConfigValues
+                            .collectionReferenceId
+                        "
+                        name="collections"
+                        value="{{ collections.id }}"
+                        binary="true"
+                      >
+                      </p-radioButton>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- End of applicability -->
+              </div>
+
+              <div class="col-sm-12">
+                <label for="buyerthresh" class="mb-20 sub-Heading-tab"
+                  >Buyer Threshold Computation</label
+                >
+              </div>
+              <div
+                class="col-sm-12"
+                *ngFor="let buyerThreshHold of tenantConfigurations"
+              >
+                <p-radioButton
+                  ngDefaultControl
+                  label="{{ buyerThreshHold.selectedValue }}"
+                  *ngIf="
+                    buyerThreshHold.module == 'BUYER_THRESHOLD_COMPUTATION'
+                  "
+                  [(ngModel)]="
+                    selectedConfigValues.onboardingConfigValues
+                      .buyerThresholdComputation
+                  "
+                  name="buyerThreshHold"
+                  value="{{ buyerThreshHold.id }}"
+                  binary="true"
+                >
+                </p-radioButton>
+              </div>
+              <div class="col-sm-12">
+                <label for="tdsTransactions" class="mb-20 sub-Heading-tab"
+                  >TDS Transactions</label
+                >
+              </div>
+              <div
+                class="col-sm-12"
+                *ngFor="let tdsTransactions of tenantConfigurations"
+              >
+                <p-radioButton
+                  ngDefaultControl
+                  label="{{ tdsTransactions.selectedValue }}"
+                  *ngIf="tdsTransactions.module == 'TDS_TRANSACTIONS'"
+                  [(ngModel)]="
+                    selectedConfigValues.onboardingConfigValues.tdsTransaction
+                  "
+                  name="tdsTransactions"
+                  value="{{ tdsTransactions.id }}"
+                  binary="true"
+                >
+                </p-radioButton>
+              </div>
+              <div class="col-sm-12">
+                <label for="gstTransactions" class="mb-20 sub-Heading-tab"
+                  >GST Implication</label
+                >
+              </div>
+              <div
+                class="col-sm-12"
+                *ngFor="let gstTransactions of tenantConfigurations"
+              >
+                <p-radioButton
+                  ngDefaultControl
+                  label="{{ gstTransactions.selectedValue }}"
+                  *ngIf="gstTransactions.module == 'GST_IMPLICATION'"
+                  [(ngModel)]="
+                    selectedConfigValues.onboardingConfigValues.gstImplication
+                  "
+                  name="gstTransactions"
+                  value="{{ gstTransactions.id }}"
+                  binary="true"
+                >
+                </p-radioButton>
+              </div>
+              <div class="col-sm-12">
+                <label for="gstTransactions" class="mb-20 sub-Heading-tab"
+                  >Processing by</label
+                >
+              </div>
+              <div
+                class="col-sm-12"
+                *ngFor="let processingBy of tenantConfigurations"
+              >
+                <p-radioButton
+                  ngDefaultControl
+                  label="{{ processingBy.selectedValue }}"
+                  *ngIf="processingBy.module == 'PROCESSING_BY'"
+                  [(ngModel)]="
+                    selectedConfigValues.onboardingConfigValues
+                      .documentOrPostingDate
+                  "
+                  name="processingBy"
+                  value="{{ processingBy.id }}"
+                  binary="true"
+                >
+                </p-radioButton>
+              </div>
+
+              <div class="mb-20 col-sm-12 text-center">
+                <button
+                  type="button"
+                  class="ui-button btn-primary"
+                  (click)="submitConfiguration()"
+                >
+                  {{ !isEdit ? 'Submit' : 'Update' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>Manage roles</ng-template>
+        <ng-template ngbTabContent>
+          <ey-roles-permissions-tcs
+            *ngIf="!showRoleForm"
+            [deductorPAN]="deductorPAN"
+            [action]="actionType"
+            (manageForm)="roleFormBehaviorHandler($event)"
+          >
+          </ey-roles-permissions-tcs>
+
+          <ey-roles-permission-tcs-form
+            *ngIf="rolespopup && showRoleForm"
+            (listHandler)="roleListBehaviorHandler($event)"
+            [formActionType]="roleFormActionType"
+            [scopeType]="moduleType"
+            [deductorPan]="deductorPAN"
+            [tenantIdRoute]="tenantId"
+            [tenantName]="tenantName"
+            (manageForm)="roleFormBehaviorHandler($event)"
+            (closeRoles)="closeRoles($event)"
+          >
+          </ey-roles-permission-tcs-form>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>

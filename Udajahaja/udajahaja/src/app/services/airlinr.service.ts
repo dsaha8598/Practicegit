@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Airline } from "../models/Airline";
 
@@ -24,6 +24,14 @@ return this.httpClient.post(this.url,book );
 getAllAirlines(){
     return this.httpClient.get("http://localhost:8001/admin/findAirlines");
 }
+
+getAllAirlinesById(id:string){
+
+    let params=new HttpParams();
+    params.set('id',id);
+    return this.httpClient.get("http://localhost:8001/admin/findAirlinesById/"+id,{params});
+    
+    }
 
 
 }

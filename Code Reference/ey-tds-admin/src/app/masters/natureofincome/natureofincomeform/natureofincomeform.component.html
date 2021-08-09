@@ -1,0 +1,347 @@
+<div class="ui-g-6">
+  <h2 class="fs-22">{{ headingMsg }} Nature Of Income</h2>
+</div>
+<div class="ui-g-6 text-right">
+  <span *HasAnyAuthority="['NOI_UPDATE']">
+    <button
+      (click)="stateChanger('edit')"
+      type="button"
+      class="ui-button btn-primary"
+      *ngIf="actionState === 'VIEW'"
+    >
+      Edit
+    </button>
+  </span>
+</div>
+<div class="ui-g-12">
+  <form [formGroup]="paymentForm">
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{ 'field-invalid': submitted && f.section.errors }"
+      >
+        <label for="inputCity">Section</label>
+        <input
+          type="text"
+          formControlName="section"
+          placeholder="Enter section"
+          [maxlength]="10"
+          (keydown.space)="$event.preventDefault()"
+          class="input-ctrl"
+          ngDefaultControl
+        />
+        <div *ngIf="submitted && f.section.errors" class="error-feedback">
+          <div *ngIf="f.section.errors.required">
+            Please enter Section.
+          </div>
+          <div *ngIf="f.section.errors.pattern">
+            Please don't enter special characters except ( ).
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{ 'field-invalid': submitted && f.nature.errors }"
+      >
+        <label for="inputCity">Nature of income</label>
+        <textarea
+          type="text"
+          formControlName="nature"
+          placeholder="Enter nature of income"
+          class="input-ctrl"
+          style="width:100%;"
+          maxlength="2048"
+          [ngClass]="{ 'is-invalid': submitted && f.nature.errors }"
+          pInputText
+          ngDefaultControl
+        ></textarea>
+        <div *ngIf="submitted && f.nature.errors" class="error-feedback">
+          <div *ngIf="f.nature.errors.required">
+            Please enter nature of income.
+          </div>
+          <div *ngIf="f.nature.errors.maxlength">
+            Nature of income must not exceed then 2048 characters.
+          </div>
+        </div>
+        <p class="text-muted fs-14 py-10 mb-0">
+          Note: Nature of income should not exceed 2048 characters.
+        </p>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-12"
+        [ngClass]="{
+          'field-invalid': submitted && f.isSubNaturePaymentApplies.errors
+        }"
+      >
+        <label>Is sub-nature of income applicable?</label>
+        <div class="form-check ui-g-1">
+          <input
+            class="form-check-input ui-radiobutton-box"
+            formControlName="isSubNaturePaymentApplies"
+            type="radio"
+            name="isSubNaturePaymentApplies"
+            id="subNatureOfPaymentRadios1"
+            [selected]
+            [value]="true"
+            ngDefaultControl
+            checked
+            (change)="changeHandler()"
+          />
+          <label for="subNatureOfPaymentRadios1">
+            Yes
+          </label>
+        </div>
+        <div class="ui-g-1 form-check">
+          <input
+            class="form-check-input ui-radiobutton-box"
+            formControlName="isSubNaturePaymentApplies"
+            type="radio"
+            name="isSubNaturePaymentApplies"
+            id="subNatureOfPaymentRadios2"
+            [ngClass]="{
+              'is-invalid': submitted && f.isSubNaturePaymentApplies.errors
+            }"
+            [value]="false"
+            (change)="changeHandler()"
+            ngDefaultControl
+          />
+          <label class="form-check-label" for="subNatureOfPaymentRadios2">
+            No
+          </label>
+        </div>
+        <div
+          *ngIf="submitted && f.isSubNaturePaymentApplies.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.isSubNaturePaymentApplies.errors.required">
+            Please enter the Is sub-nature-income applicable.
+          </div>
+        </div>
+        <div
+          *ngIf="paymentForm.getRawValue().isSubNaturePaymentApplies === true"
+          class="ui-g-12"
+        >
+          <div formArrayName="subNaturePaymentMasters">
+            <div
+              *ngFor="
+                let subNaturePaymentMasters of paymentForm.controls
+                  .subNaturePaymentMasters.controls;
+                let i = index
+              "
+            >
+              <div [formGroupName]="i">
+                <div class="p-10 bg-light ui-g-12">
+                  <div
+                    class="ui-inputgroup ui-g-8"
+                    [ngClass]="{
+                      'field-invalid':
+                        submitted &&
+                        subNaturePaymentMasters.get('nature').errors
+                    }"
+                  >
+                    <label>Sub nature of income {{ i + 1 }}</label>
+                    <input
+                      type="text"
+                      class="input-ctrl"
+                      placeholder="enter sub nature of income"
+                      formControlName="nature"
+                      ngDefaultControl
+                    />
+                    <div
+                      *ngIf="
+                        submitted &&
+                        subNaturePaymentMasters.get('nature').errors
+                      "
+                      class="error-feedback"
+                    >
+                      <div *ngIf="subNaturePaymentMasters.get('nature').errors">
+                        Please enter sub nature of income.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ui-g-1">
+                    <button
+                      type="button"
+                      *ngIf="i !== 0"
+                      [disabled]="
+                        actionState === 'EDIT' || actionState === 'VIEW'
+                      "
+                      class="ui-button btn-secondary mt-30"
+                      (click)="removeNatureOfPayment(i)"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="ui-g-12"
+            *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+          >
+            <button
+              (click)="addNatureOfPayment()"
+              type="button"
+              [disabled]="actionState === 'EDIT' || actionState === 'VIEW'"
+              class="ui-button btn-primary"
+            >
+              <i class="fas fa-plus-circle"></i> Add New
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{ 'field-invalid': submitted && f.displayValue.errors }"
+      >
+        <label for="inputCity">Display value</label>
+        <input
+          type="text"
+          formControlName="displayValue"
+          (keydown.space)="$event.preventDefault()"
+          maxlength="10"
+          placeholder="Enter display value"
+          class="input-ctrl"
+          ngDefaultControl
+          pInputText
+        />
+        <div *ngIf="submitted && f.displayValue.errors" class="error-feedback">
+          <div *ngIf="f.displayValue.errors.required">
+            Please enter display value.
+          </div>
+          <div *ngIf="f.displayValue.errors.maxlength">
+            Display value must not exceed more than 10 characters.
+          </div>
+          <div *ngIf="f.displayValue.errors.pattern">
+            Please don't enter special characters except ( ).
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{ 'field-invalid': submitted && f.applicableFrom.errors }"
+      >
+        <label for="inputCity"> Applicable from</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            name="dp"
+            id="applicableFrom"
+            formControlName="applicableFrom"
+            ngbDatepicker
+            placement="auto"
+            #applicableFrom="ngbDatepicker"
+            [value]="
+              paymentForm.getRawValue().applicableFrom | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="applicableFrom.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="submitted && f.applicableFrom.errors"
+          class="error-feedback"
+        >
+          <div *ngIf="f.applicableFrom.errors.required">
+            Please enter applicable from.
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui-inputgroup ui-g-6"
+        [ngClass]="{
+          'field-invalid':
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+        }"
+      >
+        <label for="inputState">Applicable to (optional)</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="dd-mm-yyyy"
+            [minDate]="minDate"
+            (click)="d.toggle()"
+            name="dp"
+            formControlName="applicableTo"
+            ngbDatepicker
+            placement="auto"
+            #d="ngbDatepicker"
+            [value]="
+              paymentForm.getRawValue().applicableTo | date: 'dd-MM-yyyy'
+            "
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-secondary calendar fs-14"
+              (click)="d.toggle()"
+              type="button"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            (submittedTo && f.applicableTo.errors) || applicableToDateError
+          "
+          class="error-feedback"
+        >
+          <p *ngIf="applicableToDateError">
+            Applicable to date must be more than that of Applicable from date.
+          </p>
+          <p *ngIf="f.applicableTo.errors.required">
+            Please enter applicable to.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="ui-inputgroup">
+      <button
+        (click)="backFormClick()"
+        type="button"
+        class="ui-button btn-utility"
+      >
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+      <button
+        (click)="saveNatureOfCollection('addNew')"
+        type="button"
+        class="ui-button btn-secondary"
+        *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+      >
+        <i class="fas fa-save"></i> Save &amp; Add New
+      </button>
+      <button
+        (click)="saveNatureOfCollection('back')"
+        type="button"
+        class="ui-button btn-primary"
+        *ngIf="actionState !== 'EDIT' && actionState !== 'VIEW'"
+      >
+        <i class="fas fa-save"></i> Save
+      </button>
+      <span *HasAnyAuthority="['NOI_UPDATE']">
+        <button
+          (click)="updateNatureOfPayment()"
+          type="button"
+          class="ui-button btn-primary"
+          *ngIf="actionState === 'EDIT'"
+        >
+          Update
+        </button>
+      </span>
+    </div>
+  </form>
+</div>

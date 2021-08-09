@@ -2,6 +2,95 @@
     
     <app-admin-header></app-admin-header>   
 </div>
+<div class="bodyContent">
+   <div class="airlineContainer">
+      <div style="position: relative;height: 50%;">
+         
+             <div style=" text-align: center;display: inline-block;position: relative;width: 50%;height: 100%;">
+                   <div style="position: relative;left: 60%;right: 40%;width: 15%;height: 100%;">
+                   Logo
+                   </div>
+            </div>
+            <div style="text-align: left;display: inline-block;position: relative;width: 50%;height: 100%;">
+                <div style="position: relative;left: 0%;width: 100%;height: 100%;">
+                    <input type="text" value="samana" style="position: relative;width: 95%;height: 40%;top: 37%;"/> 
+                </div> 
+            </div>
+        
+      </div>
+      <div style="position: relative;height: 50%;">    
+            <div style="display: inline-block; position: relative;width: 50%;height: 100%;">
+                <div style="display: inline-block;position: relative;vertical-align:top;text-align: center;width: 50%;height: 100%;">
+                  Contact Number 
+                </div> 
+                <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
+                    <input type="text" value="samana" style="position: relative;width: 95%;height: 40%;"/> 
+                </div>    
+            </div>
+            <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
+                <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
+                  Contact Address 
+                </div> 
+                <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
+                    <input type="text" value="samana" style="position: relative;width: 95%;height: 40%;"/> 
+                </div>   
+            </div>
+      </div>
+   </div>
+
+
+   <div clas="middleDiv">
+       <div style="display: inline-block;">
+        <h1 >Available Aeroplanes</h1>
+       </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <div style="display: inline-block;right: 0%;">
+        <button style="width: 100px;height: 50px;">Edit Airline</button>
+       </div>
+       
+       
+   </div>
+
+   <div class="aeroplaneContainer" >
+       <div  *ngFor="let number of numbers" style="position: relative;width: 100%;height: 21%; " >
+            <div style="position: relative;width: 100%;height: 92%; "  >
+                <div style="background-color:rgb(218, 235, 255);position: relative;width: 100%;height: 50%;">
+                        <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                            flight Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value="Boing-876"/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Status&nbsp;&nbsp;:&nbsp;Active
+                        </div>
+                        <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                            No of Business Class Seats &nbsp;&nbsp;:&nbsp;<input type="text" value="67" style="width: 10%;"/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                            <button style="width: 70px;height: 35px;">Edit</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button style="width: 100px;height: 35px;">Deactivate</button>
+                        </div>
+                </div>
+            <div style="background-color:rgb(218, 235, 255);position: relative;width: 100%;height: 50%;">
+                        <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                            No of Economy class Seats &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value="Boing-876" style="width: 100px;"/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            Start date &nbsp;&nbsp;:&nbsp;<input type="text" value="67" style="width: 15%;"/>
+                            </div>
+                        <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                            End date &nbsp;&nbsp;:&nbsp;<input type="text" value="67" style="width: 15%;"/>
+                        </div>
+                </div>
+            
+            </div>
+            <div style="background-color:white;position: relative;width: 100%;height: 8%;"></div>
+        </div>
+       
+   </div>
+
+    
+</div>
 <div class="footer" >
     <app-footer></app-footer>
 </div>

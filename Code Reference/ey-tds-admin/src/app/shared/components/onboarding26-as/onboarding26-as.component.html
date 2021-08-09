@@ -1,0 +1,233 @@
+<div class="container">
+  <div class="ui-g-6">
+    <h2 class="fs-18 mb-10">
+      26AS Recon configuration
+    </h2>
+  </div>
+  <div class="ui-g-12">
+    <ngb-tabset [destroyOnHide]="false">
+      <ngb-tab title="Scope & Invoice process">
+        <ng-template ngbTabContent>
+          <div class="cuSt-steps mt-30">
+            <div class="row">
+              <!--   <div class="col-sm-10 mx-auto">
+              <div class="col-sm-12 mt-10">
+                <label for="Recon" class="mb-20 sub-Heading-tab">Recon</label>
+                <label
+                  for="Tolerance"
+                  class="mb-20 sub-Heading-tab ml-60 float-right pr-76"
+                  >Tolerance</label
+                >
+                <label
+                  for="Priority"
+                  class="mb-20 sub-Heading-tab ml-60 float-right pr-100"
+                  >Priority</label
+                >
+              </div>
+            </div> -->
+              <!-- <div class="col-sm-10 mx-auto">
+              <div class="col-sm-12 mt-5">
+                <label
+                  for="toleranceLevel1"
+                  class="sub-Heading-tab ml-10 float-right"
+                  >Level II (per transaction)</label
+                >
+                <label
+                  for="toleranceLevel2"
+                  class="sub-Heading-tab ml-10 float-right"
+                  >Level I (Aggregate)</label
+                >
+              </div>
+            </div> -->
+              <!--  <div class="col-sm-10 mx-auto">
+              <div class="col-sm-12 mt-5">
+                <label
+                  for="toleranceLevel2"
+                  class="sub-Heading-tab ml-10 float-right"
+                  >Amount</label
+                >
+                <label for="toleranceLevel2" class="toggle-switch">
+                  <input type="checkbox" [(ngModel)]="selectedLevel2" />
+                  <div class="slider"></div>
+                </label>
+                <label
+                  for="toleranceLevel2"
+                  class="sub-Heading-tab ml-10 float-right"
+                  >%</label
+                >
+
+                <label
+                  for="toleranceLevel1"
+                  class="sub-Heading-tab ml-10 float-right"
+                  >Amount</label
+                >
+                <label for="toleranceLevel1" class="toggle-switch">
+                  <input type="checkbox" [(ngModel)]="selectedLevel1" />
+                  <div class="slider"></div>
+                </label>
+                <label
+                  for="toleranceLevel1"
+                  class="sub-Heading-tab ml-10 float-right"
+                  >%</label
+                >
+
+                <label for="Priority" class="sub-Heading-tab ml-10 float-right"
+                  >Blank</label
+                >
+              </div>
+            </div> -->
+              <div class="col-sm-12 mt-10">
+                <label for="reconProcess" class="col-sm-4 sub-Heading-tab pl-0"
+                  >Recon Process</label
+                >
+                <label
+                  for="priority"
+                  class="col-sm-2 mb-20 sub-Heading-tab pr-90 pl-0"
+                  >Priority</label
+                >
+                <label
+                  for="tolerance"
+                  class="col-sm-4 mb-10 sub-Heading-tab text-center pl-30"
+                  >Tolerance</label
+                >
+              </div>
+              <div class="col-sm-12 mt-10">
+                <label for="level2" class="col-sm-4 mb-10 float-right pl-40"
+                  >Level2(Per transaction)</label
+                >
+
+                <label for="level1" class="col-sm-2 mb-10 float-right pl-20"
+                  >Level1(Aggregate)</label
+                >
+              </div>
+              <div class="col-sm-12 mt-10">
+                <label
+                  for="level2transaction"
+                  class="col-sm-4 mb-10 float-right pl-80"
+                  >% / Amount</label
+                >
+
+                <label
+                  for="level1aggregate"
+                  class="col-sm-2 mb-10 float-right pl-50"
+                  >% / Amount</label
+                >
+              </div>
+              <div class="col-sm-12">
+                <div
+                  class="row"
+                  *ngFor="let process of tenantConfigurations; let i = index"
+                >
+                  <div
+                    class="col-sm-4"
+                    *ngIf="process.module == 'PROCESS_DETERMINATION'"
+                  >
+                    <p-checkbox
+                      label="{{ process.selectedValue }}"
+                      binary="true"
+                      [(ngModel)]="
+                        selectedReconProcessKeys[process.selectedValue]
+                      "
+                      (onChange)="
+                        onSectionConfigCodeSelection(
+                          $event,
+                          process.id,
+                          process.selectedValue,
+                          index
+                        )
+                      "
+                    >
+                    </p-checkbox>
+                  </div>
+
+                  <div
+                    class="col-sm-2"
+                    *ngIf="process.module == 'PROCESS_DETERMINATION'"
+                  >
+                    <select
+                      id="{{ process.selectedValue }}"
+                      name="{{ process.selectedValue }}"
+                      [(ngModel)]="
+                        selectedPriorityValues[process.selectedValue]
+                      "
+                      (change)="
+                        onSectionConfigPrioritySelection(
+                          $event,
+                          process.selectedValue
+                        )
+                      "
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+
+                  <div
+                    class="col-sm-2"
+                    *ngIf="process.module == 'PROCESS_DETERMINATION'"
+                  >
+                    <input
+                      id="{{ process.id }}"
+                      name="{{ process.selectedValue }}"
+                      placeholder="Enter 5% (or) 1000"
+                      type="text"
+                      [(ngModel)]="levelAggregateList[process.selectedValue]"
+                      class="input-ctrl"
+                      pInputText
+                      (change)="onlevel1change($event, process.selectedValue)"
+                    />
+                  </div>
+
+                  <div
+                    class="col-sm-2 ml-20"
+                    *ngIf="process.module == 'PROCESS_DETERMINATION'"
+                  >
+                    <input
+                      id="{{ process.id }}"
+                      name="{{ process.selectedValue }}"
+                      placeholder="Enter 5% (or) 1000"
+                      type="text"
+                      [(ngModel)]="
+                        levelPerTransactionList[process.selectedValue]
+                      "
+                      class="input-ctrl"
+                      pInputText
+                      (change)="onlevel2change($event, process.selectedValue)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="invalidStep1">
+              <p style="color: red;">
+                Please select at least one option in process.
+              </p>
+            </div>
+            <div *ngIf="invalidStep2">
+              <p style="color: red;">
+                Please select at least one option in process and Priority.
+              </p>
+            </div>
+            <div *ngIf="invalidStep3">
+              <p style="color: red;">
+                Please select Priority for {{ reconProcessName }}.
+              </p>
+            </div>
+            <div class="mb-20 mt-20 col-sm-12 text-center">
+              <button
+                type="button"
+                class="ui-button btn-primary"
+                (click)="submitConfiguration()"
+              >
+                {{ !isEdit ? 'Submit' : 'Update' }}
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>

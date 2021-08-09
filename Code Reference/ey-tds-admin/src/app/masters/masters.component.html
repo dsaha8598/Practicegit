@@ -1,0 +1,87 @@
+<div>
+  <div *HasAnyAuthority="['ONBOARDING_MASTER']">
+    <button
+      (click)="syncRoleDefaults()"
+      type="button"
+      class="ui-button btn-secondary"
+    >
+      Sync role permissions
+    </button>
+  </div>
+  <div class="ui-g-12 mt-20">
+    <h2 class="fs-22" *HasAnyAuthority="['DEDUCTEE_MASTER']">Client masters</h2>
+  </div>
+  <div *ngFor="let item of clientNavigation">
+    <div class="ui-g-3" *HasAnyAuthority="[item.isVisibleAuthority]">
+      <ey-tile
+        href="{{ item.href }}"
+        label="{{ item.label }}"
+        enableAddNew="true"
+        addNewAuthority="{{ item.addNewAuthority }}"
+        listViewAuthority="{{ item.listViewAuthority }}"
+      >
+      </ey-tile>
+    </div>
+  </div>
+  <div class="ui-g-12">
+    <h2 class="fs-22" *HasAnyAuthority="['ONBOARDING_MASTER']">
+      Administration masters
+    </h2>
+  </div>
+  <div *ngFor="let item of onboardingNavigation">
+    <div class="ui-g-3" *HasAnyAuthority="[item.isVisibleAuthority]">
+      <ey-tile
+        href="{{ item.href }}"
+        label="{{ item.label }}"
+        enableAddNew="true"
+        addNewAuthority="{{ item.addNewAuthority }}"
+        listViewAuthority="{{ item.listViewAuthority }}"
+      >
+      </ey-tile>
+    </div>
+  </div>
+
+  <div class="ui-g-12">
+    <h2 class="fs-22" *HasAnyAuthority="['NOP_MASTER']">Application masters</h2>
+    <div class="col-sm-2" style="float: right;">
+      <select
+        id="section"
+        class="form-control"
+        [(ngModel)]="selectedModule"
+        (change)="handleSelectChange()"
+      >
+        <option value="TDS">TDS</option>
+        <option value="TCS">TCS</option>
+      </select>
+    </div>
+  </div>
+  <div *ngIf="selectedModule === 'TDS'">
+    <div *ngFor="let item of masterNavigation">
+      <div class="ui-g-3" *HasAnyAuthority="[item.isVisibleAuthority]">
+        <ey-tile
+          href="{{ item.href }}"
+          label="{{ item.label }}"
+          enableAddNew="true"
+          addNewAuthority="{{ item.addNewAuthority }}"
+          listViewAuthority="{{ item.listViewAuthority }}"
+        >
+        </ey-tile>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="selectedModule === 'TCS'">
+    <div *ngFor="let item of masterNavigationTCS">
+      <div class="ui-g-3" *HasAnyAuthority="[item.isVisibleAuthority]">
+        <ey-tile
+          href="{{ item.href }}"
+          label="{{ item.label }}"
+          enableAddNew="true"
+          addNewAuthority="{{ item.addNewAuthority }}"
+          listViewAuthority="{{ item.listViewAuthority }}"
+        >
+        </ey-tile>
+      </div>
+    </div>
+  </div>
+</div>
+<ey-consent [show]="displayConsent"></ey-consent>

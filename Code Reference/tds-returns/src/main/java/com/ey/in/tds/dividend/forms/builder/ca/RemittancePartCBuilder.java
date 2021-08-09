@@ -1,0 +1,12 @@
+package com.ey.in.tds.dividend.forms.builder.ca;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+public interface RemittancePartCBuilder {
+
+	public ITActBuilder remittance(String countryRemittanceMade, String currencyRemittanceMade,
+			BigDecimal amountPayableInForegnCurrency, BigDecimal amountPayableInINR, String bankNameCode,
+			String bankBranch, String bankBranchBSRCode, Date proposedDateOfRemittance, String natureOfRemittance,
+			String releventPurposeCategoryRBI, String releventPurposeCodeRBI, String taxPayableGrossedUp);
+}

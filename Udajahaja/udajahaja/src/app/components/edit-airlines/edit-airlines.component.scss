@@ -1,0 +1,47 @@
+.header{
+    text-align: left;
+     position: absolute;
+    width: 100%;
+    height: 11%;
+    margin: 10px;
+    background-color: #3B579D; 
+}
+.footer{
+    position:fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 2%;
+    border: 1px solid black;
+}
+.bodyContent{
+    //   overflow: auto;
+        position: absolute;
+        bottom: 0px;
+        width: 80%;
+        height: 80%;
+        left: 9%;
+        top :130px;
+        resize: vertical;
+       
+    }
+.airlineContainer{
+position: relative;
+height: 25%;
+width: 100%;
+left: 0%;
+}
+
+.middleDiv{
+    position: relative;
+    background-color:olive;
+    height: 30%;
+    width: 100%;
+ 
+}
+.aeroplaneContainer{
+    position: relative;
+    height: 70%;
+    width: 100%;
+    right: 0%;
+    
+}

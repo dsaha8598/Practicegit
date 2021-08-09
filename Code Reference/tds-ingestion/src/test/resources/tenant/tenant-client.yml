@@ -1,0 +1,9 @@
+tenant-id: client1
+cosmos-config:
+  contact-points: ci-dv-tfo-ay200001.cassandra.cosmos.azure.com
+  keyspace-name: tds_payables_for_tests_client1
+  schema-action: NONE
+  ssl: true
+  port: 10350
+  username: ci-dv-tfo-ay200001
+  password: DqVf50JxW1j3GMe3WutrvqIbTJXXDvEjcbMRpbRxlIyQSaWeAJhSZwHb1oMzUcOLM8eAR2rgJdgs7wgIYqjxow==

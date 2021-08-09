@@ -1,0 +1,973 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://incometaxindiaefiling.gov.in/FORM15CAB"
+
+	xmlns:Form="http://incometaxindiaefiling.gov.in/common" xmlns:FORM15CB="http://incometaxindiaefiling.gov.in/FORM15CAB"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	version="1.0">
+
+	<xs:import namespace="http://incometaxindiaefiling.gov.in/common"
+		schemaLocation="./Common15CB.xsd" />
+	<xs:element name="FORM15CB">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Form:CreationInfo" />
+				<xs:element ref="Form:Form_Details" />
+				<xs:element ref="FORM15CB:RemitterDetails" />
+				<xs:element ref="FORM15CB:RemitteeDetls" />
+				<xs:element ref="FORM15CB:RemittanceDetails" />
+				<xs:element ref="FORM15CB:ItActDetails" />
+				<xs:element ref="FORM15CB:DTAADetails" />
+				<xs:element ref="FORM15CB:TDSDetails" />
+				<xs:element ref="FORM15CB:AcctntDetls" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RemitterDetails">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="IorWe">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="01|02"></xs:pattern>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RemitterHonorific">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="01|02|03"></xs:pattern>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="NameRemitter" type="FORM15CB:nameType">
+				</xs:element>
+				<xs:element name="PAN" type="FORM15CB:panTanType" />
+				<xs:element name="BeneficiaryHonorific">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="01|02|03"></xs:pattern>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RemitteeDetls">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NameRemittee" type="FORM15CB:nameType" />
+				<xs:element name="RemitteeAddrs" type="FORM15CB:addressType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RemittanceDetails">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CountryRemMadeSecb" type="Form:countryType"
+					minOccurs="0" />
+				<xs:element name="CountryRemMadeSecbDesc" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="Form:nonEmptyString">
+							<xs:maxLength value="125" />
+							<xs:minLength value="0" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+
+				<xs:element name="CurrencySecbCode" type="FORM15CB:nameType" />
+				<xs:element name="CurrencySecbDesc" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="75" />
+							<xs:minLength value="0" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="AmtPayForgnRem" type="FORM15CB:positiveDecimalAmt"
+					minOccurs="0" />
+				<xs:element name="AmtPayIndRem" type="FORM15CB:positiveDecimalAmt"
+					minOccurs="0" />
+				<xs:element name="NameBankCode" type="FORM15CB:nameType" />
+				<xs:element name="NameBankDesc" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+							<xs:minLength value="0" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="BranchName" type="FORM15CB:nameType" />
+				<xs:element name="BsrCode" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="[0-9]{3}[0-9A-Z]{4}" />
+								</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="PropDateRem">
+					<xs:simpleType>
+						<xs:restriction base="xs:date" />
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="NatureRemCategory">
+						<xs:annotation>
+						<xs:documentation>
+							16.1-ADVERTISEMENT FEE
+							16.2-AMC CHARGES
+							16.3-ARCHITECTURAL SERVICES
+							16.4-BANDWIDTH CHARGES
+							16.5-BROKEREAGE CHARGES
+							16.6-BUSINESS INCOME OTHER THAN THAT COVERED BY CATEGORIES ABOVE 
+							16.7-CARGO HANDLING SERVICES INSPECTION and LOGISTICS SERVICES
+							16.8-CELLULAR ROAMING CHARGES
+							16.9-CHARTER HIRE CHARGES (SHIPPING)
+							16.10-CLEARING and FORWARDING CHARGES
+							16.11-COMMISSION
+							16.12-COMMUNICATION CHARGES
+							16.13-CONSULTING SERVICES
+							16.14-DESIGNING FEE
+							16.15-DIRECTORS FEES 
+							16.16-DIVIDEND
+							16.17-DRILLING
+							16.18-ENGINEERING SERVICES
+							16.19-EQUIPMENT RENTAL CHARGES
+							16.20-FABRICATION SERVICES
+							16.21-FEES FOR TECHNICAL SERVICES/ FEES FOR INCLUDED SERVICES 
+							16.22-FREIGHT CHARGES
+							16.23-INCOME FROM IMMOVEABLE PROPERTY
+							16.24-INCOME FROM SHIPPING, INLAND WATERWAYS OR AIR TRANSPORT 
+							16.25-INSTALLATION and COMMISSIONING SERVICES
+							16.26-INSURANCE COMMISSIONS 
+							16.27-INTEREST PAYMENT
+							16.28-INVESTMENT INCOME 
+							16.29-LEASE PAYMENT
+							16.30-LICENSING FEE
+							16.31-LONG TERM CAPITAL GAINS 
+							16.32-MEMBERSHIP FEE
+							16.33-MOBILESTATION CHARGES
+							16.34-PAYMENTS FOR SOFTWARE BUNDLED WITH HARDWARE 
+							16.35-PAYMENTS TO PROFESSORS, TEACHERS OR RESEARCH SCHOLARS 
+							16.36-PAYMENTS TO SPORTS PERSON and ARTISTS
+							16.37-PAYMENTS TO STUDENTS OR BUSINESS APPRENTICE 
+							16.38-PENSIONS(OTHER THAN THOSE RELATED TO PAST EMPLOYMENT)
+							16.39-PROCESSING CHARGES
+							16.40-PROFESSIONAL SERVICES
+							16.41-PURCHASE OF SOFTWARE
+							16.42-RandD CHARGES
+							16.43-REGISTRATION CHARGES
+							16.44-REIMBURSEMENT OF EXPENSES
+							16.45-REPATRIATION OF SURPLUS FUNDS
+							16.46-RETAINERSHIP FEES
+							16.47-RETENTION FEES
+							16.48-ROYALTY
+							16.49-SALES AND MARKETING SERVICES
+							16.50-SEISMIC DATA PROCESSING
+							16.51-SHORT TERM CAPITAL GAINS 
+							16.52-SOFTWARE LICENCES
+							16.53-SPONSORSHIP FEES
+							16.54-SUBSCRIPTION FEES
+							16.55-SUPERVISION CHARGES
+							16.56-SURVEY FEES
+							16.57-TELECASTING SERVICES
+							16.58-TENDER FEES
+							16.59-TESTING CHARGES
+							16.60-TRAINING
+							16.61-WARRANTY SERVICES
+							16.62-WINNING FROM HORSE RACES. 
+							16.63-WINNING FROM LOTTERIES, CROSSWORD PUZZLES, CARD GAMES AND OTHER GAMES OF ANY SORT.
+							16.64-CONSULAR RECEIPTS
+							16.99-OTHER INCOME / OTHER (NOT IN THE NATURE OF INCOME)
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="5" />
+							<xs:minLength value="4" />
+							<xs:enumeration value="16.1" />
+							<xs:enumeration value="16.2" />
+							<xs:enumeration value="16.3" />
+							<xs:enumeration value="16.4" />
+							<xs:enumeration value="16.5" />
+							<xs:enumeration value="16.6" />
+							<xs:enumeration value="16.7" />
+							<xs:enumeration value="16.8" />
+							<xs:enumeration value="16.9" />
+							<xs:enumeration value="16.10" />
+							<xs:enumeration value="16.11" />
+							<xs:enumeration value="16.12" />
+							<xs:enumeration value="16.13" />
+							<xs:enumeration value="16.14" />
+							<xs:enumeration value="16.15" />
+							<xs:enumeration value="16.16" />
+							<xs:enumeration value="16.17" />
+							<xs:enumeration value="16.18" />
+							<xs:enumeration value="16.19" />
+							<xs:enumeration value="16.20" />
+							<xs:enumeration value="16.21" />
+							<xs:enumeration value="16.22" />
+							<xs:enumeration value="16.23" />
+							<xs:enumeration value="16.24" />
+							<xs:enumeration value="16.25" />
+							<xs:enumeration value="16.26" />
+							<xs:enumeration value="16.27" />
+							<xs:enumeration value="16.28" />
+							<xs:enumeration value="16.29" />
+							<xs:enumeration value="16.30" />
+							<xs:enumeration value="16.31" />
+							<xs:enumeration value="16.32" />
+							<xs:enumeration value="16.33" />
+							<xs:enumeration value="16.34" />
+							<xs:enumeration value="16.35" />
+							<xs:enumeration value="16.36" />
+							<xs:enumeration value="16.37" />
+							<xs:enumeration value="16.38" />
+							<xs:enumeration value="16.39" />
+							<xs:enumeration value="16.40" />
+							<xs:enumeration value="16.41" />
+							<xs:enumeration value="16.42" />
+							<xs:enumeration value="16.43" />
+							<xs:enumeration value="16.44" />
+							<xs:enumeration value="16.45" />
+							<xs:enumeration value="16.46" />
+							<xs:enumeration value="16.47" />
+							<xs:enumeration value="16.48" />
+							<xs:enumeration value="16.49" />
+							<xs:enumeration value="16.50" />
+							<xs:enumeration value="16.51" />
+							<xs:enumeration value="16.52" />
+							<xs:enumeration value="16.53" />
+							<xs:enumeration value="16.54" />
+							<xs:enumeration value="16.55" />
+							<xs:enumeration value="16.56" />
+							<xs:enumeration value="16.57" />
+							<xs:enumeration value="16.58" />
+							<xs:enumeration value="16.59" />
+							<xs:enumeration value="16.60" />
+							<xs:enumeration value="16.61" />
+							<xs:enumeration value="16.62" />
+							<xs:enumeration value="16.63" />
+							<xs:enumeration value="16.64" />
+							<xs:enumeration value="16.99" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="NatureRemCode" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+							<xs:minLength value="0" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RevPurCategory">
+						<xs:annotation>
+						<xs:documentation>
+							RB-0.1-Capital Account
+							RB-0.2-Foreign Direct Investments
+							RB-0.3-Foreign Portfolio Investment
+							RB-0.4-External Commercial Borrowings
+							RB-0.5-Short term Loans
+							RB-0.6-Banking Capital 
+							RB-0.7-Financial Derivatives and Others
+							RB-0.8-External Assistance
+							RB-1.1-Imports
+							RB-2.1-Transport
+							RB-3.1-Travel
+							RB-5.1-Construction Services
+							RB-6.1-Insurance and Pension Services
+							RB-7.1-Financial Services
+							RB-8.1-Telecommunication, Computer \u2013 Information  Services
+							RB-9.1-Charges for the use of intellectual property n.i.e
+							RB-10.1-Other Business Services
+							RB-11.1-Personal, Cultural \u2013 Recreational services
+							RB-12.1-Govt. not included elsewhere (G.n.i.e.)
+							RB-13.1-Secondary Income
+							RB-14.1-Primary Income
+							RB-15.1-Others
+							RB-16.1-Maintenance and repair services n.i.e
+							RB-17.1-Manufacturing services (goods for processing)
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="7" />
+							<xs:minLength value="6" />
+							<xs:enumeration value="RB-0.1" />
+							<xs:enumeration value="RB-0.2" />
+							<xs:enumeration value="RB-0.3" />
+							<xs:enumeration value="RB-0.4" />
+							<xs:enumeration value="RB-0.5" />
+							<xs:enumeration value="RB-0.6" />
+							<xs:enumeration value="RB-0.7" />
+							<xs:enumeration value="RB-0.8" />
+							<xs:enumeration value="RB-1.1" />
+							<xs:enumeration value="RB-2.1" />
+							<xs:enumeration value="RB-3.1" />
+							<xs:enumeration value="RB-5.1" />
+							<xs:enumeration value="RB-6.1" />
+							<xs:enumeration value="RB-7.1" />
+							<xs:enumeration value="RB-8.1" />
+							<xs:enumeration value="RB-9.1" />
+							<xs:enumeration value="RB-10.1" />
+							<xs:enumeration value="RB-11.1" />
+							<xs:enumeration value="RB-12.1" />
+							<xs:enumeration value="RB-13.1" />
+							<xs:enumeration value="RB-14.1" />
+							<xs:enumeration value="RB-15.1" />
+							<xs:enumeration value="RB-16.1" />
+							<xs:enumeration value="RB-17.1" />							
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RevPurCode">
+						<xs:annotation>
+						<xs:documentation>
+							RB-0.1-S0017 - Acquisition of non-produced non-financial assets (Purchase of intangible assets like patents, copyrights, trademarks etc., land acquired by government, use of natural resources)
+							RB-0.1-S0019 - Acquisition of non-produced non-financial assets (Purchase of intangible assets like patents, copyrights, trademarks etc., use of natural resources) \u2013 Non-Government
+							RB-0.1-S0099 - Other capital payments not included elsewhere
+							RB-0.1-S0026 - Capital transfers (Guarantees payments, Investment Grand given by the government/international organisation, exceptionally large Non-life insurance claims) \u2013 Government
+							RB-0.1-S0027 - Capital transfers (Guarantees payments, Investment Grand given by the Non-government, exceptionally large Non-life insurance claims) \u2013Non-Government
+							RB-0.2-S0003 - Indian Direct investment abroad (in branches \u2013 wholly owned subsidiaries) in equity Shares
+							RB-0.2-S0004 - Indian Direct investment abroad (in subsidiaries and associates) in debt instruments
+							RB-0.2-S0005 - Indian investment abroad \u2013 in real estate
+							RB-0.2-S0006 - Repatriation of Foreign Direct Investment made by overseas Investors in India \u2013 in equity shares
+							RB-0.2-S0007 - Repatriation of Foreign Direct Investment in made by overseas Investors India \u2013 in debt instruments
+							RB-0.2-S0008 - Repatriation of Foreign Direct Investment made by overseas Investors in India \u2013 in real estate
+							RB-0.3-S0001 - Indian Portfolio investment abroad \u2013in equity shares
+							RB-0.3-S0002 - Indian Portfolio investment abroad \u2013in debt instruments
+							RB-0.3-S0009 - Repatriation of Foreign Portfolio Investment made by overseas Investors in India \u2013 in equity shares
+							RB-0.3-S0010 - Repatriation of Foreign Portfolio Investment made by overseas Investors in India \u2013 in debt instruments
+							RB-0.4-S0011 - Loans extended to Non \u2013 Residents
+							RB-0.4-S0012 - Repayment of long \u2013 medium term loans with original maturity above one year received from Non-Residents
+							RB-0.5-S0013 - Repayment of short term loans with original maturity up to one year received from Non-Residents
+							RB-0.6-S0014 - Repatriation of Non-Resident Deposits (FCNR(B)/NR(E)RA 
+							RB-0.6-S0015 - Repayment of loans \u2013 overdrafts taken by ADs on their own 
+							RB-0.6-S0016 - Sale of a foreign currency against another foreign currency 
+							RB-0.7-S0020 - Payments made on account of margin payments, premium payment and settlement amount etc. under Financial derivative 
+							RB-0.7-S0021 - Payments made on account of sale of share under Employee stock option
+							RB-0.7-S0022 - Investment in Indian Depositories Receipts (IDRs)
+							RB-0.7-S0023 - Opening of foreign currency account abroad with a bank 
+							RB-0.8-S0024 - External Assistance extended by India. e.g. Loans and advances extended by India to Foreign governments under 
+							RB-0.8-S0025 - Repayments made on account of External Assistance received by India
+							RB-1.1-S0101 - Advance payment against imports made to countries other than Nepal and Bhutan
+							RB-1.1-S0102 - Payment towards imports-settlement of invoice other than Nepal and Bhutan
+							RB-1.1-S0103 - Imports by diplomatic missions other than Nepal and Bhutan
+							RB-1.1-S0104 - Intermediary trade/transit trade, i.e., third country export passing through India
+							RB-1.1-S0108 - Goods acquired under merchanting / Payment against import leg of merchanting trade*
+							RB-1.1-S0109 - Payments made for Imports from Nepal and Bhutan, if any
+							RB-2.1-S0201 - Payments for surplus freight/passenger fare by foreign shipping companies operating in India
+							RB-2.1-S0202 - Payment for operating expenses of Indian shipping companies operating abroad
+							RB-2.1-S0203 - Freight on imports \u2013Shipping companies
+							RB-2.1-S0204 - Freight on exports \u2013Shipping companies
+							RB-2.1-S0205 - Operational leasing/Rental of Vessels (with crew) \u2013Shipping companies
+							RB-2.1-S0206 - Booking of passages abroad\u2013Shipping companies
+							RB-2.1-S0207 - Payments for surplus freight/passenger fare by foreign Airlines companies operating in India
+							RB-2.1-S0208 - Operating expenses of Indian Airlines companies operating 
+							RB-2.1-S0209 - Freight on imports \u2013Airlines companies
+							RB-2.1-S0210 - Freight on exports \u2013Airlines companies
+							RB-2.1-S0211 - Operational leasing / Rental of Vessels (with crew) \u2013Airline companies
+							RB-2.1-S0212 - Booking of passages abroad \u2013Airlines companies
+							RB-2.1-S0214 - Payments on account of stevedoring, demurrage, port handling charges etc.(Shipping companies)
+							RB-2.1-S0215 - Payments on account of stevedoring, demurrage, port handling charges, etc.(Airlines companies)
+							RB-2.1-S0216 - Payments for Passenger -Shipping companies
+							RB-2.1-S0217 - Other payments by Shipping companies
+							RB-2.1-S0218 - Payments for Passenger -Airlines companies
+							RB-2.1-S0219 - Other Payments by Airlines companies
+							RB-2.1-S0220 - Payments on account of freight under other modes of transport (Internal Waterways, Roadways, Railways, Pipeline transports and others)
+							RB-2.1-S0221 - Payments on account of passenger fare under other modes of transport (Internal Waterways, Roadways, Railways, Pipeline transports and others)
+							RB-2.1-S0222 - Postal \u2013 Courier services by Air
+							RB-2.1-S0223 - Postal \u2013 Courier services by Sea
+							RB-2.1-S0224 - Postal \u2013 Courier services by others
+							RB-3.1-S0301 - Business travel.
+							RB-3.1-S0303 - Travel for pilgrimage
+							RB-3.1-S0304 - Travel for medical treatment
+							RB-3.1-S0305 - Travel for education (including fees, hostel expenses etc.)
+							RB-3.1-S0306 - Other travel (including holiday trips and payments for settling international credit cards transactions)
+							RB-5.1-S0501 - Construction of projects abroad by Indian companies including import of goods at project site abroad
+							RB-5.1-S0502 - cost of construction etc. of projects executed by foreign companies in India.
+							RB-6.1-S0601 - Life Insurance premium except term insurance
+							RB-6.1-S0602 - Freight insurance \u2013relating to import and export of goods
+							RB-6.1-S0603 - Other general insurance premium including reinsurance premium; and term life insurance premium
+							RB-6.1-S0605 - Auxiliary services including commission on insurance
+							RB-6.1-S0607 - Insurance claim Settlement of non-life  insurance; and life insurance (only term insurance)
+							RB-6.1-S0608 - Life Insurance Claim Settlements
+							RB-6.1-S0609 - Standardised guarantee services
+							RB-6.1-S0610 - Premium for pension funds
+							RB-6.1-S0611 - Periodic pension entitlements e.g. monthly quarterly or yearly payments of pension amounts by Indian Pension Fund 
+							RB-6.1-S0612 - Invoking of standardised guarantees
+							RB-7.1-S0701 - Financial intermediation, except investment banking -Bank charges, collection charges, LC charges etc.
+							RB-7.1-S0702 - Investment banking \u2013brokerage, under writing commission 
+							RB-7.1-S0703 - Auxiliary services \u2013charges on operation \u2013 regulatory fees, custodial services, depository services etc.
+							RB-8.1-S0801 - Hardware consultancy/implementation
+							RB-8.1-S0802 - Software consultancy / implementation
+							RB-8.1-S0803 - Data base, data processing charges
+							RB-8.1-S0804 - Repair and maintenance of computer and software
+							RB-8.1-S0805 - News agency services
+							RB-8.1-S0806 - Other information services-Subscription to newspapers, 
+							RB-8.1-S0807 - Off-site software imports
+							RB-8.1-S0808 - Telecommunication services including electronic mail services and voice mail services 
+							RB-8.1-S0809 - Satellite services including space shuttle and rockets etc.
+							RB-9.1-S0901 - Franchises services
+							RB-9.1-S0902 - Payment for use, through licensing arrangements, of produced originals or prototypes (such as manuscripts and films), patents, copyrights, trademarks and industrial processes etc.
+							RB-10.1-S1002 - Trade related services \u2013commission on exports / imports
+							RB-10.1-S1003 - Operational leasing services (other than financial leasing) without operating crew, including charter hire- Airlines companies
+							RB-10.1-S1004 - Legal services
+							RB-10.1-S1005 - Accounting, auditing, book-keeping services
+							RB-10.1-S1006 - Business and management consultancy and public relations 
+							RB-10.1-S1007 - Advertising, trade fair service
+							RB-10.1-S1008 - Research \u2013 Development services
+							RB-10.1-S1009 - Architectural services
+							RB-10.1-S1010 - Agricultural services like protection against insects \u2013 disease, increasing of harvest yields, forestry services.
+							RB-10.1-S1011 - Payments for maintenance of offices abroad
+							RB-10.1-S1013 - Environmental Services
+							RB-10.1-S1014 - Engineering Services
+							RB-10.1-S1015 - Tax consulting services
+							RB-10.1-S1016 - Market research and public opinion polling service
+							RB-10.1-S1017 - Publishing and printing services
+							RB-10.1-S1018 - Mining services like on \u2013site processing services analysis of ores etc.
+							RB-10.1-S1020 - Commission agent services
+							RB-10.1-S1021 - Wholesale and retailing trade services.
+							RB-10.1-S1022 - Operational leasing services (other than financial leasing) without operating crew, including charter hire- Shipping companies
+							RB-10.1-S1023 - Other Technical Services including scientific/space services.
+							RB-10.1-S1099 - Other services not included elsewhere
+							RB-11.1-S1104 - Entertainment services
+							RB-11.1-S1101 - Audio-visual and related services like Motion picture and video tape production, distribution and projection services.
+							RB-11.1-S1103 - Radio and television production, distribution and transmission services 
+							RB-11.1-S1105 - Museums, library and archival services
+							RB-11.1-S1106 - Recreation and sporting activities services
+							RB-11.1-S1107 - Education (e.g. fees for correspondence courses abroad)
+							RB-11.1-S1108 - Health Service (payment towards services received from hospitals, doctors, nurses, paramedical and similar services etc. rendered remotely or on-site)
+							RB-11.1-S1109 - Other Personal, Cultural \u2013 Recreational services
+							RB-12.1-S1201 - Maintenance of Indian embassies abroad
+							RB-12.1-S1202 - Remittances by foreign embassies in India
+							RB-13.1-S1301 - Remittance for family maintenance and savings
+							RB-13.1-S1302 - Remittance towards personal gifts and donations
+							RB-13.1-S1303 - Remittance towards donations to religious and charitable institutions abroad
+							RB-13.1-S1304 - Remittance towards grants and donations to other governments and charitable institutions established by the 
+							RB-13.1-S1305 - Contributions/donations by the Government to international institutions
+							RB-13.1-S1306 - Remittance towards payment / refund of taxes.
+							RB-13.1-S1307 - Outflows on account of migrant transfers including personal
+							RB-14.1-S1401 - Compensation of employees
+							RB-14.1-S1402 - Remittance towards interest on Non-Resident deposits (FCNR(B)/NR(E)RA, etc.)
+							RB-14.1-S1403 - Remittance towards interest on loans from Non-Residents (ST/MT/LT loans) e.g. External Commercial Borrowings,Trade Credits, etc.
+							RB-14.1-S1405 - Remittance towards interest payment by ADs on their own account (to VOSTRO a/c holders or the OD on NOSTRO a/c.)
+							RB-14.1-S1408 - Remittance of profit by FDI enterprises in India (by branches of foreign companies including bank branches)
+							RB-14.1-S1409 - Remittance of dividends by FDI enterprises in India (other than branches) on equity and investment fund shares
+							RB-14.1-S1410 - Payment of interest by FDI enterprises in India to their Parent company abroad.
+							RB-14.1-S1411 - Remittance of interest income on account of Portfolio Investment in India
+							RB-14.1-S1412 - Remittance of dividends on account of Portfolio Investment in India on equity and investment fund shares
+							RB-15.1-S1501 - Refunds / rebates / reduction in invoice value on account of
+							RB-15.1-S1502 - Reversal of wrong entries, refunds of amount remitted for non-Exports
+							RB-15.1-S1503 - Payments by residents for international bidding
+							RB-15.1-S1504 - Notional sales when export bills negotiated/ purchased/ discounted are dishonored/ crystallised/ cancelled and reversed from suspense account
+							RB-15.1-S1505 - Deemed Imports (exports between SEZ, EPZs and Domestic tariff areas)
+							RB-16.1-S1601 - Payments on account of maintenance and repair services rendered for Vessels, ships, boats, warships, etc.
+							RB-16.1-S1602 - Payments on account of maintenance and repair services rendered for aircrafts, space shuttles, rockets, military aircrafts, 
+							RB-17.1-S1701 - Payments for processing of goods
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="13" />
+							<xs:minLength value="12" />
+							<xs:enumeration value="RB-0.1-S0017" />
+							<xs:enumeration value="RB-0.1-S0019" />
+							<xs:enumeration value="RB-0.1-S0099" />
+							<xs:enumeration value="RB-0.1-S0026" />
+							<xs:enumeration value="RB-0.1-S0027" />
+							<xs:enumeration value="RB-0.2-S0003" />
+							<xs:enumeration value="RB-0.2-S0004" />
+							<xs:enumeration value="RB-0.2-S0005" />
+							<xs:enumeration value="RB-0.2-S0006" />
+							<xs:enumeration value="RB-0.2-S0007" />
+							<xs:enumeration value="RB-0.2-S0008" />
+							<xs:enumeration value="RB-0.3-S0001" />
+							<xs:enumeration value="RB-0.3-S0002" />
+							<xs:enumeration value="RB-0.3-S0009" />
+							<xs:enumeration value="RB-0.3-S0010" />
+							<xs:enumeration value="RB-0.4-S0011" />
+							<xs:enumeration value="RB-0.4-S0012" />
+							<xs:enumeration value="RB-0.5-S0013" />
+							<xs:enumeration value="RB-0.6-S0014" />
+							<xs:enumeration value="RB-0.6-S0015" />
+							<xs:enumeration value="RB-0.6-S0016" />
+							<xs:enumeration value="RB-0.7-S0020" />
+							<xs:enumeration value="RB-0.7-S0021" />
+							<xs:enumeration value="RB-0.7-S0022" />
+							<xs:enumeration value="RB-0.7-S0023" />
+							<xs:enumeration value="RB-0.8-S0024" />
+							<xs:enumeration value="RB-0.8-S0025" />
+							<xs:enumeration value="RB-1.1-S0101" />
+							<xs:enumeration value="RB-1.1-S0102" />
+							<xs:enumeration value="RB-1.1-S0103" />
+							<xs:enumeration value="RB-1.1-S0104" />
+							<xs:enumeration value="RB-1.1-S0108" />
+							<xs:enumeration value="RB-1.1-S0109" />
+							<xs:enumeration value="RB-2.1-S0201" />
+							<xs:enumeration value="RB-2.1-S0202" />
+							<xs:enumeration value="RB-2.1-S0203" />
+							<xs:enumeration value="RB-2.1-S0204" />
+							<xs:enumeration value="RB-2.1-S0205" />
+							<xs:enumeration value="RB-2.1-S0206" />
+							<xs:enumeration value="RB-2.1-S0207" />
+							<xs:enumeration value="RB-2.1-S0208" />
+							<xs:enumeration value="RB-2.1-S0209" />
+							<xs:enumeration value="RB-2.1-S0210" />
+							<xs:enumeration value="RB-2.1-S0211" />
+							<xs:enumeration value="RB-2.1-S0212" />
+							<xs:enumeration value="RB-2.1-S0214" />
+							<xs:enumeration value="RB-2.1-S0215" />
+							<xs:enumeration value="RB-2.1-S0216" />
+							<xs:enumeration value="RB-2.1-S0217" />
+							<xs:enumeration value="RB-2.1-S0218" />
+							<xs:enumeration value="RB-2.1-S0219" />
+							<xs:enumeration value="RB-2.1-S0220" />
+							<xs:enumeration value="RB-2.1-S0221" />
+							<xs:enumeration value="RB-2.1-S0222" />
+							<xs:enumeration value="RB-2.1-S0223" />
+							<xs:enumeration value="RB-2.1-S0224" />
+							<xs:enumeration value="RB-3.1-S0301" />
+							<xs:enumeration value="RB-3.1-S0303" />
+							<xs:enumeration value="RB-3.1-S0304" />
+							<xs:enumeration value="RB-3.1-S0305" />
+							<xs:enumeration value="RB-3.1-S0306" />
+							<xs:enumeration value="RB-5.1-S0501" />
+							<xs:enumeration value="RB-5.1-S0502" />
+							<xs:enumeration value="RB-6.1-S0601" />
+							<xs:enumeration value="RB-6.1-S0602" />
+							<xs:enumeration value="RB-6.1-S0603" />
+							<xs:enumeration value="RB-6.1-S0605" />
+							<xs:enumeration value="RB-6.1-S0607" />
+							<xs:enumeration value="RB-6.1-S0608" />
+							<xs:enumeration value="RB-6.1-S0609" />
+							<xs:enumeration value="RB-6.1-S0610" />
+							<xs:enumeration value="RB-6.1-S0611" />
+							<xs:enumeration value="RB-6.1-S0612" />
+							<xs:enumeration value="RB-7.1-S0701" />
+							<xs:enumeration value="RB-7.1-S0702" />
+							<xs:enumeration value="RB-7.1-S0703" />
+							<xs:enumeration value="RB-8.1-S0801" />
+							<xs:enumeration value="RB-8.1-S0802" />
+							<xs:enumeration value="RB-8.1-S0803" />
+							<xs:enumeration value="RB-8.1-S0804" />
+							<xs:enumeration value="RB-8.1-S0805" />
+							<xs:enumeration value="RB-8.1-S0806" />
+							<xs:enumeration value="RB-8.1-S0807" />
+							<xs:enumeration value="RB-8.1-S0808" />
+							<xs:enumeration value="RB-8.1-S0809" />
+							<xs:enumeration value="RB-9.1-S0901" />
+							<xs:enumeration value="RB-9.1-S0902" />
+							<xs:enumeration value="RB-10.1-S1002" />
+							<xs:enumeration value="RB-10.1-S1003" />
+							<xs:enumeration value="RB-10.1-S1004" />
+							<xs:enumeration value="RB-10.1-S1005" />
+							<xs:enumeration value="RB-10.1-S1006" />
+							<xs:enumeration value="RB-10.1-S1007" />
+							<xs:enumeration value="RB-10.1-S1008" />
+							<xs:enumeration value="RB-10.1-S1009" />
+							<xs:enumeration value="RB-10.1-S1010" />
+							<xs:enumeration value="RB-10.1-S1011" />
+							<xs:enumeration value="RB-10.1-S1013" />
+							<xs:enumeration value="RB-10.1-S1014" />
+							<xs:enumeration value="RB-10.1-S1015" />
+							<xs:enumeration value="RB-10.1-S1016" />
+							<xs:enumeration value="RB-10.1-S1017" />
+							<xs:enumeration value="RB-10.1-S1018" />
+							<xs:enumeration value="RB-10.1-S1020" />
+							<xs:enumeration value="RB-10.1-S1021" />
+							<xs:enumeration value="RB-10.1-S1022" />
+							<xs:enumeration value="RB-10.1-S1023" />
+							<xs:enumeration value="RB-10.1-S1099" />
+							<xs:enumeration value="RB-11.1-S1104" />
+							<xs:enumeration value="RB-11.1-S1101" />
+							<xs:enumeration value="RB-11.1-S1103" />
+							<xs:enumeration value="RB-11.1-S1105" />
+							<xs:enumeration value="RB-11.1-S1106" />
+							<xs:enumeration value="RB-11.1-S1107" />
+							<xs:enumeration value="RB-11.1-S1108" />
+							<xs:enumeration value="RB-11.1-S1109" />
+							<xs:enumeration value="RB-12.1-S1201" />
+							<xs:enumeration value="RB-12.1-S1202" />
+							<xs:enumeration value="RB-13.1-S1301" />
+							<xs:enumeration value="RB-13.1-S1302" />
+							<xs:enumeration value="RB-13.1-S1303" />
+							<xs:enumeration value="RB-13.1-S1304" />
+							<xs:enumeration value="RB-13.1-S1305" />
+							<xs:enumeration value="RB-13.1-S1306" />
+							<xs:enumeration value="RB-13.1-S1307" />
+							<xs:enumeration value="RB-14.1-S1401" />
+							<xs:enumeration value="RB-14.1-S1402" />
+							<xs:enumeration value="RB-14.1-S1403" />
+							<xs:enumeration value="RB-14.1-S1405" />
+							<xs:enumeration value="RB-14.1-S1408" />
+							<xs:enumeration value="RB-14.1-S1409" />
+							<xs:enumeration value="RB-14.1-S1410" />
+							<xs:enumeration value="RB-14.1-S1411" />
+							<xs:enumeration value="RB-14.1-S1412" />
+							<xs:enumeration value="RB-15.1-S1501" />
+							<xs:enumeration value="RB-15.1-S1502" />
+							<xs:enumeration value="RB-15.1-S1503" />
+							<xs:enumeration value="RB-15.1-S1504" />
+							<xs:enumeration value="RB-15.1-S1505" />
+							<xs:enumeration value="RB-16.1-S1601" />
+							<xs:enumeration value="RB-16.1-S1602" />
+							<xs:enumeration value="RB-17.1-S1701" />													
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="TaxPayGrossSecb" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N"></xs:pattern>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ItActDetails">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RemittanceCharIndia">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="ReasonNot" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="125" />
+							<xs:minLength value="0" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="SecRemCovered" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="30" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="AmtIncChrgIt" type="FORM15CB:positiveDecimalAmt"
+					minOccurs="0" />
+				<xs:element name="TaxLiablIt" type="FORM15CB:positiveDecimalAmt"
+					minOccurs="0" />
+				<xs:element name="BasisDeterTax" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DTAADetails">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TaxResidCert">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RelevantDtaa" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="30" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RelevantArtDtaa" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="TaxIncDtaa" type="FORM15CB:positiveDecimalAmt"
+					minOccurs="0" />
+				<xs:element name="TaxLiablDtaa" type="FORM15CB:positiveDecimalAmt"
+					minOccurs="0" />
+				<xs:element name="RemForRoyFlg">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="ArtDtaa" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RateTdsADtaa" type="FORM15CB:percentage"
+					minOccurs="0" />
+				<xs:element name="RemAcctBusIncFlg">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="IncLiabIndiaFlg" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N|-1" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="ArrAtRateDedTax" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="ReasonofReleventArtDtaa" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RemOnCapGainFlg">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="AmtLongTrm" type="FORM15CB:positiveDecimalAmt"
+					minOccurs="0" />
+				<xs:element name="AmtShortTrm" type="FORM15CB:positiveDecimalAmt"
+					minOccurs="0" />
+				<xs:element name="BasisTaxIncDtaa" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="OtherRemDtaa">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="NatureRemDtaa" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="TaxIndDtaaFlg" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RateTdsDDtaa" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RelArtDetlDDtaa" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+							<xs:maxLength value="125" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TDSDetails">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AmtPayForgnTds" type="FORM15CB:positiveDecimalAmt" />
+				<xs:element name="AmtPayIndianTds" type="FORM15CB:positiveDecimalAmt" />
+				<xs:element name="RateTdsSecbFlg" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="1|2" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RateTdsSecB" type="FORM15CB:percentage"
+					minOccurs="0" />
+				<xs:element name="ActlAmtTdsForgn" type="FORM15CB:positiveDecimalAmt"
+					minOccurs="0" />
+				<xs:element name="DednDateTds" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:date" />
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AcctntDetls" type="FORM15CB:AcctntDetls" />
+	<xs:simpleType name="nameType">
+		<xs:restriction base="Form:nonEmptyString">
+			<xs:maxLength value="125"></xs:maxLength>
+			<xs:minLength value="1"></xs:minLength>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="nonEmptyStringOnlyCaps">
+		<xs:restriction base="xs:string">
+			<xs:pattern
+				value="|(\s*([\p{Lu}\d_=!@#$%\^*\(\){}\[\]\|\\:;',\.\?/~`\-\+&lt;&gt;&amp;&quot;][\s\p{Lu}\d_=!@#$%\^*\(\){}\[\]\|\\:;',\.\?/~`\-\+&lt;&gt;&amp;&quot;]*)\s*)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	
+	<xs:complexType name="addressType">
+		<xs:sequence>
+			<xs:element name="PremisesBuildingVillage" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="Form:nonEmptyString">
+						<xs:maxLength value="50" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TownCityDistrict">
+				<xs:simpleType>
+					<xs:restriction base="Form:nonEmptyString">
+						<xs:maxLength value="50" />
+						<xs:minLength value="1" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="FlatDoorBuilding">
+				<xs:simpleType>
+					<xs:restriction base="Form:nonEmptyString">
+						<xs:maxLength value="50" />
+						<xs:minLength value="1" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AreaLocality">
+				<xs:simpleType>
+					<xs:restriction base="Form:nonEmptyString">
+						<xs:maxLength value="50" />
+						<xs:minLength value="1" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Pincode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="Form:nonEmptyString">
+						<xs:pattern value="[0-9]{6}" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ZipCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8" />
+						<xs:minLength value="1" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element ref="Form:State" />
+			<xs:element name="RoadStreet" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="Form:nonEmptyString">
+						<xs:maxLength value="50" />
+						<xs:minLength value="0" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Country" type="Form:countryType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AcctntDetls">
+		<xs:sequence>
+			<xs:element name="NameAcctnt">
+				<xs:simpleType>
+					<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+						<xs:minLength value="1" />
+						<xs:maxLength value="125" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="NameFirmAcctnt">
+				<xs:simpleType>
+					<xs:restriction base="FORM15CB:nonEmptyStringOnlyCaps">
+						<xs:minLength value="1" />
+						<xs:maxLength value="125" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AcctntAddrs" type="FORM15CB:addressType" />
+			<xs:element name="MembershipNumber">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="6" />
+						<xs:maxLength value="6" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RegNoAcctnt" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="8" />
+						<xs:maxLength value="8" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="percentage">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2" />
+			<xs:maxInclusive value="100" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="positiveDecimalAmt">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2" />
+			<xs:maxInclusive value="99999999999999" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="amountoftds">
+		<xs:sequence>
+			<xs:element name="InForeignCurrence">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="InIndianRupee">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="panTanType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{5}[0-9]{4}[A-Z]{1}|[a-zA-Z]{4}[0-9]{5}[a-zA-Z]{1}" />
+			<xs:maxLength value="10" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

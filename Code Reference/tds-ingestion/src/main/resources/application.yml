@@ -1,0 +1,211 @@
+spring:
+  profiles:
+    active: local,override
+  mail:
+    host: ${spring-mail-host}
+    port: ${spring-mail-port}
+    username: ${spring-mail-username}
+    password: ${spring-mail-password}
+    properties:
+      mail:
+        smtp:
+          auth: ${spring-mail-properties-mail-smtp-auth}
+          starttls:
+            enable: ${spring-mail-properties-mail-smtp-starttls-enable}
+  servlet:
+    multipart:
+      max-file-size: ${multipart-max-file-size}
+      max-request-size: ${multipart-max-request-size}
+  application:
+    name: ingestion
+  # Redis Config
+  cache:
+    type: redis
+  cloud:
+    kubernetes:
+      reload:
+        enabled: ${kubernetes_reload_enabled}
+  sftp:
+    host: ${spring-sftp-host}
+    user: ${spring-sftp-user}
+    password: ${spring-sftp-password}
+    privateKey: ${spring-sftp-privateKey}
+    classpath: ${spring-sftp-classpath}
+    privateKeyPassphrase: ${spring-sftp-privateKeyPassphrase}
+  jpa:
+    show-sql: ${jpa_show_sql}
+    properties:
+      hibernate:
+        format_sql: false
+        ## Hibernate Properties
+        # The SQL dialect makes Hibernate generate better SQL for the chosen database
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        # Hibernate ddl auto (create, create-drop, validate, update)
+        ddl-auto: update
+  redis:
+    host: ${redis-host}
+    port: ${redis-port}
+    password: ${redis-password}
+    ssl: ${redis-ssl}
+  data:
+    redis:
+      repositories:
+        enabled: false
+spark:
+  notebooks:
+    invoice_excel:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${invoice-job-id}
+    tcs_invoice_excel:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs-invoice-job-id}
+    tcs_advances:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs-advances-job-id}
+    tcs_collections:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs-collections-job-id}
+    provisions:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${provision-job-id}
+    advances:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${advances-job-id}
+    gl:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${gl-job-id}
+    gl_reconcilation:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${gl_reconcilation-job-id}
+    liability_reconcilation:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs-liability-reconcilation-job-id}
+    tds_liability_reconcilation:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tds-liability-reconcilation-job-id}
+    interest:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${interest-job-id}
+    reconciliation:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${reconciliation-job-id}
+    power_Bi:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${power-bi-job-id}
+    tcs_gl:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs_gl_reconcilation-job-id}
+    tcs_invoice_mismatch:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs_invoice_mismatch-job-id}
+    tcs_payment_mismatch:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs_invoice_mismatch-job-id}
+    tcs_gst_59_df:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs_gst_59_df-job-id}
+    tcs_gst_239_df:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs_gst_59_df-job-id}
+    invoice_mismatch:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${invoice-mismatch-job-id}
+    advance_mismatch:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${invoice-mismatch-job-id}
+    provision_mismatch:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${invoice-mismatch-job-id}
+    dividend_payout_invoice_processing:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${dividend-payout-job-id}
+    tcs_form_26as_request:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${tcs_form_26as_request-job-id}
+    dividend_payout_bulk_approve:
+      url: https://centralindia.azuredatabricks.net/api/2.0/jobs/run-now
+      job-id: ${dividend-approve-job-id}
+
+server:
+  port: ${server-port}
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    min-response-size: 1024
+management:
+  endpoint:
+    restart:
+      enabled: true
+logging:
+  pattern:
+    console: "${tds_logging_pattern}"
+  level:
+    com.ey.in.tds: ${tds_root_log_level}
+    io.jaegertracing.internal.reporters.LoggingReporter: ${custom_log_package_level}
+cosmos:
+  policy:
+    retry_max_attempts: ${cosmos-policy-retry_max_attempts}
+    fixed_backoff_time_ms: ${cosmos-policy-fixed_backoff_time_ms}
+    growing_backoff_time_ms: ${cosmos-policy-growing_backoff_time_ms}
+  socket:
+    read_timeout_in_millis: ${cosmos-socket-read_timeout_in_millis}
+    connection_timeout_in_millis: ${cosmos-socket-connection_timeout_in_millis}
+  pool:
+    pool_timeout_in_millis: ${cosmos-pool-pool_timeout_in_millis}
+  core:
+    local:
+      connections: -1
+    remote:
+      connections: -1
+  max:
+    local:
+      connections: -1
+    remote:
+      connections: -1
+databricks:
+  key: ${databricks-api-key}
+feign:
+  masters:
+    app:
+      url: ${masters-service-end-point}
+  validation:
+    app:
+      url: ${validation-service-end-point}
+  returns:
+    app:
+      url: ${returns-service-end-point}
+  onboarding:
+    app:
+      url: ${onboarding-service-end-point}
+  authorization:
+    app:
+      url: ${authorization-service-end-point}
+  challans:
+    app:
+      url: ${challans-service-end-point}
+exception:
+  email:
+    id: ${exception-email-id}
+    enabled: ${exception-email-enabled}
+# flask/invoice-api url
+application:
+  url: ${application-url}
+opentracing:
+  jaeger:
+    http-sender:
+      url: ${jaeger_http_sender_url}
+ops:
+  team:
+    email:
+      id: ${ops_team_email_id}
+page_size: ${page_size}
+datasource:
+  masters:
+    dbname: ${datasource-masters-dbname}
+    host: ${datasource-masters-host}
+    port: ${datasource-masters-port}
+    username: ${datasource-masters-username}
+    password: ${datasource-masters-password}
+sparkjob:
+  runstaus:
+    url: https://centralindia.azuredatabricks.net/api/2.0/jobs/runs/get-output?run_id=

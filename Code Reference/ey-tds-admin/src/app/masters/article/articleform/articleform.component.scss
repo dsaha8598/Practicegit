@@ -1,0 +1,10 @@
+.error-feedback {
+  color: #dc3545;
+  font-family: auto;
+}
+
+@-moz-document url-prefix() {
+  .form-row {
+    display: block ruby;
+  }
+}

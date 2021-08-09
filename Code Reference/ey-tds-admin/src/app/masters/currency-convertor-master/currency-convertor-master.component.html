@@ -1,0 +1,335 @@
+<div class="ui-g-12">
+  <div class="ui-g-6 mx-0">
+    <h2 class="fs-22 mb-0">Currency Converter Master</h2>
+  </div>
+  <div class="ui-g-6 mx-0 text-right">
+    <span *HasAnyAuthority="['CURRENCY_MASTER_UPLOAD']">
+      <button
+        type="button"
+        class="ui-button btn-primary"
+        (click)="showDialog()"
+      >
+        <i class="fas fa-upload"></i> Upload
+      </button>
+      <button
+        type="button"
+        class="ui-button btn-secondary"
+        (click)="refreshData()"
+      >
+        <i class="fas fa-sync"></i> Refresh data
+      </button>
+    </span>
+  </div>
+</div>
+
+<div class="ui-g-12 mb-100">
+  <p-tabView class="table-tab-view">
+    <p-tabPanel header="Currency rates">
+      <p-table
+        #dt
+        [columns]="currencyRateSelectedColumns"
+        [totalRecords]="currencyRateList?.length"
+        [value]="currencyRateList"
+        [paginator]="true"
+        [rows]="5"
+        [rowsPerPageOptions]="[5, 10, 20, 30]"
+        [scrollable]="true"
+      >
+        <ng-template pTemplate="caption">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-3">
+              <div style="text-align:left">
+                <p-multiSelect
+                  [options]="currencyRateCols"
+                  name="currencyRateSelectedColumns"
+                  optionLabel="header"
+                  selectedItemsLabel="{0} columns selected"
+                  [style]="{ minWidth: '200px' }"
+                  [(ngModel)]="currencyRateSelectedColumns"
+                  defaultLabel="Choose Columns"
+                  ngDefaultControl
+                >
+                </p-multiSelect>
+              </div>
+            </div>
+            <div class="ui-inputgroup ui-inputgroup-cust ui-g-4 mx-0">
+              <div class="relative">
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Search"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')"
+                  class="input-ctrl input-search-type"
+                />
+                <button
+                  type="submit"
+                  class="input-search pi pi-search"
+                ></button>
+              </div>
+            </div>
+            <div class="ui-inputgroup ui-inputgroup-cust ui-g-3 mx-0">
+              <div class="input-group">
+                <input
+                  class="input-ctrl"
+                  placeholder="dd-mm-yyyy"
+                  name="dp"
+                  [(ngModel)]="currencyDate"
+                  ngbDatepicker
+                  placement="bottom"
+                  #i="ngbDatepicker"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-secondary calendar fs-14"
+                    (click)="i.toggle()"
+                    type="button"
+                  >
+                    <i class="fas fa-calendar-alt"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="ui-inputgroup ui-g-2 mx-0 mb-0">
+              <div class="">
+                <button
+                  type="button"
+                  class="ui-button btn-primary"
+                  (click)="filerCurrencyData()"
+                >
+                  Search
+                </button>
+                <button
+                  type="button"
+                  class="ui-button btn-primary"
+                  (click)="getCurrencyRatesData()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+            <!-- <div class="ui-inputgroup ui-inputgroup-cust ui-g-4 mx-0">
+                <input type="text" ngbDatepicker #date="ngbDatepicker"/>
+                <button (click)="date.toggle()"></button>
+            </div> -->
+          </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col
+              *ngFor="let col of columns"
+              style="width:200px"
+              [style.width]="col.width"
+            />
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [style.width]="col.width">
+              {{ col.header }}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns" [style.width]="col.width">
+              {{ rowData[col.field] }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="columns.length">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <!--  <p-tabPanel header="Status">
+      <p-table
+        #dt1
+        [columns]="statusSelectedColumns"
+        [totalRecords]="statusList?.length"
+        [value]="statusList"
+        [paginator]="true"
+        [rows]="5"
+        [rowsPerPageOptions]="[5, 10, 20, 30]"
+        [scrollable]="true"
+      >
+        <ng-template pTemplate="caption">
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-4">
+              <div style="text-align:left">
+                <p-multiSelect
+                  [options]="statusCols"
+                  name="statusSelectedColumns"
+                  optionLabel="header"
+                  selectedItemsLabel="{0} columns selected"
+                  [style]="{ minWidth: '200px' }"
+                  [(ngModel)]="statusSelectedColumns"
+                  defaultLabel="Choose Columns"
+                  ngDefaultControl
+                >
+                </p-multiSelect>
+              </div>
+            </div>
+            <div class="ui-inputgroup ui-inputgroup-cust ui-g-8 mx-0">
+              <div class="relative">
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Search"
+                  (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                  class="input-ctrl input-search-type"
+                />
+                <button
+                  type="submit"
+                  class="input-search pi pi-search"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col
+              *ngFor="let col of columns"
+              style="width:200px"
+              [style.width]="col.width"
+            />
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [style.width]="col.width">
+              {{ col.header }}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns" [style.width]="col.width">
+              <span
+                *ngIf="col.field === 'fileName'"
+              >
+                {{ rowData[col.field] }}
+              </span>
+              <span
+              *ngIf="
+                col.type === 'date'
+              "
+              >{{ rowData[col.field] | date: 'dd/MM/yyyy h:mm:ss a' }}</span
+            >
+              <a
+                href="javascript:void(0);"
+                *ngIf="col.type === 'link'"
+                (click)="downloadFile(rowData)"
+              >
+                <i class="fas fa-download"></i>
+                <span>
+                  File
+                </span>
+              </a>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="columns.length">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel> -->
+  </p-tabView>
+</div>
+
+<p-dialog
+  header="Upload"
+  [(visible)]="display"
+  [style]="{ width: '800px' }"
+  [modal]="true"
+  [responsive]="true"
+  [contentStyle]="{ overflow: 'visible' }"
+  [closable]="true"
+  [minY]="70"
+  (onHide)="clearUpload()"
+  [baseZIndex]="10000"
+>
+  <form [formGroup]="currencyConvertorUploadForm">
+    <div class="p-20">
+      <div
+        class="no-files m-20"
+        *ngIf="!filesExists && !uploadSuccess && !uploadError && !fileLoading"
+      >
+        <p class="fs-18">
+          No files added. Please click add files button to upload files.
+        </p>
+        <span class="fs-14 mt-20">
+          Note: Upload .pdf files only.
+        </span>
+      </div>
+      <div class="text-center my-50" *ngIf="fileLoading">
+        <i class="fs-24 fas fa-hourglass-start fa-spin text-success mb-30"></i>
+        <p class="fs-16">Your file is being processed. please wait.</p>
+      </div>
+      <div class="text-center my-50" *ngIf="uploadSuccess">
+        <i class="fs-80 fa fa-check-circle text-success mb-30"></i>
+        <p class="fs-24">File Uploaded Successfully.</p>
+      </div>
+      <div class="text-center my-50" *ngIf="uploadError">
+        <i class="fs-80 fa fa-times text-danger mb-30"></i>
+        <p class="fs-24">Processing failed.</p>
+      </div>
+      <div
+        class="files p-20"
+        *ngIf="filesExists && !uploadSuccess && !uploadError && !fileLoading"
+      >
+        <div class="alert alert-success">
+          {{ rawValues?.file.name }} has been added successfully. Please click
+          upload files to process files.
+        </div>
+        <div class="bg-light mb-10 p-20 row mx-0">
+          <div class="col-sm-8">
+            {{ rawValues.file.name }}
+          </div>
+          <div class="col-sm-2">
+            {{ formatBytes(rawValues.file.size) }}
+          </div>
+          <div class="col-sm-2">
+            <button
+              type="button"
+              class="ui-button btn-secondary"
+              (click)="removeFiles()"
+            >
+              <i class="pi pi-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <p-footer *ngIf="!fileLoading && !uploadSuccess && !uploadError">
+    <span *ngIf="!filesExists">
+      <input
+        type="file"
+        class="inputfile"
+        id="currencyfiles"
+        (change)="uploadFileHandler($event)"
+        accept=".pdf"
+      />
+      <label for="currencyfiles" class="mb-0">Add files</label>
+    </span>
+    <button
+      type="button"
+      class="ui-button btn-secondary"
+      *ngIf="filesExists"
+      (click)="uploadFiles()"
+    >
+      Upload files
+    </button>
+  </p-footer>
+</p-dialog>

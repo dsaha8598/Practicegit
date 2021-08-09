@@ -13,3 +13,37 @@
     height: 2%;
     border: 1px solid black;
 }
+.bodyContent{
+    //   overflow: auto;
+        position: absolute;
+        bottom: 0px;
+        width: 80%;
+        height: 80%;
+        left: 9%;
+        top :130px;
+        background-color: blanchedalmond;
+       
+    }
+.logoContainer{
+position: relative;
+display: inline-block;
+background-image: url("../../images/flyingplane.gif");
+background-color: rgb(198, 232, 255) ;
+background-repeat: no-repeat;
+background-position: center;
+height: 100%;
+width: 50%;
+left: 0%;
+}
+.nameContainer{
+    position: relative;
+    display: inline-block;
+    background-image: url("../../images/bueflyingplane.gif");
+    background-color: rgb(198, 232, 255) ;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+    height: 100%;
+    width: 50%;
+    right: 0%;
+}
