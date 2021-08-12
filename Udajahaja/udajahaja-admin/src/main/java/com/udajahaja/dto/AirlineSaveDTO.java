@@ -5,6 +5,7 @@ import java.util.List;
 
 public class AirlineSaveDTO {
 
+	private int id;
 	private String airlineName;
 	private long contactNumber;
 	private String contactAddress;
@@ -40,6 +41,12 @@ public class AirlineSaveDTO {
 	}
 	public void setAeroplanes(List<AeroplaneSaveDTO> aeroplanes) {
 		this.aeroplanes = aeroplanes;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	
