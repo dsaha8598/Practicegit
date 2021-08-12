@@ -1,0 +1,111 @@
+<div class="header">
+    <div class="button">
+        <button class="loginbutton" id="adminLoginButton" [routerLink]="['admin']">Admin Login</button>
+    </div>
+    <app-header></app-header>
+
+</div>
+
+<body>
+
+    <div class="container">
+        <div style="position: relative;width: 100%;text-align: center;">
+            <h2>Start Journey</h2>
+        </div>
+        <br>
+        <div>
+            <div style="display: inline-block;position: relative;width: 20%;">Departure</div>
+            <div style="display: inline-block;position: relative;width: 20%;">Arrival</div>
+            <div style="display: inline-block;position: relative;width: 20%;">Economy Price</div>
+            <div style="display: inline-block;position: relative;width: 20%;">Business Price</div>
+            <div style="display: inline-block;position: relative;width: 20%;">Action</div>
+        </div>
+        <br>
+        <div class="availableFlight" *ngFor="let trip of onewayTrip;let i=index">
+            <div style="position: relative;width: 100%;height: 50%;text-align: center;">{{trip.airlineName}}</div>
+            <div style="position: relative;width: 100%;height: 50%;">
+                <div style="display: inline-block;position: relative;width: 23%;">
+                    {{trip.fromPlace}}<br>{{trip.departureTime}}</div>
+                <div style="display: inline-block;position: relative;width: 23%;">
+                    {{trip.toPlace}}<br>{{trip.arrivalTime}}</div>
+                <div style="display: inline-block;position: relative;width: 20%;">{{trip.economyTicketCost}}</div>
+                <div style="display: inline-block;position: relative;width: 20%;">{{trip.businessTicketCost}}</div>
+                <div style="display: inline-block;position: relative;width: 10%;">
+                    <button class="bookButton" (click)="onstartDateBookingClick(i)">Book</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="separator"></div>
+    <div class="container">
+        <div>
+            <div style="position: relative;width: 100%;text-align: center;">
+                <h2>Return Journey</h2>
+            </div>
+            <br>
+            <div style="display: inline-block;position: relative;width: 20%;">Departure</div>
+            <div style="display: inline-block;position: relative;width: 20%;">Arrival</div>
+            <div style="display: inline-block;position: relative;width: 20%;">Economy Price</div>
+            <div style="display: inline-block;position: relative;width: 20%;">Business Price</div>
+            <div style="display: inline-block;position: relative;width: 20%;">Action</div>
+            <div class="availableFlightContainer">
+                <br>
+                <div class="availableFlight" *ngFor="let trip of returnTrip;let i=index">
+                    <div style="position: relative;width: 100%;height: 50%;text-align: center;">{{trip.airlineName}}
+                    </div>
+                    <div style="position: relative;width: 100%;height: 50%;">
+                        <div style="display: inline-block;position: relative;width: 23%;word-wrap: break-word;;">
+                            {{trip.fromPlace}}<br>{{trip.departureTime}}</div>
+                        <div style="display: inline-block;position: relative;width: 23%;">
+                            {{trip.toPlace}}<br>{{trip.arrivalTime}}</div>
+                        <div style="display: inline-block;position: relative;width: 20%;">{{trip.economyTicketCost}}
+                        </div>
+                        <div style="display: inline-block;position: relative;width: 20%;">{{trip.businessTicketCost}}
+                        </div>
+                        <div style="display: inline-block;position: relative;width: 10%;text-align: center;">
+                            <button class="bookButton" (click)="onreturnDateBookingClick(i)">Book</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="position: relative;height: 2px;width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="container">
+        <div style="position: relative;width: 100%;text-align: center;">
+            <h2>Booking Detaiils</h2>
+        </div>
+
+        <div   style="position: relative;width: 100%;text-align: center;;" [ngStyle]="{'display': isBookingDetailsVisible==false ?'none' :''}">
+            <form [formGroup]="bookingFlightForm" *ngFor="let no of noOfBookingScreens">
+                <h3>Verify Detaiils And Proceed with Booking</h3>
+                <div>
+                    <label>Journey Date &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="journeydate"/>
+                    <br>
+                    <label>From &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="from"/>
+                    <br>
+                    <label>To &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="to"/>
+                    <br>
+                    <label>DepartureTime &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="departureTime"/>
+                    <br>
+                    <label>Arrival Time &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="arrivalTime"/>
+                    <br>
+                    <input type="checkbox" id="vehicle1" value="S" formControlName="isEconomy" (change)="econmyClassAmount(i)">
+                    <label for="vehicle1"> Economy Clas</label><br>
+                    <input type="checkbox" id="vehicle1" value="S" formControlName="isBusinessClass" (change)="businessClassAmount(i)">
+                    <label for="vehicle1"> Business Class</label><br>
+                    <label>Total Price :&nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="totalPrice"/>
+                    <br>
+                    <label>Enter Aadhar Number :</label><input type="text" formControlName="aadharNumber" />
+                    <br><br>
+                    <button style="width: 90px;height: 50px;color: white;border-radius: 10px;" [disabled]="bookingFlightForm.invalid" [ngStyle]="{'background-color': bookingFlightForm.invalid ?'gray' :'cornflowerblue'}">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</body>

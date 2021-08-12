@@ -3,94 +3,188 @@
     <app-admin-header></app-admin-header>   
 </div>
 <div class="bodyContent">
-   <div class="airlineContainer">
-      <div style="position: relative;height: 50%;">
-         
-             <div style=" text-align: center;display: inline-block;position: relative;width: 50%;height: 100%;">
-                   <div style="position: relative;left: 60%;right: 40%;width: 15%;height: 100%;">
-                   Logo
-                   </div>
-            </div>
-            <div style="text-align: left;display: inline-block;position: relative;width: 50%;height: 100%;">
-                <div style="position: relative;left: 0%;width: 100%;height: 100%;">
-                    <input type="text" value="samana" style="position: relative;width: 95%;height: 40%;top: 37%;"/> 
-                </div> 
-            </div>
-        
-      </div>
-      <div style="position: relative;height: 50%;">    
-            <div style="display: inline-block; position: relative;width: 50%;height: 100%;">
-                <div style="display: inline-block;position: relative;vertical-align:top;text-align: center;width: 50%;height: 100%;">
-                  Contact Number 
-                </div> 
-                <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
-                    <input type="text" value="samana" style="position: relative;width: 95%;height: 40%;"/> 
-                </div>    
-            </div>
-            <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
-                <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
-                  Contact Address 
-                </div> 
-                <div style="display: inline-block;position: relative;width: 50%;height: 100%;">
-                    <input type="text" value="samana" style="position: relative;width: 95%;height: 40%;"/> 
-                </div>   
-            </div>
-      </div>
-   </div>
-
-
-   <div clas="middleDiv">
-       <div style="display: inline-block;">
-        <h1 >Available Aeroplanes</h1>
-       </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       <div style="display: inline-block;right: 0%;">
-        <button style="width: 100px;height: 50px;">Edit Airline</button>
-       </div>
-       
-       
-   </div>
-
-   <div class="aeroplaneContainer" >
-       <div  *ngFor="let number of numbers" style="position: relative;width: 100%;height: 21%; " >
-            <div style="position: relative;width: 100%;height: 92%; "  >
-                <div style="background-color:rgb(218, 235, 255);position: relative;width: 100%;height: 50%;">
-                        <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            flight Number &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value="Boing-876"/>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Status&nbsp;&nbsp;:&nbsp;Active
-                        </div>
-                        <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            No of Business Class Seats &nbsp;&nbsp;:&nbsp;<input type="text" value="67" style="width: 10%;"/>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        
-                            <button style="width: 70px;height: 35px;">Edit</button>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button style="width: 100px;height: 35px;">Deactivate</button>
-                        </div>
-                </div>
-            <div style="background-color:rgb(218, 235, 255);position: relative;width: 100%;height: 50%;">
-                        <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            No of Economy class Seats &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value="Boing-876" style="width: 100px;"/>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Start date &nbsp;&nbsp;:&nbsp;<input type="text" value="67" style="width: 15%;"/>
-                            </div>
-                        <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                            End date &nbsp;&nbsp;:&nbsp;<input type="text" value="67" style="width: 15%;"/>
-                        </div>
-                </div>
-            
-            </div>
-            <div style="background-color:white;position: relative;width: 100%;height: 8%;"></div>
+        <div class="pageheader">
+            <h1>Schedule Flights Here</h1>
         </div>
-       
-   </div>
+        <div class="schedulingContainer">
+                <div class="schedueFormPageContainer">
+                    <form [formGroup]="schedulerForm" (ngSubmit)="saveSchedule()">
+                        <div>
+                            <label>Select Airline</label>
+                            <select style="width: 100px;" id="cars" name="cars" formControlName="airlineId" >
+                                <option (click)="getFligtsById(airline.id)" *ngFor="let airline of airlines" value="{{airline.id}}">{{airline.airlineName}}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Select Flight Nmber</label>
+                            <select style="width: 100px;" id="cars" name="cars" formControlName="flightId" >
+                                <option *ngFor="let flight of aeroplane" value="{{flight.flightId}}">{{flight.aeroplaneNumber}}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>From Place</label>
+                            <input type="text" formControlName="fromPlace"/>
+                        </div>
+                        <div>
+                            <label>To Place</label>
+                            <input type="text" formControlName="toPlace"/>
+                        </div>
+                        <div>
+                            <label>Select Departure Time</label>
+                            <input type="text" formControlName="departureTime"/>
+                        </div>
+                        <div>
+                            <label>Select Arrival Time</label>
+                            <input type="text" formControlName="arrivalTime"/>
+                        </div>
+                        <div>
+                            <label>Business Ticket Cost</label>
+                            <input type="text" formControlName="businessTicketCost"/>
+                        </div>
+                        <div>
+                            <label> Economy Ticket Cost</label>
+                            <input type="text" formControlName="economyTicketCost"/>
+                        </div>
+                        <br>
+                        <div>
+                            <label>Select Days</label>
+                        </div>
+                        <div>
+                            <ul formControlName="availableDays">
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="S" formControlName="s" >
+                                    <label for="vehicle1"> Sunday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="M" formControlName="m">
+                                    <label for="vehicle1"> Monday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="T" formControlName="t">
+                                    <label for="vehicle1"> Tuesday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="W" formControlName="w">
+                                    <label for="vehicle1"> Wednesday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="TH" formControlName="th">
+                                    <label for="vehicle1"> Thursday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="F" formControlName="f">
+                                    <label for="vehicle1"> Friday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="ST" formControlName="st">
+                                    <label for="vehicle1"> Saturday</label><br>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        <div>
+                            <input type="submit"  value="Save Schedule" [disabled]="schedulerForm.invalid" style="width: 150px;height: 50px;" />
+                        </div>
 
-    
+                    </form>
+                </div>
+                <div class="scheduleViewPage"  [ngStyle]="{'display': hide? 'none' : 'inline-block'}">
+                    <form [formGroup]="editSchedulerForm" (ngSubmit)="updateSchedulerDetails()" >
+                        <div>
+                            <h1> Edit Schedule Details Here</h1>
+                        </div>
+                       
+                        <div>
+                            <label>From Place</label>
+                            <input type="text" formControlName="fromPlace" value="{{editScheduler.fromPlace}}"/>
+                        </div>
+                        <div>
+                            <label>To Place</label>
+                            <input type="text" formControlName="toPlace" value="{{editScheduler.toPlace}}"/>
+                        </div>
+                        <div>
+                            <label>Select Departure Time</label>
+                            <input type="text" formControlName="departureTime" value="{{editScheduler.departureTime}}"/>
+                        </div>
+                        <div>
+                            <label>Select Arrival Time</label>
+                            <input type="text" formControlName="arrivalTime" value="{{editScheduler.arrivalTime}}"/>
+                        </div>
+                        <div>
+                            <label>Business Ticket Cost</label>
+                            <input type="text" formControlName="businessTicketCost" value="{{editScheduler.businessTicketCost}}"/>
+                        </div>
+                        <div>
+                            <label> Economy Ticket Cost</label>
+                            <input type="text" formControlName="economyTicketCost" value="{{editScheduler.economyTicketCost}}"/>
+                        </div>
+                        <br>
+                        <div>
+                            <label>Select Days</label>
+                        </div>
+                        <div>
+                            <ul formControlName="availableDays">
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="{{editScheduler.s}}" formControlName="s" ng-model="checked"/>
+                                    <label for="vehicle1"> Sunday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="{{editScheduler.m}}" formControlName="m" />
+                                    <label for="vehicle1"> Monday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="{{editScheduler.t}}" formControlName="t" />
+                                    <label for="vehicle1"> Tuesday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="{{editScheduler.w}}" formControlName="w" />
+                                    <label for="vehicle1"> Wednesday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="{{editScheduler.th}}" formControlName="th" />
+                                    <label for="vehicle1"> Thursday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="{{editScheduler.f}}" formControlName="f" />
+                                    <label for="vehicle1"> Friday</label><br>
+                                </li>
+                                <li style="display: inline-block;">
+                                    <input type="checkbox" id="vehicle1" value="{{editScheduler.st}}" formControlName="st" />
+                                    <label for="vehicle1"> Saturday</label><br>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        <div>
+                            <input type="submit" value="Update Schedule"  style="width: 150px;height: 50px;" [disabled]="editSchedulerForm.invalid"/> 
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="nameContainer">
+                    <div style="position: relative;width: 100%;height: 50px;">
+                       
+                       <label>Select Airline Name to See scheduling Details</label>
+                       <select style="width: 100px;" id="cars" name="cars" formControlName="flightNumber" >
+                         <option *ngFor="let airline of airlines" (click)="getSchedulesByAirlineId(airline.id)"  value="{{airline.id}}">{{airline.airlineName}}</option>
+                       </select>
+
+                    </div>
+                    
+                    <div *ngFor="let schedule of scheduler" style="position: relative;width:100%;height: 10%;border: 1px solid rgb(184, 205, 250);">
+                          <div class="schedules" >Logo</div>
+                          <div class="schedules">{{schedule.fromPlace}}</div>
+                          <div class="schedules">{{schedule.toPlace}}</div>
+                          <div class="schedules">{{schedule.economyTicketCost}}</div>
+                          <div class="schedules"><button (click)="viewScheduleById(schedule.id)">View Details</button></div>
+                    </div>
+                </div>
+        </div>
+
 </div>
-<div class="footer" >
+<!--<div class="footer" >
     <app-footer></app-footer>
-</div>
+</div>-->

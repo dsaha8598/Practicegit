@@ -18,31 +18,67 @@
         position: absolute;
         bottom: 0px;
         width: 80%;
-        height: 80%;
         left: 9%;
         top :130px;
         resize: vertical;
-       
     }
-.airlineContainer{
-position: relative;
-height: 25%;
-width: 100%;
-left: 0%;
+.pageheader{
+     position: relative;
+     width: 100%;
+     height: 3%;
+     text-align: center;
+     font-size: 20px;
+     font-style: italic;
+     font-family: 'Times New Roman', Times, serif;
+}
+.schedulingContainer{
+  
+    position: relative;
+    top: 3%;
+     width: 100%;
+     height: 100%;
+     text-align: center;
+     font-size: 20px;
+     font-style: italic;
+     font-family: 'Times New Roman', Times, serif;
+}
+.schedueFormPageContainer{
+    position: absolute;
+    display: inline-block;
+    background-color: rgb(255, 205, 198) ;
+    height: 50%;
+    width: 49%;
+    left: 0%;
+    top: 0px;
+    }
+    .nameContainer{
+        position: absolute;
+        display: inline-block;
+        background-color: rgb(198, 232, 255) ;
+        background-size: auto;
+        height: 100%;
+        width: 49%;
+        right: 0%;
+    }
+.separator{
+    position: relative;
+    display: inline-block;
+    background-color:white ;
+    height: 100%;
+    width: 2%;
+    left: 0%;
 }
 
-.middleDiv{
-    position: relative;
-    background-color:olive;
-    height: 30%;
-    width: 100%;
- 
+.schedules{
+    display: inline-block;position: relative;height: 100%;width: 20%
 }
-.aeroplaneContainer{
-    position: relative;
-    background-color: rgb(171, 226, 43);
-    height: 70%;
-    width: 100%;
-    right: 0%;
-    
+.scheduleViewPage{
+    display: none;
+    position: absolute;
+    display: inline-block;
+    background-color: rgb(224, 255, 198) ;
+    height: 50%;
+    width: 49%;
+    left: 0%;
+    bottom: 0px;
 }

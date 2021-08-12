@@ -25,7 +25,7 @@
 .search{
     background-color: rgb(226, 226, 226);
     width: 250px;
-    height: 100px;
+    height: 59px;
     display: inline-block;
     text-align: center;
     
@@ -34,7 +34,7 @@
 .searchPlace{
     background-color: rgb(226, 226, 226);
     width: 20%;
-    height: 100px;
+    height: 60px;
     display: inline-block;
     text-align: center;
 }
@@ -56,7 +56,7 @@ top: 7%;
 }
 .searchButton{
     width: 95%;
-    height: 85%;
+    height: 57%;
     overflow: hidden;
     font-size: 30px;
     font-family: Arial, Helvetica, sans-serif;
@@ -182,4 +182,10 @@ font-family: Arial, Helvetica, sans-serif;
     
     
     
+}
+.dropDown{
+    position: relative;width: 100%;height: 95%;background-color: white;text-align: center;font-size: 20px
+}
+.dropDownOption{
+    position: relative;width: 100%;height: 95%;background-color: white;
 }
