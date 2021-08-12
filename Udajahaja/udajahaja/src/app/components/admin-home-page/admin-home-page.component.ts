@@ -12,45 +12,45 @@ import { EditAirlineService } from 'src/app/services/edit-airline.service';
 })
 export class AdminHomePageComponent implements OnInit {
 
-  airlines:Airline[]=[];
-  airline:Airline;
-  constructor(private router:Router,private airlineService:AirlineService,private editservice:EditAirlineService) { }
+  airlines: Airline[] = [];
+  airline: Airline;
+  constructor(private router: Router, private airlineService: AirlineService, private editservice: EditAirlineService) { }
 
   ngOnInit(): void {
     console.log("onit")
     this.airlineService.getAllAirlines()
-    .subscribe((res:any)=>{
-      console.log(res);
-      this.airlines=res;
-      console.log('printing airline object'+this.airlines)
-  })
+      .subscribe((res: any) => {
+        console.log(res);
+        this.airlines = res;
+        console.log('printing airline object' + this.airlines)
+      })
   }
 
-  
-  addNewAirline(){
+
+  addNewAirline() {
     this.router.navigate(['/newAirline'])
   }
 
-  viewAirline(id:number){
+  viewAirline(id: number) {
     console.log("view airline")
-     console.log(id)
-     //this.router.routerState=start;
-     this.airlineService.getAllAirlinesById(id+'')
-    .subscribe((res:any)=>{
-      console.log(res);
-      //this.airlines=res;
-      //let
-      this.airline =new Airline(res.airlineName,res.contactNumber,res.contactAddress,null,res.aeroplanes,res.id);
-      console.log(this.airline)
-      this.editservice.setAirline(this.airline)
-     
-      this.router.navigate(['/editAirline'])
+    console.log(id)
+    //this.router.routerState=start;
+    this.airlineService.getAllAirlinesById(id + '')
+      .subscribe((res: any) => {
+        console.log(res);
+        //this.airlines=res;
+        //let
+        this.airline = new Airline(res.airlineName, res.contactNumber, res.contactAddress, null, res.aeroplanes, res.id);
+        console.log(this.airline)
+        this.editservice.setAirline(this.airline)
 
-  })
+        this.router.navigate(['/editAirline'])
+
+      })
   }
 
-  viewAirlineDetailsById(id:number){
-    
+  viewAirlineDetailsById(id: number) {
+
   }
 
 

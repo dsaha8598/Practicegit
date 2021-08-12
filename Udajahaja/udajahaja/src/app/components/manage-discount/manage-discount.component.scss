@@ -15,6 +15,7 @@
 }
 .bodyContent{
     //   overflow: auto;
+        resize: vertical;
         position: absolute;
         bottom: 0px;
         width: 80%;
@@ -24,26 +25,58 @@
         background-color: blanchedalmond;
        
     }
-.logoContainer{
-position: relative;
+.viewCouponContainer{
+position: absolute;
 display: inline-block;
-background-image: url("../../images/flyingplane.gif");
 background-color: rgb(198, 232, 255) ;
 background-repeat: no-repeat;
 background-position: center;
-height: 100%;
+height: 93%;
 width: 50%;
-left: 0%;
+right: 0%;
 }
-.nameContainer{
-    position: relative;
+.formPageContainer{
+    position: absolute;
     display: inline-block;
-    background-image: url("../../images/bueflyingplane.gif");
-    background-color: rgb(198, 232, 255) ;
     background-repeat: no-repeat;
     background-position: center;
     background-size: auto;
-    height: 100%;
+    height: 93%;
     width: 50%;
-    right: 0%;
+    left: 0%;
+}
+
+.headerMessage{
+    position: relative;
+    background-color: rgb(50, 189, 32) ;
+    height: 7%;
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.addFormPage{
+    text-align: center;
+    position: relative;
+    height: 50%;
+    width: 100%;
+    border: 1px solid black;
+}
+.viewFormPage{
+  
+text-align: center;
+    position: relative;
+    height: 50%;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.coupon{
+    display: inline-block;position: relative;height: 100%;width: 20%
+}
+.couponHeader{
+    display: inline-block;position: relative;height: 100%;width: 20%;
+    background-color: white;
+    
 }

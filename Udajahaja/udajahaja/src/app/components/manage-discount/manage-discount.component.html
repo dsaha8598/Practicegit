@@ -3,8 +3,86 @@
     <app-admin-header></app-admin-header>   
 </div>
 <div class="bodyContent">
-   <div class="logoContainer"></div>
-   <div class="nameContainer"></div>
+    
+    <div class="headerMessage">Manage Discount Coupons Here</div>
+    <div class="formPageContainer">
+        <br>
+            <div class="addFormPage">
+                <div style="text-align: center;">Add coupons here</div>
+                <br>
+
+                <form [formGroup]="couponFormGroup" (ngSubmit)="saveCoupon()">
+                   
+                    <div>
+                        <label>Enter Coupon Code</label>
+                        <input type="text" formControlName="couponcode"/>
+                    </div>
+                    <div>
+                        <label>Percentage Of Discount</label>
+                        <input type="number" formControlName="percentage"/>
+                    </div>
+                    <div>
+                        <label>Maximum Discount Amount</label>
+                        <input type="number" formControlName="maxamount"/>
+                    </div>
+                    <br>
+                    
+                    <div>
+                        <input type="submit"  value="Save Coupon" [disabled]="couponFormGroup.invalid" style="width: 150px;height: 50px;" />
+                    </div>
+
+                </form>
+            </div>
+            <div class="viewFormPage">
+                <div style="text-align: center;">Edit details Here</div>
+                <br>
+                <form [formGroup]="editcouponFormGroup" (ngSubmit)="saveCoupon()">
+                   
+                    <div>
+                        <label>Enter Coupon Code</label>
+                        <input type="text" formControlName="couponcode" value="{{editCoupon.couponcode}}"/>
+                    </div>
+                    <div>
+                        <label>Percentage Of Discount</label>
+                        <input type="number" formControlName="percentage" value="{{editCoupon.percentage}}"/>
+                    </div>
+                    <div>
+                        <label>Maximum Discount Amount</label>
+                        <input type="number" formControlName="maxamount" value="{{editCoupon.maxamount}}"/>
+                    </div>
+                    
+                    <br>
+                    <div>
+                        <input type="submit" (click)="updateDiscount()" value="Update Coupon" [disabled]="editcouponFormGroup.invalid" style="width: 150px;height: 50px;" />
+                    </div>
+
+                </form>
+            </div>
+        
+    </div>
+    <div class="viewCouponContainer">
+        <div style="position: relative;width: 100%;height: 50px;">
+                       
+            <h1>List Of Available Cupons</h1>
+           
+         </div>
+         
+        
+         <div  style="position: relative;width:100%;height: 10%;border: 1px solid rgb(184, 205, 250);">
+                <div class="couponHeader">&nbsp;</div>
+                <div class="couponHeader">Coupon Code</div>
+                <div class="couponHeader">Percentage</div>
+                <div class="couponHeader"> Ammount</div>
+                <div class="couponHeader">Action</div>
+               <div *ngFor="let coupon of coupons" style="border: 1px solid black;;">
+                    <div class="coupon" ></div>
+                    <div class="coupon">{{coupon.couponcode}}</div>
+                    <div class="coupon">{{coupon.percentage}}</div>
+                    <div class="coupon">{{coupon.maxamount}}</div>
+                    <div class="coupon"><button (click)="viewCouponById(coupon.id)">View Details</button></div>
+               </div>
+         </div>
+    </div>
     
 </div>
 <div class="footer" >

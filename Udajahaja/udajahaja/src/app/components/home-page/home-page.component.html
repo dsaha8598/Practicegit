@@ -1,10 +1,9 @@
-
 <div class="header">
     <div class="button">
         <button class="loginbutton" id="adminLoginButton" [routerLink]="['admin']">Admin Login</button>
     </div>
     <app-header></app-header>
-    
+
 </div>
 
 
@@ -13,38 +12,49 @@
     <div class="paragraph">Book Domestic and International Flight Tickets</div>
 
     <div class="searchMain">
-    <div class="searchPlace">
-        <input class="inputForm" type="text" placeholder="From"/>
-    </div>
-    <div class="searchPlace">
-        <input class="inputForm" type="text" placeholder="To"/>
-    </div>
-    <div class="search">
-        <input class="inputForm" onfocus="(this.type='date')" placeholder="Departure"/>
-    </div>
-    <div class="search">
-        <input class="inputForm" onfocus="(this.type='date')" placeholder="Return"/>
-    </div>
-    <div class="searchButtonContainer">
-        <button class="searchButton">Search</button>
-    </div>
-</div>
+        <form [formGroup]="searchForm" (ngSubmit)="searchFlights()">
 
-<div class="offerContainer">
-    <div class="offer1">
-        
+            <div class="searchPlace">
+                <label>FROM</label>
+                <select class="dropDown" formControlName="from">
+                    <option class="dropDownOption" value="{{place}}" *ngFor="let place of places">{{place}}</option>
+                </select>
+            </div>
+            <div class="searchPlace">
+                <label>TO</label>
+                <select class="dropDown" formControlName="to">
+                    <option class="dropDownOption" value="{{place}}" *ngFor="let place of places">{{place}}</option>
+                </select>
+            </div>
+            <div class="search">
+                <label>Departure Date</label>
+                <input class="inputForm" onfocus="(this.type='date')"  formControlName="fromDate"/>
+            </div>
+            <div class="search">
+                <label>Return Date</label>
+                <input class="inputForm" onfocus="(this.type='date')"  formControlName="toDate" />
+            </div>
+            <div class="searchButtonContainer">
+                <button class="searchButton" [disabled]="searchForm.invalid" [ngStyle]="{'background-color': searchForm.invalid==true? 'gray' : 'rgb(95, 106, 172)'}">Search</button>
+            </div>
+        </form>
     </div>
-    <div class="offer2">
-        
+
+    <div class="offerContainer">
+        <div class="offer1">
+
+        </div>
+        <div class="offer2">
+
+        </div>
+        <div class="offer3">
+
+        </div>
     </div>
-    <div class="offer3">
-        
-    </div>
-</div>
 
 
 
-    
+
 </div>
 <div class="footer">
     <app-footer></app-footer>

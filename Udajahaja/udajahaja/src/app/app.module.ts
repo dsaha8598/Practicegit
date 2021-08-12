@@ -20,6 +20,7 @@ import { EditAirlinesComponent } from './components/edit-airlines/edit-airlines.
 import { ReportsComponent } from './components/reports/reports.component';
 import { ManageBookingComponent } from './components/manage-booking/manage-booking.component';
 import { BookingHistoryComponent } from './components/booking-history/booking-history.component';
+import { BookingComponent } from './components/booking/booking.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { BookingHistoryComponent } from './components/booking-history/booking-hi
     ReportsComponent,
     ManageBookingComponent,
     BookingHistoryComponent,
+    BookingComponent,
     
   ],
   imports: [
