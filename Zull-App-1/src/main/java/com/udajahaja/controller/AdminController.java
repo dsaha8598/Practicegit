@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.udajahaja.dto.AeroplaneSaveDTO;
@@ -21,14 +21,26 @@ import com.udajahaja.dto.SearchedFlightDetails;
 import com.udajahaja.entity.AirlineEntity;
 import com.udajahaja.entity.Coupons;
 import com.udajahaja.entity.Scheduler;
+import com.udajahaja.repository.AeroplaneRepository;
+import com.udajahaja.repository.AirlineRepository;
+import com.udajahaja.repository.SchedulerRepository;
 import com.udajahaja.service.AdminService;
 
 @RestController()
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminController {
 
 	@Autowired
 	private AdminService service;
+	
+	@Autowired
+	private SchedulerRepository schedulerRepository;
+	
+	@Autowired
+	private AeroplaneRepository aeroplaneRepository;
+	
+	@Autowired
+	private AirlineRepository repo;
 	
 	@PostMapping(path = "/save", consumes = "application/json")
 	public ResponseEntity<AirlineSaveDTO> saveAirline(@RequestBody AirlineSaveDTO dto){
@@ -110,10 +122,31 @@ public class AdminController {
 
 	}
 	
-	@GetMapping("/test")
-	public @ResponseBody String test() {
-		return "success";
+	@GetMapping(path = "/findScheduler/byRoute")
+    public ResponseEntity<List<Scheduler>> getSchedulerByPlaces(@RequestParam("from")String from,
+    		@RequestParam("to")String to){
+		
+		return new ResponseEntity<List<Scheduler>>(schedulerRepository.getSchedulesByFromAndToPlace(from,to),HttpStatus.OK);
+
 	}
+	
+	@GetMapping(path = "/findAirlinesNameById")
+    public ResponseEntity<String> getAirlineName(@RequestParam("id")int id
+    		){
+		
+		return new ResponseEntity<String>(repo.findById(id).get().getAirlineName(),HttpStatus.OK);
+
+	}
+	
+	@GetMapping(path = "/findAeroplaneNumberById/{id}")
+    public ResponseEntity<String> getFlightNumber(@PathVariable("id")int id
+    		){
+		
+		return new ResponseEntity<String>(aeroplaneRepository.findById(id).get().getAeroplaneNumber(),HttpStatus.OK);
+
+	}
+	
+
 	
 	
 	
