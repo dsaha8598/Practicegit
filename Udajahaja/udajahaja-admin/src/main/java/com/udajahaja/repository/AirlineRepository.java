@@ -19,4 +19,8 @@ public interface AirlineRepository extends JpaRepository<AirlineEntity, Integer>
 	@Query(value = "select * from airline where  ID=?1 and active=1" , nativeQuery = true)
 	// @formatter:on
 	AirlineEntity findByAirlineId(Long id);
+	
+	@Query(value = "select airline_name from airline where  active=1" , nativeQuery = true)
+	// @formatter:on
+	List<String> findAllAirlineName();
 }
