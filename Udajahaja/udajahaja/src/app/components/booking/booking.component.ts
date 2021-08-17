@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Coupon } from 'src/app/models/Coupon';
 import { SearchedFlights } from 'src/app/models/SearchedFlights';
 import { BookingService } from 'src/app/services/BookingService';
 
@@ -20,9 +22,11 @@ export class BookingComponent implements OnInit {
   noOfBookingScreens:number[]=[];
   economy:number
   businessClass:number
+  coupons:Coupon[]=[]
+  totalPrice:number
 
 
-  constructor(private service: BookingService, private formBuilder: FormBuilder) {
+  constructor(private service: BookingService, private formBuilder: FormBuilder,private router:Router) {
     this.bookingFlightForm = this.formBuilder.group({
       flightId: [''],
       journeydate: [
@@ -50,7 +54,7 @@ export class BookingComponent implements OnInit {
       totalPrice: [
        ''
       ],
-      aadharNumber: []
+      email: []
 
     })
     
@@ -76,7 +80,8 @@ export class BookingComponent implements OnInit {
             this.onewayTrip.push(search)
           }
         }
-      })
+      }
+      )
   }
 
   onstartDateBookingClick(id: number) {
@@ -108,7 +113,7 @@ export class BookingComponent implements OnInit {
       totalPrice: [
        '',Validators.required
       ],
-      aadharNumber: ['',Validators.required]
+      email: ['',Validators.required]
 
     })
     this.bookingFormsArray.push(this.bookingFlightForm)
@@ -118,6 +123,7 @@ export class BookingComponent implements OnInit {
     this.economy=this.onewayTrip[id].economyTicketCost
     this.businessClass=this.onewayTrip[id].businessTicketCost
     this.noOfBookingScreens.push(1);
+    this.getAllCoupons()
 
   }
 
@@ -150,7 +156,7 @@ export class BookingComponent implements OnInit {
       totalPrice: [
        '',Validators.required
       ],
-      aadharNumber: ['',Validators.required]
+      email: ['',Validators.required]
 
     })
     this.bookingFormsArray.push(this.bookingFlightForm)
@@ -165,15 +171,52 @@ export class BookingComponent implements OnInit {
   econmyClassAmount(id:number){
     console.log('check box')
     console.log(this.economy)
+    this.totalPrice=this.economy
       this.bookingFlightForm.patchValue({
       totalPrice:this.economy
+      
     })
   }
   businessClassAmount(id:number){
     console.log('check box')
     console.log(this.economy)
+    this.totalPrice=this.businessClass
       this.bookingFlightForm.patchValue({
       totalPrice:this.businessClass
+    })
+  }
+
+  saveBooking(){
+    console.log('saving booking')
+    console.log(this.bookingFlightForm.value)
+    sessionStorage.setItem("email",this.bookingFlightForm.get("email").value)
+    console.log("local storage email="+sessionStorage.getItem("email"))
+    this.service.saveBooking(this.bookingFlightForm.value)
+    .subscribe();
+    this.router.navigate(['/manageBooking'])
+  }
+
+  getAllCoupons(){
+    this.service.getAllAvailableCoupons()
+    .subscribe((res: any) => {
+      console.log(res);
+      this.coupons=res
+    })
+  }
+
+  applyCoupon(id:number){
+   let maxAmount:any=this.coupons[id].maxamount
+    let percentage:any=this.coupons[id].percentage
+    let total:any=this.totalPrice
+    console.log(this.coupons[id])
+    console.log(maxAmount)
+    console.log(total)
+    console.log(total-maxAmount)
+
+
+    
+    this.bookingFlightForm.patchValue({
+      totalPrice:total-maxAmount
     })
   }
 

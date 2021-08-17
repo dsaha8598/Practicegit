@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { routes } from 'src/app/app.routing';
+import { AirlineService } from 'src/app/services/airlinr.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -14,7 +15,7 @@ export class AdminLoginComponent implements OnInit {
   isValid:boolean=true;
   
   
-  constructor(private router: Router) {
+  constructor(private router: Router,private service:AirlineService) {
     this.loginForm = new FormGroup({
       email: new FormControl("", [
         Validators.required,
@@ -35,20 +36,28 @@ export class AdminLoginComponent implements OnInit {
   }
 
   getLoginData(){
-   if(this.loginForm.value.email=="admin@mail.com"){
+   if(this.loginForm.value.email=="dipak@gmail.com"){
      console.log('valid')
    }else{
     console.log('invalid');
     this.isValid=false;
    }
-   if(this.loginForm.value.password=="abc@123"){
+   if(this.loginForm.value.password=="dipak678"){
     console.log('valid')
   }else{
    console.log('invalid')
    this.isValid=false;
   }
   if(this.isValid==true){
-    this.router.navigate(['/adminHome'])
+    this.service.adminLogin().subscribe(
+      res=>{
+        let token:any=res;
+        sessionStorage.setItem("token",token);
+        console.log(sessionStorage.getItem("token"))
+        this.router.navigate(['/adminHome'])
+      }
+    )
+    
   }
   }
 

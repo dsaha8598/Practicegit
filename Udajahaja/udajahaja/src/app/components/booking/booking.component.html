@@ -78,29 +78,47 @@
             <h2>Booking Detaiils</h2>
         </div>
 
-        <div   style="position: relative;width: 100%;text-align: center;;" [ngStyle]="{'display': isBookingDetailsVisible==false ?'none' :''}">
+        <div style="position: relative;width: 100%;text-align: center;;"
+            [ngStyle]="{'display': isBookingDetailsVisible==false ?'none' :''}">
             <form [formGroup]="bookingFlightForm" *ngFor="let no of noOfBookingScreens">
                 <h3>Verify Detaiils And Proceed with Booking</h3>
                 <div>
-                    <label>Journey Date &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="journeydate"/>
+                    <label>Journey Date &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text"
+                        formControlName="journeydate" />
                     <br>
-                    <label>From &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="from"/>
+                    <label>From &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="from" />
                     <br>
-                    <label>To &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="to"/>
+                    <label>To &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="to" />
                     <br>
-                    <label>DepartureTime &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="departureTime"/>
+                    <label>DepartureTime &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text"
+                        formControlName="departureTime" />
                     <br>
-                    <label>Arrival Time &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="arrivalTime"/>
+                    <label>Arrival Time &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text"
+                        formControlName="arrivalTime" />
                     <br>
-                    <input type="checkbox" id="vehicle1" value="S" formControlName="isEconomy" (change)="econmyClassAmount(i)">
+                    <input type="checkbox" id="vehicle1" value="S" formControlName="isEconomy"
+                        (change)="econmyClassAmount(i)">
                     <label for="vehicle1"> Economy Clas</label><br>
-                    <input type="checkbox" id="vehicle1" value="S" formControlName="isBusinessClass" (change)="businessClassAmount(i)">
+                    <input type="checkbox" id="vehicle1" value="S" formControlName="isBusinessClass"
+                        (change)="businessClassAmount(i)">
                     <label for="vehicle1"> Business Class</label><br>
-                    <label>Total Price :&nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" formControlName="totalPrice"/>
+                    <label>Total Price :&nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text"
+                        formControlName="totalPrice" />
                     <br>
-                    <label>Enter Aadhar Number :</label><input type="text" formControlName="aadharNumber" />
+                    <label>Enter Email id :</label><input type="text" formControlName="email" />
+                    <br>
+                    <label>Apply Coupon</label>
+                    <select style="width: 100px;" id="cars" name="cars"  >
+                        <option  >--select coupon--</option>
+                        <option (click)="applyCoupon(i)" *ngFor="let coupon of coupons;let i=index" >{{coupon.couponcode}}</option>
+                    </select>
                     <br><br>
-                    <button style="width: 90px;height: 50px;color: white;border-radius: 10px;" [disabled]="bookingFlightForm.invalid" [ngStyle]="{'background-color': bookingFlightForm.invalid ?'gray' :'cornflowerblue'}">Confirm Booking</button>
+                    <button style="width: 90px;height: 50px;color: white;border-radius: 10px;"
+                        [disabled]="bookingFlightForm.invalid"
+                        (click)="saveBooking()"
+                        [ngStyle]="{'background-color': bookingFlightForm.invalid ?'gray' :'cornflowerblue'}">Confirm
+                        Booking
+                    </button>
                 </div>
             </form>
         </div>

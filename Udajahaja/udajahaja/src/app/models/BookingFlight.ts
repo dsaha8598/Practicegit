@@ -1,5 +1,6 @@
 export class BookingFlight{
     constructor(
+        public airlineId:number,
         public flightId:number,
         public journeydate:Date,
         public from:string,
@@ -9,6 +10,9 @@ export class BookingFlight{
         public isEconomy:boolean,
         public isBusinessClass:boolean,
         public totalPrice:number,
-        public aadharNumber:string,
+        public email:string,
+        public flightNumber:string,
+        public classType:string,
+        public pnrNumber:string,
         ){}
 }

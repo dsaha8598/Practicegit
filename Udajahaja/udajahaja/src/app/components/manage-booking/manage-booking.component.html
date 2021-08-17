@@ -1,1 +1,65 @@
-<p>manage-booking works!</p>
+<div class="header">
+    <div class="button">
+        <button class="loginbutton" id="adminLoginButton" [routerLink]="['admin']">Admin Login</button>
+    </div>
+    <app-header></app-header>
+
+</div>
+
+<body>
+    <div [ngStyle]="{'display': isSearchenable==true? '' : 'none'}">
+        <label>
+            <h1>Enter Email Id To see booking details</h1>
+        </label>
+        <input type="text" value="{{emailid}}" />
+        <button>Search</button>
+    </div><br><br>
+    <div>
+
+        <div>
+            <div class="aeroplaneContainer">
+                <div *ngFor="let ticket of tickets;let i=index" style="position: relative;width: 100%;height: 21%; ">
+                    <div style="position: relative;width: 100%;height: 92%; ">
+                        <div style="background-color:rgb(231, 255, 173);position: relative;width: 100%;height: 50%;">
+                            <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                                flight Number
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{ticket.flightNumber}}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {{ticket.from}} &nbsp; -> &nbsp; {{ticket.to}}
+                            </div>
+                            <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                                Class Type &nbsp;&nbsp;:&nbsp;:{{ticket.classType}}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button
+                                    style="width: 100px;height: 35px;background-color: cornflowerblue;color: white;">Cancel
+                                </button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button
+                                    style="width: 100px;height: 35px;background-color: cornflowerblue;color: white;">Download</button>
+                            </div>
+                        </div>
+                        <div style="background-color:rgb(231, 255, 173);position: relative;width: 100%;height: 50%;">
+                            <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                                Departure Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{ticket.departureTime}}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                Arrival Time &nbsp;&nbsp;:&nbsp;:{{ticket.arrivalTime}}
+                            </div>
+                            <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                                PNR Number
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {{ticket.pnrNumber}}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="background-color:white;position: relative;width: 100%;height: 8%;"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Airline } from "../models/Airline";
 import { Coupon } from "../models/Coupon";
@@ -7,61 +7,76 @@ import { Scheduler } from "../models/Scheduler";
 @Injectable({ providedIn: "root" })
 export class AirlineService {
 
-    private url: string = "http://localhost:8001/admin/save";
+    private url: string = "http://localhost:8003/api/admin/save";
 
     constructor(private httpClient: HttpClient) { }
 
-    getAllBooks() {
-
-        return this.httpClient.get(this.url);
+    setHeaders(){
+        let headers = new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', sessionStorage.getItem("token"));
+        return headers;
     }
+
+    adminLogin() {
+
+        return this.httpClient.get("http://localhost:8003/login", { responseType: 'text' });
+    }
+
+
 
     saveAirline(book: Airline) {
 
         console.log('from service')
         console.log(book)
-        return this.httpClient.post(this.url, book);
+        let headers=this.setHeaders();
+        return this.httpClient.post(this.url, book,{'headers':headers});
 
     }
     getAllAirlines() {
-        return this.httpClient.get("http://localhost:8001/admin/findAirlines");
+        let headers=this.setHeaders();
+        return this.httpClient.get("http://localhost:8003/api/admin/findAirlines",{'headers':headers});
     }
 
     getAllAirlinesById(id: string) {
-
+        let headers=this.setHeaders();
         let params = new HttpParams();
         params.set('id', id);
-        return this.httpClient.get("http://localhost:8001/admin/findAirlinesById/" + id, { params });
+        return this.httpClient.get("http://localhost:8003/api/admin/findAirlinesById/" + id, { 'params':params,'headers':headers });
 
     }
 
     getAllAeroplanesById(id: string) {
 
+        let headers=this.setHeaders();
         let params = new HttpParams();
         params.set('id', id);
-        return this.httpClient.get("http://localhost:8001/admin/findAeroplanesById/" + id, { params });
+        return this.httpClient.get("http://localhost:8003/api/admin/findAeroplanesById/" + id, {  'params':params,'headers':headers  });
 
     }
 
-    saveScheduler(scheduler:Scheduler){
+    saveScheduler(scheduler: Scheduler) {
         console.log("scheduler service")
         console.log(scheduler)
-        return this.httpClient.post("http://localhost:8001/admin/saveScheduler", scheduler);
+        let headers=this.setHeaders();
+        return this.httpClient.post("http://localhost:8003/api/admin/saveScheduler", scheduler,{'headers':headers});
     }
 
     getSchedulerByAirlinesId(id: string) {
 
+        let headers=this.setHeaders();
         let params = new HttpParams();
         params.set('id', id);
-        return this.httpClient.get("http://localhost:8001/admin/findScheduler/byAirlineId/" + id, { params });
+        return this.httpClient.get("http://localhost:8003/api/admin/findScheduler/byAirlineId/" + id, { 'params':params,'headers':headers });
 
     }
 
     getSchedulerById(id: string) {
 
+        let headers=this.setHeaders();
         let params = new HttpParams();
         params.set('id', id);
-        return this.httpClient.get("http://localhost:8001/admin/findScheduler/byId/" + id, { params });
+        return this.httpClient.get("http://localhost:8003/api/admin/findScheduler/byId/" + id, { 'params':params,'headers':headers  });
 
     }
 
@@ -69,25 +84,28 @@ export class AirlineService {
 
         console.log('from service')
         console.log(coupon)
-        return this.httpClient.post("http://localhost:8001/admin/saveCoupon", coupon);
+        let headers=this.setHeaders();
+        return this.httpClient.post("http://localhost:8003/api/admin/saveCoupon", coupon,{'headers':headers});
 
     }
 
     getAllCoupons() {
 
-        return this.httpClient.get("http://localhost:8001/admin/getAllCoupons");
+        let headers=this.setHeaders();
+        return this.httpClient.get("http://localhost:8003/api/admin/getAllCoupons",{'headers':headers});
 
     }
 
     getCouponsById(id: string) {
 
+        let headers=this.setHeaders();
         let params = new HttpParams();
         params.set('id', id);
-        return this.httpClient.get("http://localhost:8001/admin/findCoupon/byId/" + id, { params });
+        return this.httpClient.get("http://localhost:8003/api/admin/findCoupon/byId/" + id, { 'params':params,'headers':headers  });
 
     }
 
-   
+
 
 
 

@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'udajahaja';
   showLoadingIndicator=true;
   constructor(private router:Router){
-      this.router.events.subscribe((routerEvent:Event)=>{
+      /*this.router.events.subscribe((routerEvent:Event)=>{
          if(routerEvent instanceof NavigationStart){
            this.showLoadingIndicator=true;
            console.log('navigation start')
@@ -20,6 +20,6 @@ export class AppComponent {
           this.showLoadingIndicator=false;
           console.log('navigation end')
         }
-      });
+      });*/
   }
 }

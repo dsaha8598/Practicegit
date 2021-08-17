@@ -23,7 +23,11 @@ export class AdminHomePageComponent implements OnInit {
         console.log(res);
         this.airlines = res;
         console.log('printing airline object' + this.airlines)
-      })
+      },err=>{
+        console.log('from error')
+        this.router.navigate(['/error'])
+    }
+      )
   }
 
 

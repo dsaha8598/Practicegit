@@ -21,7 +21,7 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { ManageBookingComponent } from './components/manage-booking/manage-booking.component';
 import { BookingHistoryComponent } from './components/booking-history/booking-history.component';
 import { BookingComponent } from './components/booking/booking.component';
-
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -40,11 +40,14 @@ import { BookingComponent } from './components/booking/booking.component';
     ManageBookingComponent,
     BookingHistoryComponent,
     BookingComponent,
+    ErrorComponent,
+
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,RouterModule.forRoot(routes), ReactiveFormsModule,HttpClientModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

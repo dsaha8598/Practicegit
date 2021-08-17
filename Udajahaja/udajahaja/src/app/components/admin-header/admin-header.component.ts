@@ -14,6 +14,7 @@ export class AdminHeaderComponent implements OnInit {
   }
 
   logOut(){
+    sessionStorage.clear();
     this.router.navigate(['/admin'])
    }
 

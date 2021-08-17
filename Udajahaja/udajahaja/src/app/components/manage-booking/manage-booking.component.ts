@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BookingFlight } from 'src/app/models/BookingFlight';
+import { BookingService } from 'src/app/services/BookingService';
 
 @Component({
   selector: 'app-manage-booking',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageBookingComponent implements OnInit {
 
-  constructor() { }
+  isSearchenable:boolean=true;
+  emailid:any=''
+  tickets:any=[]
+  constructor(private service:BookingService) { }
 
   ngOnInit(): void {
+    console.log("booking on it")
+    if(sessionStorage.getItem("email")!=null){
+        this.emailid=sessionStorage.getItem("email")
+    }
+    this.service.getAllBookedTickets(this.emailid)
+    .subscribe(res=>{
+      this.tickets=res;
+      console.log("view ticket details")
+      console.log(this.tickets)
+    })
   }
 
 }

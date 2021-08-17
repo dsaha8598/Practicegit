@@ -45,9 +45,10 @@ export class ManageDiscountComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.router.navigate(['/discount'])
+        this.getAllCoupons();
       })
     this.couponFormGroup.reset()
-    this.getAllCoupons();
+   
   }
 
   viewCouponById(id:string){
@@ -76,7 +77,11 @@ export class ManageDiscountComponent implements OnInit {
       this.router.navigate(['/discount'])
       this.coupons=res;
       
-    })
+    },err=>{
+      console.log('from error')
+      this.router.navigate(['/error'])
+  }
+    )
   }
 
   copyToEditFormGroup(coupon:Coupon){
