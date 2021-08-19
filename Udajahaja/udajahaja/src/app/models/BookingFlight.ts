@@ -14,5 +14,7 @@ export class BookingFlight{
         public flightNumber:string,
         public classType:string,
         public pnrNumber:string,
+        public id:number,
+        public status:string
         ){}
 }

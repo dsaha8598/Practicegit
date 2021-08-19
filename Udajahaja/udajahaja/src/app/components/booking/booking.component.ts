@@ -85,7 +85,7 @@ export class BookingComponent implements OnInit {
   }
 
   onstartDateBookingClick(id: number) {
-    this.onewayTrip[id];
+    console.log(this.onewayTrip[id])
     this.bookingFlightForm = this.formBuilder.group({
       flightId: [this.onewayTrip[id].flightId],
       journeydate: [

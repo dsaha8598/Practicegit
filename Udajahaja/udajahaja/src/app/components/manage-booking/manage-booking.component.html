@@ -12,7 +12,7 @@
             <h1>Enter Email Id To see booking details</h1>
         </label>
         <input type="text" value="{{emailid}}" />
-        <button>Search</button>
+        <button (click)="getBookedTicketsByEmail()">Search</button>
     </div><br><br>
     <div>
 
@@ -35,7 +35,9 @@
 
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <button
-                                    style="width: 100px;height: 35px;background-color: cornflowerblue;color: white;">Cancel
+                                    style="width: 100px;height: 35px;background-color: cornflowerblue;color: white;"
+                                    (click)="cancelTicket(ticket.id)"
+                                >Cancel
                                 </button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <button

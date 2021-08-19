@@ -27,3 +27,39 @@
     margin: 10px;
     background-color: #3B579D;
 }
+
+body{
+    position: absolute;
+    background-color:rgb(206, 219, 245);
+    top: 13%;
+    height: 100%; 
+    width: 80%; 
+    left: 10%;
+  }
+
+.historyContainer{
+    position: relative;
+    width: 70%;
+    height: 160px;
+    left: 10%;
+   
+}
+.ticket{
+    position: relative;
+    background-color: #3b9d40;
+    width: 100%;
+    height: 80%;
+    border:1px solid black;
+    border-radius: 30%;
+}
+.separator{
+    position: relative;
+    width: 100%;
+    height: 20%;
+}
+.lines{
+    position: relative;
+    background-color: #da6ff0;
+    width: 100%;
+    height: 50%;
+}

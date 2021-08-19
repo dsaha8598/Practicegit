@@ -16,15 +16,27 @@ export class ManageBookingComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("booking on it")
-    if(sessionStorage.getItem("email")!=null){
-        this.emailid=sessionStorage.getItem("email")
-    }
-    this.service.getAllBookedTickets(this.emailid)
+    this.getBookedTicketsByEmail()
+  }
+
+  cancelTicket(id:string){
+    this.service.cancelTicket(id)
     .subscribe(res=>{
-      this.tickets=res;
-      console.log("view ticket details")
-      console.log(this.tickets)
+      this.getBookedTicketsByEmail()
     })
+  }
+
+  getBookedTicketsByEmail(){
+    console.log("retrievig available ticket")
+    if(sessionStorage.getItem("email")!=null){
+      this.emailid=sessionStorage.getItem("email")
+  }
+  this.service.getAllBookedTickets(this.emailid)
+  .subscribe(res=>{
+    this.tickets=res;
+    console.log("view ticket details")
+    console.log(this.tickets)
+  })
   }
 
 }

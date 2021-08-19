@@ -4,7 +4,8 @@ export class Aeroplane{
         public businessClassCount:number,
         public economyClassCount:number,
         public startDate:Date,
-        public endDate:Date
+        public endDate:Date,
+        public id:number
     
     ){}
 }

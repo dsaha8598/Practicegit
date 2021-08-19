@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BookingService } from 'src/app/services/BookingService';
 
 @Component({
   selector: 'app-booking-history',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookingHistoryComponent implements OnInit {
 
-  constructor() { }
+  tickets:any=[]
+  constructor(private service:BookingService) { }
 
   ngOnInit(): void {
+    this.service.getBookingHistory()
+    .subscribe(res=>{
+       this.tickets=res
+       
+    })
   }
 
 }

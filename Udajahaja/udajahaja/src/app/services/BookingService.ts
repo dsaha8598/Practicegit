@@ -40,6 +40,16 @@ export class BookingService {
         return this.httpClient.get("http://localhost:8003/api/user/findAll/bookings/" + email, { 'params':params});
     }
 
+    cancelTicket(id:string){
+        let params = new HttpParams();
+        params.set('id', id);
+        return this.httpClient.post("http://localhost:8003/api/user/cancel/ticket/" + id, { 'params':params});
+    }
+
+    getBookingHistory(){
+        return this.httpClient.get("http://localhost:8003/api/user/findAll/bookings/history");
+    }
+
    
 
 
