@@ -101,7 +101,6 @@ public class AdminService {
 	
 	public void saveScheduler(Scheduler entity) {
 		entity=schedulerRepository.save(entity);
-		System.err.println("saved scheduler with id -->"+entity.getId());
 	}
 	
 	public List<Scheduler> aeroplanesByairlineId(int id) {

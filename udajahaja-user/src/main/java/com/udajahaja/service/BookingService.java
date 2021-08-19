@@ -117,8 +117,6 @@ public class BookingService {
 	
 	public List<TicketDTO> findAllBookings(String email) throws CustomException{
 		
-		
-		
 		List<TicketDTO> listOfTickets=new ArrayList<>();
 		 List<Booking> bookedTicketsByEmail = bookingRepository.getBookedTicketsByEmail(email);
 		 if(bookedTicketsByEmail.isEmpty()) {
@@ -126,9 +124,8 @@ public class BookingService {
 		 }
 		 for(Booking booking:bookedTicketsByEmail) {
 			 
-			 
 			 Map<String, Integer> urlParams = new HashMap<>();
-				urlParams.put("id", booking.getId());
+				urlParams.put("id", booking.getFlightId());
 				URI uri = UriComponentsBuilder.fromUriString("http://localhost:8001/api/admin/findAeroplaneNumberById/{id}")
 						.buildAndExpand(urlParams).toUri();
 				uri = UriComponentsBuilder.fromUri(uri).build().toUri();
@@ -149,6 +146,49 @@ public class BookingService {
 			 dto.setJourneydate(booking.getJourneydate());
 			 dto.setTo(booking.getTo());
 			 dto.setPnrNumber(booking.getPnrNumber());
+			 listOfTickets.add(dto);
+		 }
+		 return listOfTickets;
+	}
+	
+	public void cancelTicket(Integer id) {
+		Booking booking = bookingRepository.findById(id).get();
+		booking.setActive(false);
+		bookingRepository.save(booking);
+	}
+	
+public List<TicketDTO> findBookingHistory() throws CustomException{
+		
+		List<TicketDTO> listOfTickets=new ArrayList<>();
+		 List<Booking> bookedTicketsByEmail = bookingRepository.findAll();
+		 if(bookedTicketsByEmail.isEmpty()) {
+			 throw new CustomException("No tickets found");
+		 }
+		 for(Booking booking:bookedTicketsByEmail) {
+			 
+			 Map<String, Integer> urlParams = new HashMap<>();
+				urlParams.put("id", booking.getFlightId());
+				URI uri = UriComponentsBuilder.fromUriString("http://localhost:8001/api/admin/findAeroplaneNumberById/{id}")
+						.buildAndExpand(urlParams).toUri();
+				uri = UriComponentsBuilder.fromUri(uri).build().toUri();
+				ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, null,
+						new ParameterizedTypeReference<String>() {
+						});
+				
+			 TicketDTO dto=new TicketDTO();
+			 dto.setAirlineId(booking.getAirlineId());
+			 dto.setArrivalTime(booking.getArrivalTime());
+			 dto.setClassType(booking.getIsBusinessClass()==1?"Business Class":"Economy Class");
+			 dto.setDepartureTime(booking.getDepartureTime());
+			 dto.setEmail(booking.getEmail());
+			 dto.setFlightId(booking.getFlightId());
+			 dto.setFlightNumber(responseEntity.getBody());
+			 dto.setFrom(booking.getFrom());
+			 dto.setId(booking.getId());
+			 dto.setJourneydate(booking.getJourneydate());
+			 dto.setTo(booking.getTo());
+			 dto.setPnrNumber(booking.getPnrNumber());
+			 dto.setStatus(booking.isActive()==true?"Booked":"Cancelled");
 			 listOfTickets.add(dto);
 		 }
 		 return listOfTickets;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.udajahaja.dto.BookingDTO;
@@ -44,6 +45,22 @@ public class BookingResource {
 	@GetMapping("findAll/bookings/{email}")
 	public ResponseEntity<List<TicketDTO>> findAllBookings(@PathVariable("email")String email) throws CustomException{
 		 return new ResponseEntity<List<TicketDTO>>(bookingService.findAllBookings(email),HttpStatus.OK);
+	}
+	
+	@PostMapping("cancel/ticket/{id}")
+	public ResponseEntity<String> cancelTickets(@PathVariable("id")Integer id) throws CustomException{
+		bookingService.cancelTicket(id);
+		 return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+	}
+	
+	@GetMapping("findAll/bookings/history")
+	public ResponseEntity<List<TicketDTO>> findBookingHistory() throws CustomException{
+		 return new ResponseEntity<List<TicketDTO>>(bookingService.findBookingHistory(),HttpStatus.OK);
+	}
+	
+	@GetMapping("/test")
+	public ResponseEntity<String> test() throws CustomException{
+		 return new ResponseEntity<String>("test",HttpStatus.OK);
 	}
 	
 	

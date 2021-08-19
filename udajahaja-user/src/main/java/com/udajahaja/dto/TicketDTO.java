@@ -29,6 +29,8 @@ public class TicketDTO {
 	   private String classType;
 	   
 	   private String pnrNumber;
+	   
+	   private String status;
 
 	public Integer getId() {
 		return id;
@@ -124,4 +126,14 @@ public class TicketDTO {
 	public void setPnrNumber(String pnrNumber) {
 		this.pnrNumber = pnrNumber;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 }
