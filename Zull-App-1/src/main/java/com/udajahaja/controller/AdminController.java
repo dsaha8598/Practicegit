@@ -1,17 +1,20 @@
 package com.udajahaja.controller;
 
+import java.awt.print.Book;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.udajahaja.dto.AeroplaneSaveDTO;
@@ -41,6 +44,11 @@ public class AdminController {
 	
 	@Autowired
 	private AirlineRepository repo;
+	
+	@Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+	
+	private static final String TOPIC = "udajahajaTopic";
 	
 	@PostMapping(path = "/save", consumes = "application/json")
 	public ResponseEntity<AirlineSaveDTO> saveAirline(@RequestBody AirlineSaveDTO dto){
@@ -146,7 +154,25 @@ public class AdminController {
 
 	}
 	
+	@GetMapping("/test")
+	public @ResponseBody ResponseEntity<String> test() {
+		 return new ResponseEntity<String>("Hurray...admin....TEST WORKING",HttpStatus.OK);
+	}
+	
+	@GetMapping("/blockAirline/{id}")
+    public ResponseEntity<String> blockAirline(@PathVariable("id")Integer id) {
 
+		System.out.println("Producing kafka topic");
+        kafkaTemplate.send(TOPIC, id+"");
+
+        return  new ResponseEntity<String>("Published successfully",HttpStatus.OK);
+    }
+	
+	@GetMapping("/unblockAirline/{id}")
+    public ResponseEntity<String> unBlockAirline(@PathVariable("id")Integer id) {
+		service.unblockAirline(id);
+        return  new ResponseEntity<String>("Published successfully",HttpStatus.OK);
+    }
 	
 	
 	

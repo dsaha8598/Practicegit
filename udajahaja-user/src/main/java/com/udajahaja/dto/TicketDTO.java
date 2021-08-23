@@ -31,6 +31,16 @@ public class TicketDTO {
 	   private String pnrNumber;
 	   
 	   private String status;
+	   
+	   private Boolean isLessThan24;
+
+	public Boolean getIsLessThan24() {
+		return isLessThan24;
+	}
+
+	public void setIsLessThan24(Boolean isLessThan24) {
+		this.isLessThan24 = isLessThan24;
+	}
 
 	public Integer getId() {
 		return id;

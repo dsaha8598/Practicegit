@@ -50,6 +50,12 @@ export class BookingService {
         return this.httpClient.get("http://localhost:8003/api/user/findAll/bookings/history");
     }
 
+    downloadTicket(id:string){
+        let params = new HttpParams();
+        params.set('id', id);
+        return this.httpClient.get("http://localhost:8003/api/user/download/" + id, { 'params':params});
+    }
+
    
 
 

@@ -10,6 +10,6 @@ public class CustomExceptionHandler {
 
 	@ExceptionHandler(value = CustomException.class)
 	   public ResponseEntity<Object> exception(CustomException exception) {
-	      return new ResponseEntity<>(exception, HttpStatus.NOT_FOUND);
+	      return new ResponseEntity<>("No tickets found", HttpStatus.NOT_FOUND);
 	   }
 }

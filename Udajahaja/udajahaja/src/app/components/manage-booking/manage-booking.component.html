@@ -11,57 +11,58 @@
         <label>
             <h1>Enter Email Id To see booking details</h1>
         </label>
-        <input type="text" value="{{emailid}}" />
-        <button (click)="getBookedTicketsByEmail()">Search</button>
+        <input type="text" [(ngModel)]="email" />
+        <button (click)="getBookedTicketsByEmailFromSearch()">Search</button>
     </div><br><br>
-    <div>
 
-        <div>
-            <div class="aeroplaneContainer">
-                <div *ngFor="let ticket of tickets;let i=index" style="position: relative;width: 100%;height: 21%; ">
-                    <div style="position: relative;width: 100%;height: 92%; ">
-                        <div style="background-color:rgb(231, 255, 173);position: relative;width: 100%;height: 50%;">
-                            <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                                flight Number
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{ticket.flightNumber}}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                {{ticket.from}} &nbsp; -> &nbsp; {{ticket.to}}
-                            </div>
-                            <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                                Class Type &nbsp;&nbsp;:&nbsp;:{{ticket.classType}}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button
-                                    style="width: 100px;height: 35px;background-color: cornflowerblue;color: white;"
-                                    (click)="cancelTicket(ticket.id)"
-                                >Cancel
-                                </button>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button
-                                    style="width: 100px;height: 35px;background-color: cornflowerblue;color: white;">Download</button>
-                            </div>
-                        </div>
-                        <div style="background-color:rgb(231, 255, 173);position: relative;width: 100%;height: 50%;">
-                            <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                                Departure Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{ticket.departureTime}}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                Arrival Time &nbsp;&nbsp;:&nbsp;:{{ticket.arrivalTime}}
-                            </div>
-                            <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
-                                PNR Number
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                {{ticket.pnrNumber}}
-                            </div>
-                        </div>
 
-                    </div>
-                    <div style="background-color:white;position: relative;width: 100%;height: 8%;"></div>
+    <div *ngFor="let ticket of tickets;let i=index" style="position: relative;width: 95%;height: 20%; left: 2%;">
+        <div style="position: relative;width: 100%;height: 92%; background-color: white;border: 1px solid black;">
+            <div style="position: relative;width: 100%;height: 50%;">
+                <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                    flight Number
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{ticket.flightNumber}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ticket.from}} &nbsp; -> &nbsp; {{ticket.to}}
                 </div>
+                <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                    Class Type &nbsp;&nbsp;:&nbsp;:{{ticket.classType}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button style="width: 100px;height: 35px;background-color: cornflowerblue;color: white;"
+                        (click)="cancelTicket(ticket.id)"
+                        [ngStyle]="{'background-color': ticket.isLessThan24==true? 'gray' : 'cornflowerblue'}"
+                        [disabled]="ticket.isLessThan24">Cancel
+                    </button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button style="width: 100px;height: 35px;background-color: cornflowerblue;color: white;"
+                        (click)="downloadTicket(ticket.id)">Download
+                    </button>
+                </div>
             </div>
+            <div style="position: relative;width: 100%;height: 50%;">
+                <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                    Departure Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{ticket.departureTime}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Arrival Time &nbsp;&nbsp;:&nbsp;:{{ticket.arrivalTime}}
+                </div>
+                <div style="display: inline-block;position: relative;height: 100%;width: 50%;">
+                    PNR Number
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{ticket.pnrNumber}}
+                </div>
+            </div>
+
         </div>
+        <div style="position: relative;width: 100%;height: 8%;"></div>
     </div>
+
+
+
+
+
 </body>

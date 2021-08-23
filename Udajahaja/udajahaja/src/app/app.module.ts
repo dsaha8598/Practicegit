@@ -10,7 +10,7 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routing';
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminHomePageComponent } from './components/admin-home-page/admin-home-page.component';
 import { AddAirlineComponent } from './components/add-airline/add-airline.component';
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
@@ -46,6 +46,7 @@ import { ErrorComponent } from './components/error/error.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,RouterModule.forRoot(routes), ReactiveFormsModule,HttpClientModule,
     
   ],

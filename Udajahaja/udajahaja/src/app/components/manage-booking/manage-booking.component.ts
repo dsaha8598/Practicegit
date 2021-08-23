@@ -12,6 +12,7 @@ export class ManageBookingComponent implements OnInit {
   isSearchenable:boolean=true;
   emailid:any=''
   tickets:any=[]
+  email:string="";
   constructor(private service:BookingService) { }
 
   ngOnInit(): void {
@@ -27,16 +28,32 @@ export class ManageBookingComponent implements OnInit {
   }
 
   getBookedTicketsByEmail(){
-    console.log("retrievig available ticket")
     if(sessionStorage.getItem("email")!=null){
-      this.emailid=sessionStorage.getItem("email")
+      this.email=sessionStorage.getItem("email")
   }
-  this.service.getAllBookedTickets(this.emailid)
+  this.service.getAllBookedTickets(this.email)
   .subscribe(res=>{
     this.tickets=res;
     console.log("view ticket details")
     console.log(this.tickets)
   })
+  }
+
+  getBookedTicketsByEmailFromSearch(){
+    console.log("retrievig available ticket  = "+this.email)
+    sessionStorage.setItem("email",this.email)
+    
+  this.service.getAllBookedTickets(this.email)
+  .subscribe(res=>{
+    this.tickets=res;
+    console.log("view ticket details")
+    console.log(this.tickets)
+  })
+  }
+
+  downloadTicket(id:string){
+    this.service.downloadTicket(id)
+    .subscribe()
   }
 
 }

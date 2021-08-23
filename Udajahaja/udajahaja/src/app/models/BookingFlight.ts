@@ -15,6 +15,7 @@ export class BookingFlight{
         public classType:string,
         public pnrNumber:string,
         public id:number,
-        public status:string
+        public status:string,
+        public isLessThan24:boolean
         ){}
 }

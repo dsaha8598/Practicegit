@@ -16,22 +16,22 @@
     </div>
     <br><br><br>
 
-    <div class="historyContainer">
+    <div class="historyContainer" *ngFor="let ticket of tickets">
 
         <div class="ticket">
           <div class="lines">
-            PNR Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:122334455
+            PNR Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{ticket.pnrNumber}}  
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-            Bhubaneswar &nbsp;&nbsp;-->&nbsp;&nbsp;Hyderabad
+            {{ticket.from}} &nbsp;&nbsp;-->&nbsp;&nbsp;{{ticket.to}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-            Ticket Status: &nbsp;&nbsp;&nbsp;Active
+            Ticket Status: &nbsp;&nbsp;&nbsp;{{ticket.status}}
           </div>
           <div class="lines">
-            Flight Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:122334455
+            Flight Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:{{ticket.flightNumber}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-            Arrival Time &nbsp;&nbsp;-->04:30
+            Arrival Time &nbsp;&nbsp;-->{{ticket.arrivalTime}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Departure Time &nbsp;&nbsp;-->04:30
+            Departure Time &nbsp;&nbsp;-->{{ticket.departureTime}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
             
           </div>

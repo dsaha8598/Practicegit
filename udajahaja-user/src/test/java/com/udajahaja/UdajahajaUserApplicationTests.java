@@ -32,7 +32,9 @@ class UdajahajaUserApplicationTests {
 	contentStream.close();
 
 	document.save("//home//dipak//Desktop//pdfBoxHelloWorld.pdf");
-	document.close();*/
+	document.close();
+	
+	
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter First String");
 		String s1=sc.next();
@@ -59,7 +61,9 @@ class UdajahajaUserApplicationTests {
 		System.out.println("\n Output 2 ");
 		for(String element:list2) {
 			System.out.print(element);
-		}
+		}*/
+		
+		System.out.println("first line \n second line");
 
 		}
 		

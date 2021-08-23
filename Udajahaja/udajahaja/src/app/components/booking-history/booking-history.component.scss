@@ -45,12 +45,11 @@ body{
    
 }
 .ticket{
+    border: 1px solid rgb(1, 1, 7);
+    background-color: #fefaff;
     position: relative;
-    background-color: #3b9d40;
     width: 100%;
     height: 80%;
-    border:1px solid black;
-    border-radius: 30%;
 }
 .separator{
     position: relative;
@@ -59,7 +58,6 @@ body{
 }
 .lines{
     position: relative;
-    background-color: #da6ff0;
     width: 100%;
     height: 50%;
 }

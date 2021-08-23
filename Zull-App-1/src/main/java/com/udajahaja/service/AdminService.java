@@ -169,4 +169,10 @@ public class AdminService {
 		}
 		return searchedFlightList;
 	}
+	
+	public void unblockAirline(Integer id) {
+		AirlineEntity airlineEntity = repo.findById(id).get();
+		airlineEntity.setActive(true);
+		repo.save(airlineEntity);
+	}
 }
