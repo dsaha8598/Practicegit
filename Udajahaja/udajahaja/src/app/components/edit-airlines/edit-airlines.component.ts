@@ -15,6 +15,8 @@ export class EditAirlinesComponent implements OnInit {
   airline:Airline;
   aeroplanes:Aeroplane[]
    numbers:number[]=[1,2,3];
+   status:string="Block";
+   blocked:boolean=false
   constructor(private router:Router,private airlineService:AirlineService,private editservice:EditAirlineService) {
     this.airline=editservice.getAirline();
     this.aeroplanes=this.airline.aeroplanes
@@ -25,9 +27,23 @@ export class EditAirlinesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  editAirline(){
+  blockAirline(id:number){
     
-    this.router.navigate(['/newAirline']);
+    if(this.blocked==false){
+    this.airlineService.deactivateAirline(id)
+    .subscribe(res=>{
+     console.log("Produced topic on kafka")
+     
+    });
+    this.blocked=true;
+     this.status="Unblock"
+  }else{
+    this.airlineService.activateAirline(id).subscribe()
+    this.blocked=false;
+    this.status="Block"
+  }
+    this.router.navigate(['/editAirline']);
+    
   }
 
   

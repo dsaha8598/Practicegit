@@ -28,6 +28,7 @@ export class BookingComponent implements OnInit {
 
   constructor(private service: BookingService, private formBuilder: FormBuilder,private router:Router) {
     this.bookingFlightForm = this.formBuilder.group({
+      airlineId:[''],
       flightId: [''],
       journeydate: [
         '', Validators.required
@@ -87,6 +88,7 @@ export class BookingComponent implements OnInit {
   onstartDateBookingClick(id: number) {
     console.log(this.onewayTrip[id])
     this.bookingFlightForm = this.formBuilder.group({
+      airlineId:[this.onewayTrip[id].airlineId],
       flightId: [this.onewayTrip[id].flightId],
       journeydate: [
         this.onewayTrip[id].startDate, Validators.required
@@ -130,6 +132,7 @@ export class BookingComponent implements OnInit {
   onreturnDateBookingClick(id:number){
     this.returnTrip[id];
     this.bookingFlightForm = this.formBuilder.group({
+      airlineId:[this.returnTrip[id].airlineId],
       flightId: [this.returnTrip[id].flightId],
       journeydate: [
         this.returnTrip[id].returnDate, Validators.required

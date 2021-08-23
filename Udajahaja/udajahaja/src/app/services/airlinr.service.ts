@@ -105,6 +105,20 @@ export class AirlineService {
 
     }
 
+    deactivateAirline(id:number){
+        let headers=this.setHeaders();
+        let params = new HttpParams();
+        params.set('id', id+"");
+        return this.httpClient.get("http://localhost:8003/api/admin/blockAirline/" + id, { 'params':params,'headers':headers});
+    }
+
+    activateAirline(id:number){
+        let headers=this.setHeaders();
+        let params = new HttpParams();
+        params.set('id', id+"");
+        return this.httpClient.get("http://localhost:8003/api/admin/unblockAirline/" + id, { 'params':params,'headers':headers});
+    }
+
 
 
 
