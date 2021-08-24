@@ -268,5 +268,48 @@ public class BookingService {
 		
 		return file;
 	}
+	
+	public List<Booking> getAllBookings(){
+		return bookingRepository.findAll();
+	}
+	
+	public List<TicketDTO> findBookingHistory(String email) throws CustomException {
+
+		List<TicketDTO> listOfTickets = new ArrayList<>();
+		List<Booking> bookedTicketsByEmail = bookingRepository.getTicketsHistoryByEmail(email);
+		if (bookedTicketsByEmail.isEmpty()) {
+			throw new CustomException("No tickets found");
+		}
+		for (Booking booking : bookedTicketsByEmail) {
+
+			Map<String, Integer> urlParams = new HashMap<>();
+			urlParams.put("id", booking.getFlightId());
+			URI uri = UriComponentsBuilder.fromUriString("http://localhost:8001/api/admin/findAeroplaneNumberById/{id}")
+					.buildAndExpand(urlParams).toUri();
+			uri = UriComponentsBuilder.fromUri(uri).build().toUri();
+			ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, null,
+					new ParameterizedTypeReference<String>() {
+					});
+
+			TicketDTO dto = new TicketDTO();
+			dto.setAirlineId(booking.getAirlineId());
+			dto.setArrivalTime(booking.getArrivalTime());
+			dto.setClassType(booking.getIsBusinessClass() == 1 ? "Business Class" : "Economy Class");
+			dto.setDepartureTime(booking.getDepartureTime());
+			dto.setEmail(booking.getEmail());
+			dto.setFlightId(booking.getFlightId());
+			dto.setFlightNumber(responseEntity.getBody());
+			dto.setFrom(booking.getFrom());
+			dto.setId(booking.getId());
+			dto.setJourneydate(booking.getJourneydate());
+			dto.setTo(booking.getTo());
+			dto.setPnrNumber(booking.getPnrNumber());
+			dto.setStatus(booking.isActive() == true ? "Booked" : "Cancelled");
+
+			listOfTickets.add(dto);
+		}
+		return listOfTickets;
+	}
+
 
 }

@@ -29,6 +29,7 @@ import com.udajahaja.dto.BookingDTO;
 import com.udajahaja.dto.SearchDTO;
 import com.udajahaja.dto.SearchedFlightDetails;
 import com.udajahaja.dto.TicketDTO;
+import com.udajahaja.entity.Booking;
 import com.udajahaja.exception.CustomException;
 import com.udajahaja.service.BookingService;
 
@@ -67,6 +68,10 @@ public class BookingResource {
 	@GetMapping("findAll/bookings/history")
 	public ResponseEntity<List<TicketDTO>> findBookingHistory() throws CustomException{
 		 return new ResponseEntity<List<TicketDTO>>(bookingService.findBookingHistory(),HttpStatus.OK);
+	}
+	@GetMapping("findAll/bookings/history/{email}")
+	public ResponseEntity<List<TicketDTO>> findBookingHistory(@PathVariable("email")String email) throws CustomException{
+		 return new ResponseEntity<List<TicketDTO>>(bookingService.findBookingHistory(email),HttpStatus.OK);
 	}
 	
 	@PostMapping(value="download/ticket/{id}")
@@ -108,6 +113,11 @@ public class BookingResource {
 	            .contentLength(file.length())
 	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
 	            .body(resource);
+	}
+	
+	@GetMapping("findAll/bookings")
+	public ResponseEntity<List<Booking>> findBookings() throws CustomException{
+		 return new ResponseEntity<List<Booking>>(bookingService.getAllBookings(),HttpStatus.OK);
 	}
 	
 	

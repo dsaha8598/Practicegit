@@ -1,13 +1,32 @@
 package com.udajahaja.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.poi.xssf.streaming.SXSSFRow;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.udajahaja.dto.AeroplaneSaveDTO;
 import com.udajahaja.dto.AirlineSaveDTO;
+import com.udajahaja.dto.BookingDTO;
 import com.udajahaja.dto.SearchDTO;
 import com.udajahaja.dto.SearchedFlightDetails;
 import com.udajahaja.entity.AeroplaneEntity;
@@ -30,6 +49,10 @@ public class AdminService {
 	private SchedulerRepository schedulerRepository;
 	@Autowired
 	private CouponRepository ccouponRepository;
+	@Autowired
+	private ResourceLoader resourceLoader;
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	public void save(AirlineSaveDTO dto) {
 		AirlineEntity entity=new AirlineEntity();
@@ -175,4 +198,48 @@ public class AdminService {
 		airlineEntity.setActive(true);
 		repo.save(airlineEntity);
 	}
+	
+	public File generateReport() throws IOException {
+		Resource resource = resourceLoader.getResource("classpath:templates/" + "ticket_report.xlsx");
+		InputStream input = resource.getInputStream();
+		List<BookingDTO> bookingList=null;
+		
+		URI uri = UriComponentsBuilder.fromUriString("http://localhost:8002/api/user/findAll/bookings")
+				.buildAndExpand().toUri();
+		uri = UriComponentsBuilder.fromUri(uri).build()
+				.toUri();
+
+		ResponseEntity<List<BookingDTO>> responseEntity = restTemplate.exchange(uri, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<BookingDTO>>() {
+				});
+		bookingList = responseEntity.getBody();
+		
+		AtomicInteger integer=new AtomicInteger(1);
+		try (SXSSFWorkbook workbook = new SXSSFWorkbook(new XSSFWorkbook(input))) {
+			SXSSFSheet worksheet = workbook.getSheetAt(0);
+			bookingList.stream().forEach(record->{
+				SXSSFRow row = worksheet.createRow(integer.addAndGet(1));
+				aceptTicketData(record, row);
+			});
+			File file = new File("Ticket_Summery" + System.currentTimeMillis() + ".xlsx");
+			OutputStream out = new FileOutputStream(file);
+			workbook.write(out);
+			return file;
+		}
+		
+		
+
+	}
+	
+	private void aceptTicketData(BookingDTO bookingDTO, SXSSFRow row) {
+
+		row.createCell(0).setCellValue("");
+		row.createCell(1)
+				.setCellValue("");
+		row.createCell(2)
+		.setCellValue(bookingDTO.getJourneydate());
+		row.createCell(3)
+		.setCellValue(bookingDTO.isActive()?"Booked":"Cancelled");
+	}
+	
 }

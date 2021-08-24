@@ -19,4 +19,8 @@ public interface BookingRepository extends JpaRepository<Booking, Integer>{
 	// @formatter:on
 	List<Booking> deactivateRecordsByAirlineId(Integer id);
 	
+	@Query(value = "select * from booking where  email=?1  ", nativeQuery = true)
+	// @formatter:on
+	List<Booking> getTicketsHistoryByEmail(String email);
+	
 }
