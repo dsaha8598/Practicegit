@@ -119,6 +119,11 @@ export class AirlineService {
         return this.httpClient.get("http://localhost:8003/api/admin/unblockAirline/" + id, { 'params':params,'headers':headers});
     }
 
+    generateReport(){
+        let headers=this.setHeaders();
+        return this.httpClient.get("http://localhost:8003/api/admin/download", { 'headers':headers});
+    }
+
 
 
 

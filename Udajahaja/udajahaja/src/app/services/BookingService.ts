@@ -55,6 +55,11 @@ export class BookingService {
         params.set('id', id);
         return this.httpClient.get("http://localhost:8003/api/user/download/" + id, { 'params':params});
     }
+    getBookingHistoryByEmil(email:string){
+        let params = new HttpParams();
+        params.set('email', email);
+        return this.httpClient.get("http://localhost:8003/api/user/findAll/bookings/history/" + email, { 'params':params});
+    }
 
    
 

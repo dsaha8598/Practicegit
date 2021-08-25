@@ -12,7 +12,8 @@ export class BookingHistoryComponent implements OnInit {
   constructor(private service:BookingService) { }
 
   ngOnInit(): void {
-    this.service.getBookingHistory()
+    
+    this.service.getBookingHistoryByEmil(sessionStorage.getItem("email"))
     .subscribe(res=>{
        this.tickets=res
        
