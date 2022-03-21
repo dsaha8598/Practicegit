@@ -1,2 +1,0 @@
-/*ALTER TABLE tds.deductor_master
-DROP CONSTRAINT UQ_DEDUCTOR_CODE;*/

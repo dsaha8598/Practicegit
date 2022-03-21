@@ -1,1 +1,0 @@
-INSERT INTO tds.mode_of_payment (mode) VALUES ('Cash'),('ATM/Debit Card-Payment'),('Online-Payment');

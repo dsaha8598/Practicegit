@@ -1,1 +1,0 @@
-INSERT INTO tds.deductor_type  (type) VALUES ('Trust'),('Company'),('Assosiation');

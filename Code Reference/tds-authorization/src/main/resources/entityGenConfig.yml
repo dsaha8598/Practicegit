@@ -1,7 +1,0 @@
-jdbcSettings:
-  url: "jdbc:sqlserver://192.168.0.157:1433;databaseName=tds_authorization"
-  username: "sa"
-  password: "root"
-  driverClassName: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-
-packageName: "com.ey.in.tds.authorization.domain"

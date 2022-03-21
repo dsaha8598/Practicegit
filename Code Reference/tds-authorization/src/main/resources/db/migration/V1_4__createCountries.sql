@@ -1,1 +1,0 @@
-INSERT INTO tds.country (name) VALUES ('India'),('Pakistan');
